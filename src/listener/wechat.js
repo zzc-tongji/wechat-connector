@@ -3,25 +3,29 @@ import { ScanStatus } from 'wechaty';
 import { global } from '../utils/global';
 import * as cache from '../utils/cache';
 
-const dong = async (data) => {
+const dong = (data) => {
   // (data?: string)
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.wechat.dong`,
-    content: { data },
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.wechat.dong`,
+      content: { data },
+      timestamp: Date.now(),
+    });
   });
 };
 
-const error = async (error) => {
+const error = (error) => {
   // (error: Error)
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.wechat.error`,
-    content: { error },
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.wechat.error`,
+      content: { error },
+      timestamp: Date.now(),
+    });
   });
 };
 
@@ -30,36 +34,42 @@ const friendship = (friendship) => {
   // (friendship: Friendship)
 };
 
-const heatbeat = async (data) => {
+const heatbeat = (data) => {
   // (data: any)
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.wechat.heatbeat`,
-    content: { data },
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.wechat.heatbeat`,
+      content: { data },
+      timestamp: Date.now(),
+    });
   });
 };
 
-const login = async (user) => {
+const login = (user) => {
   // (user: ContactSelf)
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.wechat.login`,
-    content: { user },
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.wechat.login`,
+      content: { user },
+      timestamp: Date.now(),
+    });
   });
 };
 
-const logout = async (user, reason) => {
+const logout = (user, reason) => {
   // (user: ContactSelf, reason?: string)
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.wechat.logout`,
-    content: { user, reason },
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.wechat.logout`,
+      content: { user, reason },
+      timestamp: Date.now(),
+    });
   });
 };
 
@@ -96,13 +106,15 @@ const message = async (m) => {
   cache.set(payload.id, payload);
 };
 
-const ready = async () => {
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.wechat.ready`,
-    content: null,
-    timestamp: Date.now(),
+const ready = () => {
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.wechat.ready`,
+      content: null,
+      timestamp: Date.now(),
+    });
   });
 };
 
@@ -129,7 +141,7 @@ const roomTopic = (room, newTopic, oldTopic, changer, date) => {
   // (room: Room, newTopic: string, oldTopic: string, changer: Contact, date?: Date)
 };
 
-const scan = async (qrcode, status) => {
+const scan = (qrcode, status) => {
   // (qrcode: string, status: ScanStatus, data?: string)
   global.loginApproach.url = qrcode;
   global.loginApproach.qrcode = [
@@ -138,33 +150,39 @@ const scan = async (qrcode, status) => {
   ].join('');
   global.loginApproach.timestamp = Date.now();
   //
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.wechat.scan`,
-    content: { qrcode, status: ScanStatus[status] },
-    data: global.loginApproach,
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.wechat.scan`,
+      content: { qrcode, status: ScanStatus[status] },
+      data: global.loginApproach,
+      timestamp: Date.now(),
+    });
   });
 };
 
-const start = async () => {
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.wechat.start`,
-    content: null,
-    timestamp: Date.now(),
+const start = () => {
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.wechat.start`,
+      content: null,
+      timestamp: Date.now(),
+    });
   });
 };
 
-const stop = async () => {
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.wechat.stop`,
-    content: null,
-    timestamp: Date.now(),
+const stop = () => {
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.wechat.stop`,
+      content: null,
+      timestamp: Date.now(),
+    });
   });
 };
 

@@ -16,7 +16,7 @@ const init = () => {
   timer = setInterval(removeExpired, expiration);
 };
 
-const removeExpired = async () => {
+const removeExpired = () => {
   const remove = [];
   cache.forEach((value, key) => {
     if (Date.now() - value.timestamp > expiration) {
@@ -26,12 +26,14 @@ const removeExpired = async () => {
   remove.forEach((key) => {
     cache.delete(key);
   });
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.cache.remove-expired`,
-    content: null,
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.cache.remove-expired`,
+      content: null,
+      timestamp: Date.now(),
+    });
   });
 };
 

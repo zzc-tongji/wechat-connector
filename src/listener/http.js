@@ -151,12 +151,14 @@ app.post('/rpc/logout', bodyParser.text({ type: '*/*' }), async (req, res) => {
   res.status(204);
   res.send();
   // log
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.http.logout`,
-    content: null,
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.http.logout`,
+      content: null,
+      timestamp: Date.now(),
+    });
   });
 });
 
@@ -239,12 +241,14 @@ app.post('/rpc/start', bodyParser.text({ type: '*/*' }), async (req, res) => {
   res.status(204);
   res.send();
   // log
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.http.start`,
-    content: null,
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.http.start`,
+      content: null,
+      timestamp: Date.now(),
+    });
   });
 });
 
@@ -267,12 +271,14 @@ app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
   res.status(204);
   res.send();
   // log
-  global.requestor.log({
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: `${global.setting.wechaty.name}.listener.http.stop`,
-    content: null,
-    timestamp: Date.now(),
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.http.stop`,
+      content: null,
+      timestamp: Date.now(),
+    });
   });
 });
 

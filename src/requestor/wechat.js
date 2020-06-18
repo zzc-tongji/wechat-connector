@@ -205,12 +205,14 @@ const send = async (payload) => {
     // shorten (too long for log)
     delete recipient.payload.memberIdList;
     // success
-    await global.requestor.log({
-      id: await global.requestor.getId(),
-      level: 'info',
-      type: `${global.setting.wechaty.name}.requestor.wechat.send`,
-      content: { payload, recipient },
-      timestamp: Date.now(),
+    global.requestor.getId().then((id) => {
+      global.requestor.log({
+        id,
+        level: 'info',
+        type: `${global.setting.wechaty.name}.requestor.wechat.send`,
+        content: { payload, recipient },
+        timestamp: Date.now(),
+      });
     });
   }
 };
