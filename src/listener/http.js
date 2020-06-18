@@ -2,6 +2,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import { log as wechatyLog } from 'wechaty';
 
+import { mock } from './http-mock';
 import { test as forwardTest } from './http-validator/forward';
 import { test as replyTest } from './http-validator/reply';
 import { test as sendTest } from './http-validator/send';
@@ -10,6 +11,9 @@ import * as wechat from '../requestor/wechat';
 import { global } from '../utils/global';
 
 const app = express();
+
+// mock
+mock(app);
 
 // POST /rpc/exit
 app.post('/rpc/exit', bodyParser.text({ type: '*/*' }), (req, res) => {
@@ -66,19 +70,6 @@ app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
       timestamp: Date.now(),
     });
   });
-});
-
-// POST => /rpc/log
-app.post('/rpc/log', bodyParser.text({ type: '*/*' }), (req, res) => {
-  // test usage
-  //
-  // request
-  const request = JSON.parse(req.body);
-  // echo
-  wechatyLog.info('[ECHO]', JSON.stringify(request));
-  // response
-  res.status(202);
-  res.send();
 });
 
 // POST => /rpc/login-approach

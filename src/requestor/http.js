@@ -4,15 +4,18 @@ import { log as wechatyLog } from 'wechaty';
 import { global } from '../utils/global';
 import { getId as terminalGetId } from './terminal';
 
+let bodyToken;
 let headerPost;
 let idUrl;
 let logUrl;
 
 const init = () => {
-  headerPost = new Headers({ 'Content-Type': 'application/json' });
+  // eslint-disable-next-line max-len
+  headerPost = new Headers({ 'Content-Type': 'application/json; charset=UTF-8' });
   const baseUrl = global.setting.http.sender.url.replace(/\/+$/, '');
   idUrl = baseUrl + '/id';
   logUrl = baseUrl + '/log';
+  bodyToken = JSON.stringify({ token: global.setting.http.sender.token });
 };
 
 const log = (content) => {
@@ -36,9 +39,10 @@ const log = (content) => {
 
 const getId = () => {
   return new Promise((resolve) => {
-    fetch(idUrl, { method: 'Get' }).then((response) => {
+    // eslint-disable-next-line max-len
+    fetch(idUrl, { method: 'POST', headerPost, body: bodyToken }).then((response) => {
       if (!response.ok) {
-        throw `fetch ${logUrl} => ${response.status}`;
+        throw `fetch ${idUrl} => ${response.status}`;
       }
       response.json().then((data) => {
         if (!data.id) {
