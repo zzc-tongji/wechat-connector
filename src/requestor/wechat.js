@@ -4,8 +4,8 @@ import { global } from '../utils/global';
 const checkRobot = async (caller, payload) => {
   // (caller: string, payload: object)
   if (!global.robot) {
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'error',
       type: `${global.setting.wechaty.name}.requestor.wechat.${caller}`,
       content: { reason: 'robot non-existent', payload },
@@ -14,8 +14,8 @@ const checkRobot = async (caller, payload) => {
     return false;
   }
   if (!global.robot.logonoff()) {
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'error',
       type: `${global.setting.wechaty.name}.requestor.wechat.${caller}`,
       content: { reason: 'robot logged-out', payload },
@@ -33,8 +33,8 @@ const forward = async (payload) => {
   }
   const context = cache.get(payload.id);
   if (!context) {
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'error',
       type: `${global.setting.wechaty.name}.requestor.wechat.forward`,
       content: { reason: 'message expired', payload },
@@ -53,8 +53,8 @@ const forward = async (payload) => {
       recipient = await global.robot.Contact.find({ name: payload.receiver.name });
     }
     if (!recipient) {
-      await global.log({
-        id: await global.getId(),
+      await global.requestor.log({
+        id: await global.requestor.getId(),
         level: 'error',
         type: `${global.setting.wechaty.name}.requestor.wechat.forward`,
         content: { reason: 'friend not found', payload },
@@ -65,8 +65,8 @@ const forward = async (payload) => {
     // forward
     await context.content.message.forward(recipient);
     // success
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'info',
       type: `${global.setting.wechaty.name}.requestor.wechat.forward`,
       content: { payload, context },
@@ -76,8 +76,8 @@ const forward = async (payload) => {
     // to group
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
-      await global.log({
-        id: await global.getId(),
+      await global.requestor.log({
+        id: await global.requestor.getId(),
         level: 'error',
         type: `${global.setting.wechaty.name}.requestor.wechat.forward`,
         content: { reason: 'group not found', payload },
@@ -90,8 +90,8 @@ const forward = async (payload) => {
     // shorten (too long for log)
     delete recipient.payload.memberIdList;
     // success
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'info',
       type: `${global.setting.wechaty.name}.requestor.wechat.forward`,
       content: { payload, context },
@@ -107,8 +107,8 @@ const reply = async (payload) => {
   }
   const context = cache.get(payload.id);
   if (!context) {
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'error',
       type: `${global.setting.wechaty.name}.requestor.wechat.reply`,
       content: { reason: 'message expired', payload },
@@ -124,8 +124,8 @@ const reply = async (payload) => {
     // shorten (too long for log)
     delete context.content.group.payload.memberIdList;
     // success
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'info',
       type: `${global.setting.wechaty.name}.requestor.wechat.reply`,
       content: {
@@ -141,8 +141,8 @@ const reply = async (payload) => {
     // reply
     context.content.one.say(payload.message);
     // success
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'info',
       type: `${global.setting.wechaty.name}.requestor.wechat.reply`,
       content: {
@@ -169,8 +169,8 @@ const send = async (payload) => {
       recipient = await global.robot.Contact.find({ name: payload.receiver.name });
     }
     if (!recipient) {
-      await global.log({
-        id: await global.getId(),
+      await global.requestor.log({
+        id: await global.requestor.getId(),
         level: 'error',
         type: `${global.setting.wechaty.name}.requestor.wechat.send`,
         content: { reason: 'friend not found', payload },
@@ -181,8 +181,8 @@ const send = async (payload) => {
     // send
     await recipient.say(payload.message);
     // success
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'info',
       type: `${global.setting.wechaty.name}.requestor.wechat.send`,
       content: { payload, recipient },
@@ -191,8 +191,8 @@ const send = async (payload) => {
   } else if (payload.receiver.category === 'group') {
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
-      await global.log({
-        id: await global.getId(),
+      await global.requestor.log({
+        id: await global.requestor.getId(),
         level: 'error',
         type: `${global.setting.wechaty.name}.requestor.wechat.send`,
         content: { reason: 'group not found', payload },
@@ -205,8 +205,8 @@ const send = async (payload) => {
     // shorten (too long for log)
     delete recipient.payload.memberIdList;
     // success
-    await global.log({
-      id: await global.getId(),
+    await global.requestor.log({
+      id: await global.requestor.getId(),
       level: 'info',
       type: `${global.setting.wechaty.name}.requestor.wechat.send`,
       content: { payload, recipient },

@@ -40,11 +40,9 @@ const setGlobal = () => {
   setting.init(); // global.setting
   if (global.setting.mode === 'http') {
     http.init();
-    global.log = http.log;
-    global.getId = http.getId;
+    global.requestor = http;
   } else { // 'terminal'
-    global.log = terminal.log;
-    global.getId = terminal.getId;
+    global.requestor = terminal;
   }
   cache.init();
   global.logout = async () => {

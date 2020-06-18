@@ -5,8 +5,8 @@ import * as cache from '../utils/cache';
 
 const dong = async (data) => {
   // (data?: string)
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.dong`,
     content: { data },
@@ -16,8 +16,8 @@ const dong = async (data) => {
 
 const error = async (error) => {
   // (error: Error)
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.error`,
     content: { error },
@@ -32,8 +32,8 @@ const friendship = (friendship) => {
 
 const heatbeat = async (data) => {
   // (data: any)
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.heatbeat`,
     content: { data },
@@ -43,8 +43,8 @@ const heatbeat = async (data) => {
 
 const login = async (user) => {
   // (user: ContactSelf)
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.login`,
     content: { user },
@@ -54,8 +54,8 @@ const login = async (user) => {
 
 const logout = async (user, reason) => {
   // (user: ContactSelf, reason?: string)
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.logout`,
     content: { user, reason },
@@ -85,20 +85,20 @@ const message = async (m) => {
   }
   // log
   const payload = {
-    id: await global.getId(),
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.message`,
     content,
     timestamp: Date.now(),
   };
-  await global.log(payload);
+  await global.requestor.log(payload);
   // cache
   cache.set(payload.id, payload);
 };
 
 const ready = async () => {
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.ready`,
     content: null,
@@ -138,8 +138,8 @@ const scan = async (qrcode, status) => {
   ].join('');
   global.loginApproach.timestamp = Date.now();
   //
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.scan`,
     content: { qrcode, status: ScanStatus[status] },
@@ -149,8 +149,8 @@ const scan = async (qrcode, status) => {
 };
 
 const start = async () => {
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.start`,
     content: null,
@@ -159,8 +159,8 @@ const start = async () => {
 };
 
 const stop = async () => {
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.stop`,
     content: null,

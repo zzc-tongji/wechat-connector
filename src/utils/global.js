@@ -1,10 +1,12 @@
 const global = {
-  getId: null, // async function
-  log: null, // async function
   loginApproach: {
     url: null,
     qrcode: null,
     timestamp: null,
+  },
+  requestor: {
+    getId: null, // async function
+    log: null, // async function
   },
   robot: null,
   setting: null,

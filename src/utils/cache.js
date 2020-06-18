@@ -26,8 +26,8 @@ const removeExpired = async () => {
   remove.forEach((key) => {
     cache.delete(key);
   });
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.cache.remove-expired`,
     content: null,
@@ -37,8 +37,8 @@ const removeExpired = async () => {
 
 const get = (key) => {
   const value = cache.get(key);
-  global.getId().then((id) => {
-    global.log({
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.cache.get`,
@@ -54,8 +54,8 @@ const set = (key, value) => {
     value.timestamp = Date.now();
   }
   cache.set(key, value);
-  global.getId().then((id) => {
-    global.log({
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.cache.set`,

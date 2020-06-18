@@ -31,8 +31,8 @@ app.post('/rpc/exit', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.status(202);
   res.send();
   // log
-  global.getId().then((id) => {
-    global.log({
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.http.exit`,
@@ -63,8 +63,8 @@ app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.status(204);
   res.send();
   // log
-  global.getId().then((id) => {
-    global.log({
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.http.forward`,
@@ -91,8 +91,8 @@ app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => 
   res.set('Content-Type', 'application/json; charset=UTF-8');
   res.send(JSON.stringify({ loginApproach: global.loginApproach }));
   // log
-  global.getId().then((id) => {
-    global.log({
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.http.login-approach`,
@@ -121,8 +121,8 @@ app.post('/rpc/logonoff', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.set('Content-Type', 'application/json; charset=UTF-8');
   res.send(JSON.stringify({ logonoff }));
   // log
-  global.getId().then((id) => {
-    global.log({
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.http.logonoff`,
@@ -151,8 +151,8 @@ app.post('/rpc/logout', bodyParser.text({ type: '*/*' }), async (req, res) => {
   res.status(204);
   res.send();
   // log
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.http.logout`,
     content: null,
@@ -179,8 +179,8 @@ app.post('/rpc/reply', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.status(204);
   res.send();
   // log
-  global.getId().then((id) => {
-    global.log({
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.http.reply`,
@@ -209,8 +209,8 @@ app.post('/rpc/send', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.status(204);
   res.send();
   // log
-  global.getId().then((id) => {
-    global.log({
+  global.requestor.getId().then((id) => {
+    global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.http.send`,
@@ -239,8 +239,8 @@ app.post('/rpc/start', bodyParser.text({ type: '*/*' }), async (req, res) => {
   res.status(204);
   res.send();
   // log
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.http.start`,
     content: null,
@@ -267,8 +267,8 @@ app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
   res.status(204);
   res.send();
   // log
-  global.log({
-    id: await global.getId(),
+  global.requestor.log({
+    id: await global.requestor.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.http.stop`,
     content: null,
@@ -279,8 +279,8 @@ app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
 const listen = () => {
   app.listen(global.setting.http.receiver.port, () => {
     // log
-    global.getId().then((id) => {
-      global.log({
+    global.requestor.getId().then((id) => {
+      global.requestor.log({
         id,
         level: 'info',
         type: `${global.setting.wechaty.name}.listener.http.listen`,
