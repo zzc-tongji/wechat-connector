@@ -1,0 +1,33 @@
+{
+  "name": "wechat-worker",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "babel": "babel src/ -d lib/ -s",
+    "eslint": "eslint --fix src/",
+    "start": "cd runtime/ && babel-node ../src/main.js",
+    "start-install": "cd runtime/ && INSTALL=TRUE babel-node ../src/main.js",
+    "start-install-windows": "set INSTALL=TRUE && cd runtime/ && babel-node ../src/main.js"
+  },
+  "repository": "git+https://github.com/zzc-tongji/wechat-worker.git",
+  "author": "Zhicheng Zhang",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/zzc-tongji/wechat-worker/issues"
+  },
+  "homepage": "https://github.com/zzc-tongji/wechat-worker#readme",
+  "dependencies": {
+    "ajv": "^6.12.2",
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "hashmap": "^2.4.0",
+    "node-fetch": "^2.6.0",
+    "wechaty": "^0.40.10"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}

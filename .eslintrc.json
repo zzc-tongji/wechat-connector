@@ -1,0 +1,33 @@
+{
+  "env": {
+    "es2020": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "google"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "rules": {
+    "function-call-argument-newline": [
+      "error",
+      "never"
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "no-throw-literal": "off",
+    "object-curly-spacing": [
+      2,
+      "always"
+    ],
+    "quote-props": [
+      "error",
+      "as-needed"
+    ]
+  }
+}

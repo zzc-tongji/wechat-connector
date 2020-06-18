@@ -1,0 +1,9 @@
+{
+  "wechaty": {
+    "name": "wechat-worker"
+  },
+  "cache": {
+    "expirationSecond": 600
+  },
+  "mode": "terminal"
+}

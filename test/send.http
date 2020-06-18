@@ -1,0 +1,12 @@
+POST http://localhost:8080/rpc/send/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "message": "wechaty-message",
+  "receiver": {
+    "name": "wechaty-user",
+    "isAlias": false,
+    "category": "friend"
+  },
+  "token": "wechaty-receiver-token"
+}

@@ -1,0 +1,19 @@
+{
+  "wechaty": {
+    "name": "wechat-worker"
+  },
+  "cache": {
+    "expirationSecond": 180
+  },
+  "mode": "http",
+  "http": {
+    "receiver": {
+      "port": 8080,
+      "token": "wechaty-receiver-token"
+    },
+    "sender": {
+      "url": "http://localhost:8080/rpc/",
+      "token": "wechaty-sender-token"
+    }
+  }
+}
