@@ -24,6 +24,7 @@ app.post('/rpc/exit', bodyParser.text({ type: '*/*' }), (req, res) => {
     res.send();
     // eslint-disable-next-line max-len
     wechatyLog.error(`${global.setting.wechaty.name}.listener.http.exit`, data.payload);
+    console.log();
     return;
   }
   // response
@@ -52,6 +53,7 @@ app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
     res.send();
     // eslint-disable-next-line max-len
     wechatyLog.error(`${global.setting.wechaty.name}.listener.http.forward`, data.payload);
+    console.log();
     return;
   }
   // forward
@@ -82,6 +84,7 @@ app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => 
     res.send();
     // eslint-disable-next-line max-len
     wechatyLog.error(`${global.setting.wechaty.name}.listener.http.login-approach`, data.payload);
+    console.log();
     return;
   }
   // response
@@ -109,6 +112,7 @@ app.post('/rpc/logonoff', bodyParser.text({ type: '*/*' }), (req, res) => {
     res.send();
     // eslint-disable-next-line max-len
     wechatyLog.error(`${global.setting.wechaty.name}.listener.http.logonoff`, data.payload);
+    console.log();
     return;
   }
   // logonoff
@@ -138,6 +142,7 @@ app.post('/rpc/logout', bodyParser.text({ type: '*/*' }), async (req, res) => {
     res.send();
     // eslint-disable-next-line max-len
     wechatyLog.error(`${global.setting.wechaty.name}.listener.http.logout`, data.payload);
+    console.log();
     return;
   }
   // logout
@@ -164,6 +169,7 @@ app.post('/rpc/reply', bodyParser.text({ type: '*/*' }), (req, res) => {
     res.send();
     // eslint-disable-next-line max-len
     wechatyLog.error(`${global.setting.wechaty.name}.listener.http.reply`, data.payload);
+    console.log();
     return;
   }
   // reply
@@ -193,6 +199,7 @@ app.post('/rpc/send', bodyParser.text({ type: '*/*' }), (req, res) => {
     res.send();
     // eslint-disable-next-line max-len
     wechatyLog.error(`${global.setting.wechaty.name}.listener.http.send`, data.payload);
+    console.log();
     return;
   }
   // send
@@ -223,6 +230,7 @@ app.post('/rpc/start', bodyParser.text({ type: '*/*' }), async (req, res) => {
     res.send();
     // eslint-disable-next-line max-len
     wechatyLog.error(`${global.setting.wechaty.name}.listener.http.start`, data.payload);
+    console.log();
     return;
   }
   // start
@@ -250,6 +258,7 @@ app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
     res.send();
     // eslint-disable-next-line max-len
     wechatyLog.error(`${global.setting.wechaty.name}.listener.http.stop`, data.payload);
+    console.log();
     return;
   }
   // stop

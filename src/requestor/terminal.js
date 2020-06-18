@@ -8,22 +8,27 @@ const log = (payload) => {
       case 'error':
         delete payloadCopy.level;
         wechatyLog.error(JSON.stringify(payloadCopy));
+        console.log();
         break;
       case 'warn':
         delete payloadCopy.level;
         wechatyLog.warn(JSON.stringify(payloadCopy));
+        console.log();
         break;
       case 'verbose':
         delete payloadCopy.level;
         wechatyLog.verbose(JSON.stringify(payloadCopy));
+        console.log();
         break;
       case 'silly':
         delete payloadCopy.level;
         wechatyLog.silly(JSON.stringify(payloadCopy));
+        console.log();
         break;
       default: // 'info'
         delete payloadCopy.level;
         wechatyLog.info(JSON.stringify(payloadCopy));
+        console.log();
         break;
     }
     resolve();

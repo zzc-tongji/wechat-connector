@@ -32,6 +32,7 @@ const log = (content) => {
     }).catch((error) => {
       // eslint-disable-next-line max-len
       wechatyLog.warn(`${global.setting.wechaty.name}.requestor.http.log`, error);
+      console.log();
       resolve();
     });
   });
@@ -53,6 +54,7 @@ const getId = () => {
     }).catch((error) => {
       // eslint-disable-next-line max-len
       wechatyLog.warn(`${global.setting.wechaty.name}.requestor.http.get-id`, error);
+      console.log();
       terminalGetId().then((id) => {
         resolve(id);
       });

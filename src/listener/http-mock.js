@@ -29,6 +29,7 @@ const mock = (app) => {
     }
     // echo
     wechatyLog.info('[MOCK]', req.body);
+    console.log();
     // response
     res.status(202);
     res.send();
