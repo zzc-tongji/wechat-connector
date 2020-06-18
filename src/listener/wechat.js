@@ -66,16 +66,33 @@ const logout = async (user, reason) => {
 const message = async (m) => {
   // (m: Message)
   if (m.self()) {
+    // ingore sent message
     return;
   }
+  // content
+  const content = { message: m };
+  const one = m.from();
+  const group = m.room();
+  if (group) {
+    // from group => { message, one, group }
+    content.one = one;
+    content.group = group;
+    // shorten (too long for log)
+    delete content.group.payload.memberIdList;
+  } else {
+    // from friend => { message, friend }
+    content.friend = one;
+  }
+  // log
   const payload = {
     id: await global.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.message`,
-    content: { message: m },
+    content,
     timestamp: Date.now(),
   };
   await global.log(payload);
+  // cache
   cache.set(payload.id, payload);
 };
 

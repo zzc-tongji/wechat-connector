@@ -116,34 +116,39 @@ const reply = async (payload) => {
     });
     return;
   }
-  const group = context.content.message.room();
-  const one = context.content.message.from();
-  if (group) {
+  if (context.content.group) {
     // from one in group
     //
     // reply
-    group.say(payload.message);
+    context.content.group.say(payload.message, context.content.one);
     // shorten (too long for log)
-    delete group.payload.memberIdList;
+    delete context.content.group.payload.memberIdList;
     // success
     await global.log({
       id: await global.getId(),
       level: 'info',
       type: `${global.setting.wechaty.name}.requestor.wechat.reply`,
-      content: { payload, one, group },
+      content: {
+        payload,
+        one: context.content.one,
+        group: context.content.group,
+      },
       timestamp: Date.now(),
     });
   } else {
     // from friend
     //
     // reply
-    one.say(payload.message);
+    context.content.one.say(payload.message);
     // success
     await global.log({
       id: await global.getId(),
       level: 'info',
       type: `${global.setting.wechaty.name}.requestor.wechat.reply`,
-      content: { payload, friend: one },
+      content: {
+        payload,
+        friend: context.content.one,
+      },
       timestamp: Date.now(),
     });
   }
