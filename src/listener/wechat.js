@@ -131,16 +131,19 @@ const roomTopic = (room, newTopic, oldTopic, changer, date) => {
 
 const scan = async (qrcode, status) => {
   // (qrcode: string, status: ScanStatus, data?: string)
-  const state = ScanStatus[status];
-  const url = [
+  global.loginApproach.url = qrcode;
+  global.loginApproach.qrcode = [
     'https://api.qrserver.com/v1/create-qr-code/?data=',
     encodeURIComponent(qrcode),
   ].join('');
+  global.loginApproach.timestamp = Date.now();
+  //
   global.log({
     id: await global.getId(),
     level: 'info',
     type: `${global.setting.wechaty.name}.listener.wechat.scan`,
-    content: { transfered: { state, url }, origin: { status, qrcode } },
+    content: { qrcode, status: ScanStatus[status] },
+    data: global.loginApproach,
     timestamp: Date.now(),
   });
 };

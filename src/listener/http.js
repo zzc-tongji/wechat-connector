@@ -81,6 +81,33 @@ app.post('/rpc/log', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.send();
 });
 
+// POST => /rpc/login-approach
+// eslint-disable-next-line max-len
+app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => {
+  // request
+  const data = tokenTest(req.body, global.setting.http.receiver.token);
+  if (data.status >= 300) {
+    res.status(data.status);
+    res.send();
+    // eslint-disable-next-line max-len
+    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.login-approach`, data.payload);
+    return;
+  }
+  // response
+  res.set('Content-Type', 'application/json; charset=UTF-8');
+  res.send(JSON.stringify({ loginApproach: global.loginApproach }));
+  // log
+  global.getId().then((id) => {
+    global.log({
+      id,
+      level: 'info',
+      type: `${global.setting.wechaty.name}.listener.http.login-approach`,
+      content: null,
+      timestamp: Date.now(),
+    });
+  });
+});
+
 // POST /rpc/logonoff
 // eslint-disable-next-line max-len
 app.post('/rpc/logonoff', bodyParser.text({ type: '*/*' }), (req, res) => {

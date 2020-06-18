@@ -49,6 +49,9 @@ const setGlobal = () => {
     if (global.robot === null) {
       return;
     }
+    global.loginApproach.url = null;
+    global.loginApproach.qrcode = null;
+    global.loginApproach.timestamp = null;
     if (global.robot.logonoff()) {
       await global.robot.logout();
     }
@@ -65,6 +68,9 @@ const setGlobal = () => {
     if (global.robot === null) {
       return;
     }
+    global.loginApproach.url = null;
+    global.loginApproach.qrcode = null;
+    global.loginApproach.timestamp = null;
     await global.robot.stop();
     global.robot = null;
   };
