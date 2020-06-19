@@ -43,7 +43,7 @@ const validate = (new Ajv()).compile({
         expirationSecond: {
           $id: '#/properties/cache/properties/expirationSecond',
           type: 'integer',
-          maximum: 1800,
+          maximum: 3600,
           minimun: 60,
         },
       },
