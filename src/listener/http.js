@@ -25,6 +25,8 @@ app.post('/rpc/exit', bodyParser.text({ type: '*/*' }), (req, res) => {
   // response
   res.status(202);
   res.send();
+  // exit
+  process.exit(0);
 });
 
 // POST => /rpc/forward
@@ -38,7 +40,7 @@ app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
   delete data.payload.token;
   wechat.forward(data.payload);
   // response
-  res.status(204);
+  res.status(202);
   res.send();
 });
 
@@ -53,7 +55,7 @@ app.post('/rpc/forward/await', bodyParser.text({ type: '*/*' }), async (req, res
   delete data.payload.token;
   await wechat.forward(data.payload);
   // response
-  res.status(202);
+  res.status(204);
   res.send();
 });
 
@@ -135,7 +137,7 @@ app.post('/rpc/reply/await', bodyParser.text({ type: '*/*' }), async (req, res) 
   delete data.payload.token;
   await wechat.reply(data.payload);
   // response
-  res.status(202);
+  res.status(204);
   res.send();
 });
 

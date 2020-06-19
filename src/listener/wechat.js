@@ -149,7 +149,6 @@ const ready = () => {
 /*
 const roomInvite = (roomInvitation) => {
   // (roomInvitation: RoomInvitation)
-  //
   // TODO: bug - event connot be emitted.
 };
 
@@ -162,8 +161,7 @@ const roomLeave = (room, leaverList) => {
 };
 
 const roomTopic = (room, newTopic, oldTopic, changer, date) => {
-  // (room: Room, newTopic: string, oldTopic: string,
-  // changer: Contact, date?: Date)
+  // (room: Room, newTopic: string, oldTopic: string, changer: Contact, date?: Date)
 };
 */
 

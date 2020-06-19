@@ -54,8 +54,13 @@ const forward = async (payload) => {
       await logError('friend not found', 'wechat-worker.requestor.wechat.forward', payload);
       return;
     }
-    // forward
-    await context.message.forward(recipient);
+    try {
+      // forward
+      await context.message.forward(recipient);
+    } catch (error) {
+      await logError(error.message, 'wechat-worker.requestor.wechat.forward', payload);
+      return;
+    }
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -79,8 +84,13 @@ const forward = async (payload) => {
       await logError('group not found', 'wechat-worker.requestor.wechat.forward', payload);
       return;
     }
-    // forward
-    await context.message.forward(recipient);
+    try {
+      // forward
+      await context.message.forward(recipient);
+    } catch (error) {
+      await logError(error.message, 'wechat-worker.requestor.wechat.forward', payload);
+      return;
+    }
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -113,8 +123,13 @@ const reply = async (payload) => {
   if (context.group) {
     // from one in group
     //
-    // reply
-    context.group.say(payload.message, context.one);
+    try {
+      // reply
+      context.group.say(payload.message, context.one);
+    } catch (error) {
+      await logError(error.message, 'wechat-worker.requestor.wechat.reply', payload);
+      return;
+    }
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -132,8 +147,13 @@ const reply = async (payload) => {
   } else {
     // from friend
     //
-    // reply
-    context.one.say(payload.message);
+    try {
+      // reply
+      context.one.say(payload.message);
+    } catch (error) {
+      await logError(error.message, 'wechat-worker.requestor.wechat.reply', payload);
+      return;
+    }
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -168,8 +188,13 @@ const send = async (payload) => {
       await logError('friend not found', 'wechat-worker.requestor.wechat.send', payload);
       return;
     }
-    // send
-    await recipient.say(payload.message);
+    try {
+      // send
+      await recipient.say(payload.message);
+    } catch (error) {
+      await logError(error.message, 'wechat-worker.requestor.wechat.send', payload);
+      return;
+    }
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -191,8 +216,13 @@ const send = async (payload) => {
       await logError('group not found', 'wechat-worker.requestor.wechat.send', payload);
       return;
     }
-    // send
-    await recipient.say(payload.message);
+    try {
+      // send
+      await recipient.say(payload.message);
+    } catch (error) {
+      await logError(error.message, 'wechat-worker.requestor.wechat.send', payload);
+      return;
+    }
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
