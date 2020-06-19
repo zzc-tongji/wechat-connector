@@ -1,4 +1,4 @@
-import { ScanStatus } from 'wechaty';
+import { Message, ScanStatus } from 'wechaty';
 
 import { global } from '../utils/global';
 import * as cache from '../utils/cache';
@@ -88,39 +88,49 @@ const logout = (user, reason) => {
 };
 
 const message = async (m) => {
-  // TODO: split log and cache, update log
-  //
   // (m: Message)
   if (m.self()) {
     // ingore sent message
     return;
   }
-  // content
-  const content = { message: m };
   const one = m.from();
   const group = m.room();
-  if (group) {
-    // from group => { message, one, group }
-    content.one = one;
-    content.group = group;
-    // shorten (too long for log)
-    delete content.group.payload.memberIdList;
-  } else {
-    // from friend => { message, friend }
-    content.friend = one;
-  }
-  // log
-  const payload = {
-    instance: global.setting.wechaty.name,
-    id: await global.requestor.getId(),
-    level: 'info',
-    type: 'wechat-worker.listener.wechat.message',
-    content,
-    timestamp: Date.now(),
-  };
-  await global.requestor.log(payload);
-  // cache
-  cache.set(payload.id, payload);
+  // id
+  global.requestor.getId().then((id) => {
+    const promiseList = [
+      one.alias(), // [0]
+    ];
+    if (group) {
+      promiseList.push(group.alias(one)); // [1]
+      promiseList.push(group.topic()); // [2]
+    }
+    Promise.all(promiseList).then((resultList) => {
+      // log
+      global.requestor.log({
+        instance: global.setting.wechaty.name,
+        id,
+        level: 'info',
+        type: 'wechat-worker.listener.wechat.message',
+        timestamp: Date.now(),
+        content: {
+          messageId: m.id, // string
+          messageType: Message.Type[m.type()], // string
+          messageText: m.type() === Message.Type.Text ? m.text() : '', // string
+          messageTimestamp: m.date().valueOf(), // number as long
+          messageAgeMillisecond: m.age() * 1000, // number as long
+          oneId: one.id, // string
+          oneName: one.name(), // string
+          oneAlias: resultList[0] ? resultList[0] : '', // string
+          oneAliasInGroup: resultList[1] ? resultList[1] : '', // string
+          oneIsFriend: one.friend() ? true : false, // boolean
+          groupId: group ? group.id : '', // string
+          groupName: group ? resultList[2] : '', // string
+        },
+      });
+    });
+    // cache
+    cache.set(id, { message: m, one, group });
+  });
 };
 
 const ready = () => {

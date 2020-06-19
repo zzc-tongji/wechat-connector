@@ -55,7 +55,7 @@ const forward = async (payload) => {
       return;
     }
     // forward
-    await context.content.message.forward(recipient);
+    await context.message.forward(recipient);
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -64,9 +64,9 @@ const forward = async (payload) => {
       type: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
       content: {
-        messageId: context.content.message.id, // string
-        messageType: Message.Type[context.content.message.type()], // string
-        messageText: context.content.message.type() === Message.Type.Text ? context.content.message.text() : '', // string
+        messageId: context.message.id, // string
+        messageType: Message.Type[context.message.type()], // string
+        messageText: context.message.type() === Message.Type.Text ? context.message.text() : '', // string
         receiverId: recipient.id, // string
         receiverType: 'friend', // string
         receiverName: recipient.name(), // string
@@ -80,7 +80,7 @@ const forward = async (payload) => {
       return;
     }
     // forward
-    await context.content.message.forward(recipient);
+    await context.message.forward(recipient);
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -89,12 +89,12 @@ const forward = async (payload) => {
       type: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
       content: {
-        messageId: context.content.message.id, // string
-        messageType: Message.Type[context.content.message.type()], // string
-        messageText: context.content.message.type() === Message.Type.Text ? context.content.message.text() : '', // string
+        messageId: context.message.id, // string
+        messageType: Message.Type[context.message.type()], // string
+        messageText: context.message.type() === Message.Type.Text ? context.message.text() : '', // string
         receiverId: recipient.id, // string
         receiverType: 'group', // string
-        receiverName: recipient.topic(), // string
+        receiverName: await recipient.topic(), // string
       },
     });
   }
@@ -110,11 +110,11 @@ const reply = async (payload) => {
     await logError('message expired', 'wechat-worker.requestor.wechat.reply', payload);
     return;
   }
-  if (context.content.group) {
+  if (context.group) {
     // from one in group
     //
     // reply
-    context.content.group.say(payload.message, context.content.one);
+    context.group.say(payload.message, context.one);
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -124,16 +124,16 @@ const reply = async (payload) => {
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string
-        receiverId: context.content.group.id, // string
+        receiverId: context.group.id, // string
         receiverType: 'group', // string
-        receiverName: context.content.group.topic(), // string
+        receiverName: await context.group.topic(), // string
       },
     });
   } else {
     // from friend
     //
     // reply
-    context.content.one.say(payload.message);
+    context.one.say(payload.message);
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -143,9 +143,9 @@ const reply = async (payload) => {
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string
-        receiverId: context.content.one.id, // string
+        receiverId: context.one.id, // string
         receiverType: 'friend', // string
-        receiverName: context.content.one.name(), // string
+        receiverName: context.one.name(), // string
       },
     });
   }
@@ -204,7 +204,7 @@ const send = async (payload) => {
         messageText: payload.message, // string
         receiverId: recipient.id, // string
         receiverType: 'group', // string
-        receiverName: recipient.topic(), // string
+        receiverName: await recipient.topic(), // string
       },
     });
   }
