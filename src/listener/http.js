@@ -54,16 +54,16 @@ app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => 
   res.send(JSON.stringify({ loginApproach: global.loginApproach }));
 });
 
-// POST /rpc/logonoff
-app.post('/rpc/logonoff', bodyParser.text({ type: '*/*' }), (req, res) => {
+// POST /rpc/status
+app.post('/rpc/status', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.logoff', tokenValidate, req, res);
+  const data = errorhandler('.listener.http.status', tokenValidate, req, res);
   if (data.status !== 200) {
     return;
   }
   // response
   res.set('Content-Type', 'application/json; charset=UTF-8');
-  res.send(JSON.stringify({ logonoff: global.robot ? global.robot.logonoff() : false }));
+  res.send(JSON.stringify({ status: global.robot ? (global.robot.logonoff() ? 'logged-in' : 'logged-out') : 'stopped' }));
 });
 
 // POST => /rpc/logout
