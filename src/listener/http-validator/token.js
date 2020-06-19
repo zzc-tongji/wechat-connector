@@ -17,35 +17,4 @@ const validate = (new Ajv()).compile({
   },
 });
 
-const test = (json, token) => {
-  let payload;
-  try {
-    payload = JSON.parse(json);
-    if (!validate(payload)) {
-      throw {
-        status: 400,
-        payload: JSON.stringify(validate.errors),
-      };
-    }
-    if (token && payload.token !== token) {
-      throw {
-        status: 403,
-        payload: 'invalid token',
-      };
-    }
-  } catch (error) {
-    if (!error.status) {
-      return {
-        status: 400,
-        payload: error.toString(),
-      };
-    }
-    return error;
-  }
-  return {
-    status: 204,
-    payload,
-  };
-};
-
-export { test };
+export { validate };

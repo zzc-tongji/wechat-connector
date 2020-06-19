@@ -3,14 +3,66 @@ import express from 'express';
 import { log as wechatyLog } from 'wechaty';
 
 import { mock } from './http-mock';
-import { test as forwardTest } from './http-validator/forward';
-import { test as replyTest } from './http-validator/reply';
-import { test as sendTest } from './http-validator/send';
-import { test as tokenTest } from './http-validator/token';
+import { validate as forwardValidate } from './http-validator/forward';
+import { validate as replyValidate } from './http-validator/reply';
+import { validate as sendValidate } from './http-validator/send';
+import { validate as tokenValidate } from './http-validator/token';
 import * as wechat from '../requestor/wechat';
 import { global } from '../utils/global';
 
 const app = express();
+
+const test = (validate, json) => {
+  let payload;
+  try {
+    payload = JSON.parse(json);
+    if (!validate(payload)) {
+      throw {
+        status: 400,
+        payload: {
+          reason: JSON.stringify(validate.errors),
+        },
+      };
+    }
+    if (payload.token !== global.setting.http.receiver.token) {
+      throw {
+        status: 403,
+        payload: {
+          reason: 'invalid token',
+        },
+      };
+    }
+  } catch (error) {
+    if (!error.status) {
+      // 'SyntaxError: JSON.parse: ...'
+      return {
+        status: 400,
+        payload: {
+          reason: error.toString(),
+        },
+      };
+    }
+    return error;
+  }
+  return {
+    status: 200,
+    payload,
+  };
+};
+
+const errorhandler = (type, validate, req, res) => {
+  const data = test(validate, req.body);
+  if (data.status !== 200) {
+    res.status(data.status);
+    res.set('Content-Type', 'application/json; charset=UTF-8');
+    res.send(data.payload);
+    // log
+    // eslint-disable-next-line max-len
+    wechatyLog.error(`${global.setting.wechaty.name}${type}`, data.payload);
+    console.log();
+  }
+  return data;
+};
 
 // mock
 mock(app);
@@ -18,42 +70,21 @@ mock(app);
 // POST /rpc/exit
 app.post('/rpc/exit', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
-  const data = tokenTest(req.body, global.setting.http.receiver.token);
-  if (data.status >= 300) {
-    res.status(data.status);
-    res.send();
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.exit`, data.payload);
-    console.log();
+  const data = errorhandler('.listener.http.exit', tokenValidate, req, res);
+  if (data.status !== 200) {
     return;
   }
   // response
   res.status(202);
   res.send();
-  // log
-  global.requestor.getId().then((id) => {
-    global.requestor.log({
-      id,
-      level: 'info',
-      type: `${global.setting.wechaty.name}.listener.http.exit`,
-      content: null,
-      timestamp: Date.now(),
-    }).then(() => {
-      process.exit(0);
-    });
-  });
 });
 
 // POST => /rpc/forward
 app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
-  const data = forwardTest(req.body, global.setting.http.receiver.token);
-  if (data.status >= 300) {
-    res.status(data.status);
-    res.send();
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.forward`, data.payload);
-    console.log();
+  // eslint-disable-next-line max-len
+  const data = errorhandler('.listener.http.forward', forwardValidate, req, res);
+  if (data.status !== 200) {
     return;
   }
   // forward
@@ -62,87 +93,42 @@ app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
   // response
   res.status(204);
   res.send();
-  // log
-  global.requestor.getId().then((id) => {
-    global.requestor.log({
-      id,
-      level: 'info',
-      type: `${global.setting.wechaty.name}.listener.http.forward`,
-      content: null,
-      timestamp: Date.now(),
-    });
-  });
 });
 
 // POST => /rpc/login-approach
 // eslint-disable-next-line max-len
 app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
-  const data = tokenTest(req.body, global.setting.http.receiver.token);
-  if (data.status >= 300) {
-    res.status(data.status);
-    res.send();
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.login-approach`, data.payload);
-    console.log();
+  // eslint-disable-next-line max-len
+  const data = errorhandler('.listener.http.login-approach', tokenValidate, req, res);
+  if (data.status !== 200) {
     return;
   }
   // response
   res.set('Content-Type', 'application/json; charset=UTF-8');
   res.send(JSON.stringify({ loginApproach: global.loginApproach }));
-  // log
-  global.requestor.getId().then((id) => {
-    global.requestor.log({
-      id,
-      level: 'info',
-      type: `${global.setting.wechaty.name}.listener.http.login-approach`,
-      content: null,
-      timestamp: Date.now(),
-    });
-  });
 });
 
 // POST /rpc/logonoff
 // eslint-disable-next-line max-len
 app.post('/rpc/logonoff', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
-  const data = tokenTest(req.body, global.setting.http.receiver.token);
-  if (data.status >= 300) {
-    res.status(data.status);
-    res.send();
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.logonoff`, data.payload);
-    console.log();
+  const data = errorhandler('.listener.http.logoff', tokenValidate, req, res);
+  if (data.status !== 200) {
     return;
   }
-  // logonoff
-  const logonoff = global.robot ? global.robot.logonoff() : false;
   // response
   res.set('Content-Type', 'application/json; charset=UTF-8');
-  res.send(JSON.stringify({ logonoff }));
-  // log
-  global.requestor.getId().then((id) => {
-    global.requestor.log({
-      id,
-      level: 'info',
-      type: `${global.setting.wechaty.name}.listener.http.logonoff`,
-      content: null,
-      timestamp: Date.now(),
-    });
-  });
+  // eslint-disable-next-line max-len
+  res.send(JSON.stringify({ logonoff: global.robot ? global.robot.logonoff() : false }));
 });
 
 // POST => /rpc/logout
 // eslint-disable-next-line max-len
 app.post('/rpc/logout', bodyParser.text({ type: '*/*' }), async (req, res) => {
   // request
-  const data = tokenTest(req.body, global.setting.http.receiver.token);
-  if (data.status >= 300) {
-    res.status(data.status);
-    res.send();
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.logout`, data.payload);
-    console.log();
+  const data = errorhandler('.listener.http.logout', tokenValidate, req, res);
+  if (data.status !== 200) {
     return;
   }
   // logout
@@ -150,28 +136,13 @@ app.post('/rpc/logout', bodyParser.text({ type: '*/*' }), async (req, res) => {
   // response
   res.status(204);
   res.send();
-  // log
-  global.requestor.getId().then((id) => {
-    global.requestor.log({
-      id,
-      level: 'info',
-      type: `${global.setting.wechaty.name}.listener.http.logout`,
-      content: null,
-      timestamp: Date.now(),
-    });
-  });
 });
 
 // POST => /rpc/reply
 app.post('/rpc/reply', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
-  const data = replyTest(req.body, global.setting.http.receiver.token);
-  if (data.status >= 300) {
-    res.status(data.status);
-    res.send();
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.reply`, data.payload);
-    console.log();
+  const data = errorhandler('.listener.http.reply', replyValidate, req, res);
+  if (data.status !== 200) {
     return;
   }
   // reply
@@ -180,28 +151,13 @@ app.post('/rpc/reply', bodyParser.text({ type: '*/*' }), (req, res) => {
   // response
   res.status(204);
   res.send();
-  // log
-  global.requestor.getId().then((id) => {
-    global.requestor.log({
-      id,
-      level: 'info',
-      type: `${global.setting.wechaty.name}.listener.http.reply`,
-      content: null,
-      timestamp: Date.now(),
-    });
-  });
 });
 
 // POST => /rpc/send
 app.post('/rpc/send', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
-  const data = sendTest(req.body, global.setting.http.receiver.token);
-  if (data.status >= 300) {
-    res.status(data.status);
-    res.send();
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.send`, data.payload);
-    console.log();
+  const data = errorhandler('.listener.http.send', sendValidate, req, res);
+  if (data.status !== 200) {
     return;
   }
   // send
@@ -210,29 +166,14 @@ app.post('/rpc/send', bodyParser.text({ type: '*/*' }), (req, res) => {
   // response
   res.status(204);
   res.send();
-  // log
-  global.requestor.getId().then((id) => {
-    global.requestor.log({
-      id,
-      level: 'info',
-      type: `${global.setting.wechaty.name}.listener.http.send`,
-      content: null,
-      timestamp: Date.now(),
-    });
-  });
 });
 
 // POST => /rpc/start
 // eslint-disable-next-line max-len
 app.post('/rpc/start', bodyParser.text({ type: '*/*' }), async (req, res) => {
   // request
-  const data = tokenTest(req.body, global.setting.http.receiver.token);
-  if (data.status >= 300) {
-    res.status(data.status);
-    res.send();
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.start`, data.payload);
-    console.log();
+  const data = errorhandler('.listener.http.start', tokenValidate, req, res);
+  if (data.status !== 200) {
     return;
   }
   // start
@@ -240,29 +181,14 @@ app.post('/rpc/start', bodyParser.text({ type: '*/*' }), async (req, res) => {
   // response
   res.status(204);
   res.send();
-  // log
-  global.requestor.getId().then((id) => {
-    global.requestor.log({
-      id,
-      level: 'info',
-      type: `${global.setting.wechaty.name}.listener.http.start`,
-      content: null,
-      timestamp: Date.now(),
-    });
-  });
 });
 
 // POST => /rpc/stop
 // eslint-disable-next-line max-len
 app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
   // request
-  const data = tokenTest(req.body, global.setting.http.receiver.token);
-  if (data.status >= 300) {
-    res.status(data.status);
-    res.send();
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}.listener.http.stop`, data.payload);
-    console.log();
+  const data = errorhandler('.listener.http.stop', tokenValidate, req, res);
+  if (data.status !== 200) {
     return;
   }
   // stop
@@ -270,16 +196,6 @@ app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
   // response
   res.status(204);
   res.send();
-  // log
-  global.requestor.getId().then((id) => {
-    global.requestor.log({
-      id,
-      level: 'info',
-      type: `${global.setting.wechaty.name}.listener.http.stop`,
-      content: null,
-      timestamp: Date.now(),
-    });
-  });
 });
 
 const listen = () => {
@@ -290,8 +206,10 @@ const listen = () => {
         id,
         level: 'info',
         type: `${global.setting.wechaty.name}.listener.http.listen`,
-        content: { port: global.setting.http.receiver.port },
         timestamp: Date.now(),
+        content: {
+          port: global.setting.http.receiver.port, // number as integer
+        },
       });
     });
   });
