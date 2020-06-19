@@ -81,7 +81,6 @@ app.post('/rpc/exit', bodyParser.text({ type: '*/*' }), (req, res) => {
 // POST => /rpc/forward
 app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
-  // eslint-disable-next-line max-len
   const data = errorhandler('.listener.http.forward', forwardValidate, req, res);
   if (data.status !== 200) {
     return;
@@ -95,10 +94,8 @@ app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
 });
 
 // POST => /rpc/login-approach
-// eslint-disable-next-line max-len
 app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
-  // eslint-disable-next-line max-len
   const data = errorhandler('.listener.http.login-approach', tokenValidate, req, res);
   if (data.status !== 200) {
     return;
@@ -109,7 +106,6 @@ app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => 
 });
 
 // POST /rpc/logonoff
-// eslint-disable-next-line max-len
 app.post('/rpc/logonoff', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.logoff', tokenValidate, req, res);
@@ -118,12 +114,10 @@ app.post('/rpc/logonoff', bodyParser.text({ type: '*/*' }), (req, res) => {
   }
   // response
   res.set('Content-Type', 'application/json; charset=UTF-8');
-  // eslint-disable-next-line max-len
   res.send(JSON.stringify({ logonoff: global.robot ? global.robot.logonoff() : false }));
 });
 
 // POST => /rpc/logout
-// eslint-disable-next-line max-len
 app.post('/rpc/logout', bodyParser.text({ type: '*/*' }), async (req, res) => {
   // request
   const data = errorhandler('.listener.http.logout', tokenValidate, req, res);
@@ -168,7 +162,6 @@ app.post('/rpc/send', bodyParser.text({ type: '*/*' }), (req, res) => {
 });
 
 // POST => /rpc/start
-// eslint-disable-next-line max-len
 app.post('/rpc/start', bodyParser.text({ type: '*/*' }), async (req, res) => {
   // request
   const data = errorhandler('.listener.http.start', tokenValidate, req, res);
@@ -183,7 +176,6 @@ app.post('/rpc/start', bodyParser.text({ type: '*/*' }), async (req, res) => {
 });
 
 // POST => /rpc/stop
-// eslint-disable-next-line max-len
 app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
   // request
   const data = errorhandler('.listener.http.stop', tokenValidate, req, res);

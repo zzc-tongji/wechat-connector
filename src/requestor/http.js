@@ -10,7 +10,6 @@ let idUrl;
 let logUrl;
 
 const init = () => {
-  // eslint-disable-next-line max-len
   headerPost = new Headers({ 'Content-Type': 'application/json; charset=UTF-8' });
   const baseUrl = global.setting.http.sender.url.replace(/\/+$/, '');
   idUrl = baseUrl + '/id';
@@ -23,7 +22,6 @@ const log = (content) => {
   return new Promise((resolve) => {
     const contentCopy = JSON.parse(JSON.stringify(content));
     contentCopy.token = global.setting.http.sender.token;
-    // eslint-disable-next-line max-len
     fetch(logUrl, { method: 'POST', headerPost, body: JSON.stringify(contentCopy) }).then((response) => {
       if (!response.ok) {
         throw `fetch ${logUrl} => ${response.status}`;
@@ -31,7 +29,6 @@ const log = (content) => {
       resolve();
     }).catch((error) => {
       // local log
-      // eslint-disable-next-line max-len
       wechatyLog.warn('local.requestor.http.log', error);
       console.log();
       resolve();
@@ -41,7 +38,6 @@ const log = (content) => {
 
 const getId = () => {
   return new Promise((resolve) => {
-    // eslint-disable-next-line max-len
     fetch(idUrl, { method: 'POST', headerPost, body: bodyToken }).then((response) => {
       if (!response.ok) {
         throw `fetch ${idUrl} => ${response.status}`;
@@ -54,7 +50,6 @@ const getId = () => {
       });
     }).catch((error) => {
       // local log
-      // eslint-disable-next-line max-len
       wechatyLog.warn('local.requestor.http.get-id', error);
       console.log();
       terminalGetId().then((id) => {

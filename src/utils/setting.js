@@ -117,10 +117,8 @@ const validate = (new Ajv()).compile({
 const init = (settingPath = null) => {
   try {
     if (typeof settingPath !== 'string') {
-      // eslint-disable-next-line max-len
       settingPath = `${__dirname}${sep}..${sep}..${sep}runtime${sep}setting.json`;
     }
-    // eslint-disable-next-line max-len
     const settingText = fs.readFileSync(settingPath, { encoding: 'utf-8', flag: 'r' });
     const setting = JSON.parse(settingText);
     if (!validate(setting)) {

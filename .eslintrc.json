@@ -20,6 +20,7 @@
       "error",
       "unix"
     ],
+    "max-len": "off",
     "no-throw-literal": "off",
     "object-curly-spacing": [
       2,
