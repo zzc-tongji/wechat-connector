@@ -210,4 +210,24 @@ const send = async (payload) => {
   }
 };
 
-export { forward, reply, send };
+const sync = async () => {
+  if (!await checkRobot('sync', null)) {
+    return;
+  }
+  const promiseList = [];
+  await Promise.all([
+    global.robot.Contact.findAll().then((resultList) => {
+      resultList.forEach((contact) => {
+        promiseList.push(contact.sync());
+      });
+    }),
+    global.robot.Room.findAll().then((resultList) => {
+      resultList.forEach((room) => {
+        promiseList.push(room.sync());
+      });
+    }),
+  ]);
+  await Promise.all(promiseList);
+};
+
+export { forward, reply, send, sync };

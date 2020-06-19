@@ -138,6 +138,20 @@ app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
   res.send();
 });
 
+// POST => /rpc/sync
+app.post('/rpc/sync', bodyParser.text({ type: '*/*' }), async (req, res) => {
+  // request
+  const data = errorhandler('.listener.http.sync', tokenValidate, req, res);
+  if (data.status !== 200) {
+    return;
+  }
+  // sync
+  await wechat.sync();
+  // response
+  res.status(204);
+  res.send();
+});
+
 const listen = () => {
   app.listen(global.setting.http.receiver.port, () => {
     // log
