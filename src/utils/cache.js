@@ -31,7 +31,6 @@ const removeExpired = () => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.cache.remove-expired`,
-      content: null,
       timestamp: Date.now(),
     });
   });
@@ -44,7 +43,7 @@ const get = (key) => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.cache.get`,
-      content: { key, value },
+      content: { key, success: value ? true : false },
       timestamp: Date.now(),
     });
   });
@@ -61,7 +60,7 @@ const set = (key, value) => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.cache.set`,
-      content: { key, value },
+      content: { key },
       timestamp: Date.now(),
     });
   });
