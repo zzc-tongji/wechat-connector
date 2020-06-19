@@ -1,8 +1,11 @@
+import { ScanStatus } from 'wechaty';
+
 const global = {
   loginApproach: {
-    url: null,
-    qrcode: null,
-    timestamp: null,
+    status: ScanStatus[ScanStatus.Unknown],
+    url: '',
+    qrcode: '',
+    timestamp: 0,
   },
   requestor: {
     getId: null, // async function

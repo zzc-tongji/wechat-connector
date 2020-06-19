@@ -32,6 +32,7 @@ const removeExpired = () => {
       level: 'info',
       type: `${global.setting.wechaty.name}.cache.remove-expired`,
       timestamp: Date.now(),
+      // content: null,
     });
   });
 };
@@ -43,8 +44,11 @@ const get = (key) => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.cache.get`,
-      content: { key, success: value ? true : false },
       timestamp: Date.now(),
+      content: {
+        key, // number as long
+        success: value ? true : false, // boolean
+      },
     });
   });
   return value;
@@ -60,8 +64,10 @@ const set = (key, value) => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.cache.set`,
-      content: { key },
       timestamp: Date.now(),
+      content: {
+        key, // number as long
+      },
     });
   });
 };

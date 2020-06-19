@@ -3,15 +3,15 @@ import { ScanStatus } from 'wechaty';
 import { global } from '../utils/global';
 import * as cache from '../utils/cache';
 
-const dong = (data) => {
+const dong = (/* data */) => {
   // (data?: string)
   global.requestor.getId().then((id) => {
     global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.wechat.dong`,
-      content: { data },
       timestamp: Date.now(),
+      // content: null,
     });
   });
 };
@@ -23,26 +23,30 @@ const error = (error) => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.wechat.error`,
-      content: { error },
       timestamp: Date.now(),
+      content: {
+        name: error.name, // string
+        message: error.message, // string
+      },
     });
   });
 };
 
-// eslint-disable-next-line no-unused-vars
+/*
 const friendship = (friendship) => {
   // (friendship: Friendship)
 };
+*/
 
-const heatbeat = (data) => {
+const heatbeat = (/* data */) => {
   // (data: any)
   global.requestor.getId().then((id) => {
     global.requestor.log({
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.wechat.heatbeat`,
-      content: { data },
       timestamp: Date.now(),
+      // content: null,
     });
   });
 };
@@ -54,8 +58,10 @@ const login = (user) => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.wechat.login`,
-      content: { user },
       timestamp: Date.now(),
+      content: {
+        name: user.name(), // string
+      },
     });
   });
 };
@@ -67,13 +73,18 @@ const logout = (user, reason) => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.wechat.logout`,
-      content: { user, reason },
       timestamp: Date.now(),
+      content: {
+        name: user.name(), // string
+        reason, // string
+      },
     });
   });
 };
 
 const message = async (m) => {
+  // TODO: split log and cache, update log
+  //
   // (m: Message)
   if (m.self()) {
     // ingore sent message
@@ -112,37 +123,36 @@ const ready = () => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.wechat.ready`,
-      content: null,
       timestamp: Date.now(),
+      // content: null,
     });
   });
 };
 
-// eslint-disable-next-line no-unused-vars
+/*
 const roomInvite = (roomInvitation) => {
   // (roomInvitation: RoomInvitation)
   //
   // TODO: bug - event connot be emitted.
 };
 
-// eslint-disable-next-line no-unused-vars
 const roomJoin = (room, inviteeList, inviter, date) => {
   // (room: Room, inviteeList: Contact[], inviter: Contact, date?: Date)
 };
 
-// eslint-disable-next-line no-unused-vars
 const roomLeave = (room, leaverList) => {
   // (room: Room, leaverList: Contact[],  remover?: Contact, date?: Date)
 };
 
-// eslint-disable-next-line no-unused-vars
 const roomTopic = (room, newTopic, oldTopic, changer, date) => {
-  // eslint-disable-next-line max-len
-  // (room: Room, newTopic: string, oldTopic: string, changer: Contact, date?: Date)
+  // (room: Room, newTopic: string, oldTopic: string,
+  // changer: Contact, date?: Date)
 };
+*/
 
 const scan = (qrcode, status) => {
   // (qrcode: string, status: ScanStatus, data?: string)
+  global.loginApproach.status = ScanStatus[status];
   global.loginApproach.url = qrcode;
   global.loginApproach.qrcode = [
     'https://api.qrserver.com/v1/create-qr-code/?data=',
@@ -155,9 +165,13 @@ const scan = (qrcode, status) => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.wechat.scan`,
-      content: { qrcode, status: ScanStatus[status] },
-      data: global.loginApproach,
       timestamp: Date.now(),
+      content: {
+        status: global.loginApproach.status, // string
+        url: global.loginApproach.url, // string
+        qrcode: global.loginApproach.qrcode, // string
+        timestamp: global.loginApproach.timestamp, // number as long
+      },
     });
   });
 };
@@ -168,8 +182,8 @@ const start = () => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.wechat.start`,
-      content: null,
       timestamp: Date.now(),
+      // content: null,
     });
   });
 };
@@ -180,8 +194,8 @@ const stop = () => {
       id,
       level: 'info',
       type: `${global.setting.wechaty.name}.listener.wechat.stop`,
-      content: null,
       timestamp: Date.now(),
+      // content: null,
     });
   });
 };
