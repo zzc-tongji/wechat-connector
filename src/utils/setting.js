@@ -137,7 +137,8 @@ const init = (settingPath = null) => {
     }
     global.setting = setting;
   } catch (error) {
-    wechatyLog.error('wechat-worker.setting', error);
+    // local log
+    wechatyLog.error('local.setting', error);
     console.log();
     process.exit(1);
   }

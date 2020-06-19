@@ -30,8 +30,9 @@ const log = (content) => {
       }
       resolve();
     }).catch((error) => {
+      // local log
       // eslint-disable-next-line max-len
-      wechatyLog.warn('wechat-worker.requestor.http.log', error);
+      wechatyLog.warn('local.requestor.http.log', error);
       console.log();
       resolve();
     });
@@ -52,8 +53,9 @@ const getId = () => {
         resolve(data.id);
       });
     }).catch((error) => {
+      // local log
       // eslint-disable-next-line max-len
-      wechatyLog.warn('wechat-worker.requestor.http.get-id', error);
+      wechatyLog.warn('local.requestor.http.get-id', error);
       console.log();
       terminalGetId().then((id) => {
         resolve(id);

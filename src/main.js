@@ -9,11 +9,13 @@ import { global } from './utils/global';
 import * as setting from './utils/setting';
 
 const install = async () => {
-  wechatyLog.info('wechat-worker.install', 'begin');
+  // local log
+  wechatyLog.info('local.install', 'begin');
   console.log();
   const bot = new Wechaty();
   const exit = () => {
-    wechatyLog.info('wechat-worker.install', 'end');
+    // local log
+    wechatyLog.info('local.install', 'end');
     console.log();
     process.exit(0);
   };

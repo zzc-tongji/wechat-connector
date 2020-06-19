@@ -56,9 +56,8 @@ const errorhandler = (type, validate, req, res) => {
     res.status(data.status);
     res.set('Content-Type', 'application/json; charset=UTF-8');
     res.send(data.payload);
-    // log
-    // eslint-disable-next-line max-len
-    wechatyLog.error(`wechat-worker${type}`, data.payload);
+    // local log
+    wechatyLog.error(`local${type}`, data.payload);
     console.log();
   }
   return data;
