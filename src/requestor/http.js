@@ -31,7 +31,7 @@ const log = (content) => {
       resolve();
     }).catch((error) => {
       // eslint-disable-next-line max-len
-      wechatyLog.warn(`${global.setting.wechaty.name}.requestor.http.log`, error);
+      wechatyLog.warn('wechat-worker.requestor.http.log', error);
       console.log();
       resolve();
     });
@@ -53,7 +53,7 @@ const getId = () => {
       });
     }).catch((error) => {
       // eslint-disable-next-line max-len
-      wechatyLog.warn(`${global.setting.wechaty.name}.requestor.http.get-id`, error);
+      wechatyLog.warn('wechat-worker.requestor.http.get-id', error);
       console.log();
       terminalGetId().then((id) => {
         resolve(id);

@@ -6,9 +6,10 @@ import { Message } from 'wechaty';
 const logError = async (reason, contextType, payload) => {
   // (reason: string, callerType: string, payload: object)
   await global.requestor.log({
+    instance: global.setting.wechaty.name,
     id: await global.requestor.getId(),
     level: 'error',
-    type: `${global.setting.wechaty.name}.requestor.wechat.error`,
+    type: 'wechat-worker.requestor.wechat.error',
     timestamp: Date.now(),
     content: {
       reason, // string
@@ -39,7 +40,7 @@ const forward = async (payload) => {
   const context = cache.get(payload.id);
   if (!context) {
     // eslint-disable-next-line max-len
-    await logError('message expired', `${global.setting.wechaty.name}.requestor.wechat.forward`, payload);
+    await logError('message expired', 'wechat-worker.requestor.wechat.forward', payload);
     return;
   }
   let recipient;
@@ -54,16 +55,17 @@ const forward = async (payload) => {
     }
     if (!recipient) {
       // eslint-disable-next-line max-len
-      await logError('friend not found', `${global.setting.wechaty.name}.requestor.wechat.forward`, payload);
+      await logError('friend not found', 'wechat-worker.requestor.wechat.forward', payload);
       return;
     }
     // forward
     await context.content.message.forward(recipient);
     // log
     await global.requestor.log({
+      instance: global.setting.wechaty.name,
       id: await global.requestor.getId(),
       level: 'info',
-      type: `${global.setting.wechaty.name}.requestor.wechat.forward`,
+      type: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
       content: {
         messageId: context.content.message.id, // string
@@ -80,16 +82,17 @@ const forward = async (payload) => {
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
       // eslint-disable-next-line max-len
-      await logError('group not found', `${global.setting.wechaty.name}.requestor.wechat.forward`, payload);
+      await logError('group not found', 'wechat-worker.requestor.wechat.forward', payload);
       return;
     }
     // forward
     await context.content.message.forward(recipient);
     // log
     await global.requestor.log({
+      instance: global.setting.wechaty.name,
       id: await global.requestor.getId(),
       level: 'info',
-      type: `${global.setting.wechaty.name}.requestor.wechat.forward`,
+      type: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
       content: {
         messageId: context.content.message.id, // string
@@ -112,7 +115,7 @@ const reply = async (payload) => {
   const context = cache.get(payload.id);
   if (!context) {
     // eslint-disable-next-line max-len
-    await logError('message expired', `${global.setting.wechaty.name}.requestor.wechat.reply`, payload);
+    await logError('message expired', 'wechat-worker.requestor.wechat.reply', payload);
     return;
   }
   if (context.content.group) {
@@ -122,9 +125,10 @@ const reply = async (payload) => {
     context.content.group.say(payload.message, context.content.one);
     // log
     await global.requestor.log({
+      instance: global.setting.wechaty.name,
       id: await global.requestor.getId(),
       level: 'info',
-      type: `${global.setting.wechaty.name}.requestor.wechat.reply`,
+      type: 'wechat-worker.requestor.wechat.reply',
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string
@@ -140,9 +144,10 @@ const reply = async (payload) => {
     context.content.one.say(payload.message);
     // log
     await global.requestor.log({
+      instance: global.setting.wechaty.name,
       id: await global.requestor.getId(),
       level: 'info',
-      type: `${global.setting.wechaty.name}.requestor.wechat.reply`,
+      type: 'wechat-worker.requestor.wechat.reply',
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string
@@ -171,16 +176,17 @@ const send = async (payload) => {
     }
     if (!recipient) {
       // eslint-disable-next-line max-len
-      await logError('friend not found', `${global.setting.wechaty.name}.requestor.wechat.send`, payload);
+      await logError('friend not found', 'wechat-worker.requestor.wechat.send', payload);
       return;
     }
     // send
     await recipient.say(payload.message);
     // log
     await global.requestor.log({
+      instance: global.setting.wechaty.name,
       id: await global.requestor.getId(),
       level: 'info',
-      type: `${global.setting.wechaty.name}.requestor.wechat.send`,
+      type: 'wechat-worker.requestor.wechat.send',
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string
@@ -194,16 +200,17 @@ const send = async (payload) => {
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
       // eslint-disable-next-line max-len
-      await logError('group not found', `${global.setting.wechaty.name}.requestor.wechat.send`, payload);
+      await logError('group not found', 'wechat-worker.requestor.wechat.send', payload);
       return;
     }
     // send
     await recipient.say(payload.message);
     // log
     await global.requestor.log({
+      instance: global.setting.wechaty.name,
       id: await global.requestor.getId(),
       level: 'info',
-      type: `${global.setting.wechaty.name}.requestor.wechat.send`,
+      type: 'wechat-worker.requestor.wechat.send',
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string

@@ -58,7 +58,7 @@ const errorhandler = (type, validate, req, res) => {
     res.send(data.payload);
     // log
     // eslint-disable-next-line max-len
-    wechatyLog.error(`${global.setting.wechaty.name}${type}`, data.payload);
+    wechatyLog.error(`wechat-worker${type}`, data.payload);
     console.log();
   }
   return data;
@@ -203,9 +203,10 @@ const listen = () => {
     // log
     global.requestor.getId().then((id) => {
       global.requestor.log({
+        instance: global.setting.wechaty.name,
         id,
         level: 'info',
-        type: `${global.setting.wechaty.name}.listener.http.listen`,
+        type: 'wechat-worker.listener.http.listen',
         timestamp: Date.now(),
         content: {
           port: global.setting.http.receiver.port, // number as integer

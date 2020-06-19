@@ -28,9 +28,10 @@ const removeExpired = () => {
   });
   global.requestor.getId().then((id) => {
     global.requestor.log({
+      instance: global.setting.wechaty.name,
       id,
       level: 'info',
-      type: `${global.setting.wechaty.name}.cache.remove-expired`,
+      type: 'wechat-worker.cache.remove-expired',
       timestamp: Date.now(),
       // content: null,
     });
@@ -41,9 +42,10 @@ const get = (key) => {
   const value = cache.get(key);
   global.requestor.getId().then((id) => {
     global.requestor.log({
+      instance: global.setting.wechaty.name,
       id,
       level: 'info',
-      type: `${global.setting.wechaty.name}.cache.get`,
+      type: 'wechat-worker.cache.get',
       timestamp: Date.now(),
       content: {
         key, // number as long
@@ -61,9 +63,10 @@ const set = (key, value) => {
   cache.set(key, value);
   global.requestor.getId().then((id) => {
     global.requestor.log({
+      instance: global.setting.wechaty.name,
       id,
       level: 'info',
-      type: `${global.setting.wechaty.name}.cache.set`,
+      type: 'wechat-worker.cache.set',
       timestamp: Date.now(),
       content: {
         key, // number as long
