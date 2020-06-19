@@ -1,17 +1,15 @@
 import bodyParser from 'body-parser';
 import { log as wechatyLog } from 'wechaty';
 
-import { global } from '../utils/global';
-import { test as tokenTest } from './http-validator/token';
+import { errorhandler } from './http-error-handler';
+import { validate as tokenValidate } from './http-validator/token';
 
 const mock = (app) => {
   // POST => /rpc/id
   app.post('/rpc/id', bodyParser.text({ type: '*/*' }), (req, res) => {
     // request
-    const data = tokenTest(req.body, global.setting.http.sender.token);
-    if (data.status >= 300) {
-      res.status(data.status);
-      res.send();
+    const data = errorhandler(null, tokenValidate, req, res, true);
+    if (data.status !== 200) {
       return;
     }
     // response
@@ -21,10 +19,8 @@ const mock = (app) => {
   // POST => /rpc/log
   app.post('/rpc/log', bodyParser.text({ type: '*/*' }), (req, res) => {
     // request
-    const data = tokenTest(req.body, global.setting.http.sender.token);
-    if (data.status >= 300) {
-      res.status(data.status);
-      res.send();
+    const data = errorhandler(null, tokenValidate, req, res, true);
+    if (data.status !== 200) {
       return;
     }
     // echo

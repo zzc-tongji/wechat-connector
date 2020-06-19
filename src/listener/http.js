@@ -1,67 +1,16 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import { log as wechatyLog } from 'wechaty';
 
-import { mock } from './http-mock';
-import { validate as forwardValidate } from './http-validator/forward';
-import { validate as replyValidate } from './http-validator/reply';
-import { validate as sendValidate } from './http-validator/send';
-import { validate as tokenValidate } from './http-validator/token';
+import { mock } from './utils/http-mock';
+import { validate as forwardValidate } from './utils/http-validator/forward';
+import { validate as replyValidate } from './utils/http-validator/reply';
+import { validate as sendValidate } from './utils/http-validator/send';
+import { validate as tokenValidate } from './utils/http-validator/token';
+import { errorhandler } from './utils/http-error-handler';
 import * as wechat from '../requestor/wechat';
 import { global } from '../utils/global';
 
 const app = express();
-
-const test = (validate, json) => {
-  let payload;
-  try {
-    payload = JSON.parse(json);
-    if (!validate(payload)) {
-      throw {
-        status: 400,
-        payload: {
-          reason: JSON.stringify(validate.errors),
-        },
-      };
-    }
-    if (payload.token !== global.setting.http.receiver.token) {
-      throw {
-        status: 403,
-        payload: {
-          reason: 'invalid token',
-        },
-      };
-    }
-  } catch (error) {
-    if (!error.status) {
-      // 'SyntaxError: JSON.parse: ...'
-      return {
-        status: 400,
-        payload: {
-          reason: error.toString(),
-        },
-      };
-    }
-    return error;
-  }
-  return {
-    status: 200,
-    payload,
-  };
-};
-
-const errorhandler = (type, validate, req, res) => {
-  const data = test(validate, req.body);
-  if (data.status !== 200) {
-    res.status(data.status);
-    res.set('Content-Type', 'application/json; charset=UTF-8');
-    res.send(data.payload);
-    // local log
-    wechatyLog.error(`local${type}`, data.payload);
-    console.log();
-  }
-  return data;
-};
 
 // mock
 mock(app);
