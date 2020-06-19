@@ -38,6 +38,21 @@ app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
   delete data.payload.token;
   wechat.forward(data.payload);
   // response
+  res.status(204);
+  res.send();
+});
+
+// POST => /rpc/forward/await
+app.post('/rpc/forward/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
+  // request
+  const data = errorhandler('.listener.http.forward.await', forwardValidate, req, res);
+  if (data.status !== 200) {
+    return;
+  }
+  // forward
+  delete data.payload.token;
+  await wechat.forward(data.payload);
+  // response
   res.status(202);
   res.send();
 });
@@ -67,9 +82,23 @@ app.post('/rpc/status', bodyParser.text({ type: '*/*' }), (req, res) => {
 });
 
 // POST => /rpc/logout
-app.post('/rpc/logout', bodyParser.text({ type: '*/*' }), async (req, res) => {
+app.post('/rpc/logout', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.logout', tokenValidate, req, res);
+  if (data.status !== 200) {
+    return;
+  }
+  // logout
+  global.logout();
+  // response
+  res.status(202);
+  res.send();
+});
+
+// POST => /rpc/logout/await
+app.post('/rpc/logout/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
+  // request
+  const data = errorhandler('.listener.http.logout.await', tokenValidate, req, res);
   if (data.status !== 200) {
     return;
   }
@@ -95,6 +124,21 @@ app.post('/rpc/reply', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.send();
 });
 
+// POST => /rpc/reply/await
+app.post('/rpc/reply/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
+  // request
+  const data = errorhandler('.listener.http.reply.await', replyValidate, req, res);
+  if (data.status !== 200) {
+    return;
+  }
+  // reply
+  delete data.payload.token;
+  await wechat.reply(data.payload);
+  // response
+  res.status(202);
+  res.send();
+});
+
 // POST => /rpc/send
 app.post('/rpc/send', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
@@ -110,10 +154,39 @@ app.post('/rpc/send', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.send();
 });
 
+// POST => /rpc/send/await
+app.post('/rpc/send/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
+  // request
+  const data = errorhandler('.listener.http.send.await', sendValidate, req, res);
+  if (data.status !== 200) {
+    return;
+  }
+  // send
+  delete data.payload.token;
+  await wechat.send(data.payload);
+  // response
+  res.status(204);
+  res.send();
+});
+
 // POST => /rpc/start
-app.post('/rpc/start', bodyParser.text({ type: '*/*' }), async (req, res) => {
+app.post('/rpc/start', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.start', tokenValidate, req, res);
+  if (data.status !== 200) {
+    return;
+  }
+  // start
+  global.start();
+  // response
+  res.status(202);
+  res.send();
+});
+
+// POST => /rpc/start/await
+app.post('/rpc/start/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
+  // request
+  const data = errorhandler('.listener.http.start.await', tokenValidate, req, res);
   if (data.status !== 200) {
     return;
   }
@@ -125,9 +198,23 @@ app.post('/rpc/start', bodyParser.text({ type: '*/*' }), async (req, res) => {
 });
 
 // POST => /rpc/stop
-app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
+app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.stop', tokenValidate, req, res);
+  if (data.status !== 200) {
+    return;
+  }
+  // stop
+  global.stop();
+  // response
+  res.status(202);
+  res.send();
+});
+
+// POST => /rpc/stop/await
+app.post('/rpc/stop/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
+  // request
+  const data = errorhandler('.listener.http.stop.await', tokenValidate, req, res);
   if (data.status !== 200) {
     return;
   }
@@ -139,9 +226,23 @@ app.post('/rpc/stop', bodyParser.text({ type: '*/*' }), async (req, res) => {
 });
 
 // POST => /rpc/sync
-app.post('/rpc/sync', bodyParser.text({ type: '*/*' }), async (req, res) => {
+app.post('/rpc/sync', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.sync', tokenValidate, req, res);
+  if (data.status !== 200) {
+    return;
+  }
+  // sync
+  wechat.sync();
+  // response
+  res.status(202);
+  res.send();
+});
+
+// POST => /rpc/sync/await
+app.post('/rpc/sync/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
+  // request
+  const data = errorhandler('.listener.http.sync.await', tokenValidate, req, res);
   if (data.status !== 200) {
     return;
   }
