@@ -92,20 +92,59 @@ const validate = (new Ajv()).compile({
           $id: '#/properties/http/properties/sender',
           type: 'object',
           required: [
-            'url',
-            'token',
+            'log',
+            'id',
           ],
           additionalProperties: false,
           properties: {
-            url: {
-              $id: '#/properties/http/properties/sender/properties/url',
-              type: 'string',
+            log: {
+              $id: '#/properties/http/properties/sender/properties/log',
+              type: 'object',
+              required: [
+                'serverList',
+              ],
+              additionalProperties: false,
+              properties: {
+                serverList: {
+                  $id: '#/properties/http/properties/sender/properties/log/properties/serverList',
+                  type: 'array',
+                  additionalItems: false,
+                  items: {
+                    $ref: '#/properties/http/properties/sender/properties/id/properties/server',
+                  },
+                },
+              },
             },
-            token: {
-              $id: '#/properties/http/properties/sender/properties/token',
-              type: 'string',
-              maxlength: 64,
-              minLength: 1,
+            id: {
+              $id: '#/properties/http/properties/sender/properties/id',
+              type: 'object',
+              required: [
+                'server',
+              ],
+              additionalProperties: false,
+              properties: {
+                server: {
+                  $id: '#/properties/http/properties/sender/properties/id/properties/server',
+                  type: 'object',
+                  required: [
+                    'url',
+                    'token',
+                  ],
+                  additionalProperties: false,
+                  properties: {
+                    url: {
+                      $id: '#/properties/http/properties/sender/properties/id/properties/server/properties/url',
+                      type: 'string',
+                      minLength: 1,
+                    },
+                    token: {
+                      $id: '#/properties/http/properties/sender/properties/id/properties/server/properties/token',
+                      type: 'string',
+                      minLength: 1,
+                    },
+                  },
+                },
+              },
             },
           },
         },

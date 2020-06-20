@@ -12,8 +12,20 @@
       "token": "wechaty-receiver-token"
     },
     "sender": {
-      "url": "http://localhost:8080/rpc/",
-      "token": "wechaty-sender-token"
+      "log": {
+        "serverList": [
+          {
+            "url": "http://localhost:8080/rpc/log",
+            "token": "wechaty-sender-log-0"
+          }
+        ]
+      },
+      "id": {
+        "server": {
+          "url": "http://localhost:8080/rpc/id",
+          "token": "wechaty-sender-id"
+        }
+      }
     }
   }
 }

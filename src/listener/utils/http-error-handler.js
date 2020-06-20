@@ -3,7 +3,6 @@ import { log as wechatyLog } from 'wechaty';
 import { global } from '../../utils/global';
 
 const test = (validate, json, mock = false) => {
-  const t = mock ? global.setting.http.sender.token : global.setting.http.receiver.token;
   let payload;
   try {
     payload = JSON.parse(json);
@@ -15,7 +14,7 @@ const test = (validate, json, mock = false) => {
         },
       };
     }
-    if (payload.token !== t) {
+    if (!mock && payload.token !== global.setting.http.receiver.token) {
       throw {
         status: 403,
         payload: {
@@ -47,11 +46,9 @@ const errorhandler = (type, validate, req, res, mock = false) => {
     res.status(data.status);
     res.set('Content-Type', 'application/json; charset=UTF-8');
     res.send(data.payload);
-    if (!mock) {
-      // local log
-      wechatyLog.error(`local${type}`, data.payload);
-      console.log();
-    }
+    // local log
+    wechatyLog.error(`local${type}`, JSON.stringify(data.payload));
+    console.log();
   }
   return data;
 };
