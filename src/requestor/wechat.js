@@ -7,7 +7,7 @@ const logError = async (reason, contextType, payload) => {
   // (reason: string, callerType: string, payload: object)
   await global.requestor.log({
     instance: global.setting.wechaty.name,
-    id: await global.requestor.getId(),
+    id: await global.requestor.id(),
     level: 'error',
     type: 'wechat-worker.requestor.wechat.error',
     timestamp: Date.now(),
@@ -64,7 +64,7 @@ const forward = async (payload) => {
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
-      id: await global.requestor.getId(),
+      id: await global.requestor.id(),
       level: 'info',
       type: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
@@ -94,7 +94,7 @@ const forward = async (payload) => {
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
-      id: await global.requestor.getId(),
+      id: await global.requestor.id(),
       level: 'info',
       type: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
@@ -133,7 +133,7 @@ const reply = async (payload) => {
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
-      id: await global.requestor.getId(),
+      id: await global.requestor.id(),
       level: 'info',
       type: 'wechat-worker.requestor.wechat.reply',
       timestamp: Date.now(),
@@ -157,7 +157,7 @@ const reply = async (payload) => {
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
-      id: await global.requestor.getId(),
+      id: await global.requestor.id(),
       level: 'info',
       type: 'wechat-worker.requestor.wechat.reply',
       timestamp: Date.now(),
@@ -198,7 +198,7 @@ const send = async (payload) => {
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
-      id: await global.requestor.getId(),
+      id: await global.requestor.id(),
       level: 'info',
       type: 'wechat-worker.requestor.wechat.send',
       timestamp: Date.now(),
@@ -226,7 +226,7 @@ const send = async (payload) => {
     // log
     await global.requestor.log({
       instance: global.setting.wechaty.name,
-      id: await global.requestor.getId(),
+      id: await global.requestor.id(),
       level: 'info',
       type: 'wechat-worker.requestor.wechat.send',
       timestamp: Date.now(),

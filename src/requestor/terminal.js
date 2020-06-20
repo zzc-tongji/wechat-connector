@@ -1,5 +1,11 @@
 import { log as wechatyLog } from 'wechaty';
 
+const id = () => {
+  return new Promise((resolve) => {
+    resolve(Math.floor(Math.random() * -9007199254740991));
+  });
+};
+
 const log = (payload) => {
   // (payloadCopy: object, fullText?: boolean)
   return new Promise((resolve) => {
@@ -35,10 +41,4 @@ const log = (payload) => {
   });
 };
 
-const getId = () => {
-  return new Promise((resolve) => {
-    resolve(Math.floor(Math.random() * -9007199254740991));
-  });
-};
-
-export { log, getId };
+export { id, log };

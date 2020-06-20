@@ -7,7 +7,7 @@ const dev = process.env.DEV ? true : false;
 
 const dong = (data) => {
   // (data?: string)
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,
@@ -22,7 +22,7 @@ const dong = (data) => {
 
 const error = (error) => {
   // (error: Error)
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,
@@ -46,7 +46,7 @@ const friendship = (friendship) => {
 
 const heatbeat = (data) => {
   // (data: any)
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,
@@ -61,7 +61,7 @@ const heatbeat = (data) => {
 
 const login = (user) => {
   // (user: ContactSelf)
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,
@@ -78,7 +78,7 @@ const login = (user) => {
 
 const logout = (user, reason) => {
   // (user: ContactSelf, reason?: string)
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,
@@ -103,7 +103,7 @@ const message = (m) => {
   const one = m.from();
   const group = m.room();
   // id
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     const promiseList = [
       one.alias(), // [0]
     ];
@@ -144,7 +144,7 @@ const message = (m) => {
 };
 
 const ready = () => {
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,
@@ -185,7 +185,7 @@ const scan = (qrcode, status) => {
   ].join('');
   global.loginApproach.timestamp = Date.now();
   //
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,
@@ -204,7 +204,7 @@ const scan = (qrcode, status) => {
 };
 
 const start = () => {
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,
@@ -217,7 +217,7 @@ const start = () => {
 };
 
 const stop = () => {
-  global.requestor.getId().then((id) => {
+  global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,

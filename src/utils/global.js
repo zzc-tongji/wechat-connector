@@ -8,7 +8,7 @@ const global = {
     timestamp: 0,
   },
   requestor: {
-    getId: null, // async function
+    id: null, // async function
     log: null, // async function
   },
   robot: null,

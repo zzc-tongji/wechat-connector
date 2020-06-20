@@ -258,7 +258,7 @@ app.post('/rpc/sync/await', bodyParser.text({ type: '*/*' }), async (req, res) =
 const listen = () => {
   app.listen(global.setting.http.receiver.port, () => {
     // log
-    global.requestor.getId().then((id) => {
+    global.requestor.id().then((id) => {
       global.requestor.log({
         instance: global.setting.wechaty.name,
         id,
