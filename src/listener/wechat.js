@@ -3,7 +3,9 @@ import { Message, ScanStatus } from 'wechaty';
 import { global } from '../utils/global';
 import * as cache from '../utils/cache';
 
-const dong = (/* data */) => {
+const dev = process.env.DEV ? true : false;
+
+const dong = (data) => {
   // (data?: string)
   global.requestor.getId().then((id) => {
     global.requestor.log({
@@ -13,6 +15,7 @@ const dong = (/* data */) => {
       type: 'wechat-worker.listener.wechat.dong',
       timestamp: Date.now(),
       // content: null,
+      dev: dev ? { data } : null,
     });
   });
 };
@@ -30,6 +33,7 @@ const error = (error) => {
         name: error.name, // string
         message: error.message, // string
       },
+      dev: dev ? { error } : null,
     });
   });
 };
@@ -40,7 +44,7 @@ const friendship = (friendship) => {
 };
 */
 
-const heatbeat = (/* data */) => {
+const heatbeat = (data) => {
   // (data: any)
   global.requestor.getId().then((id) => {
     global.requestor.log({
@@ -50,6 +54,7 @@ const heatbeat = (/* data */) => {
       type: 'wechat-worker.listener.wechat.heatbeat',
       timestamp: Date.now(),
       // content: null,
+      dev: dev ? { data } : null,
     });
   });
 };
@@ -66,6 +71,7 @@ const login = (user) => {
       content: {
         name: user.name(), // string
       },
+      dev: dev ? { user } : null,
     });
   });
 };
@@ -83,6 +89,7 @@ const logout = (user, reason) => {
         name: user.name(), // string
         reason, // string
       },
+      dev: dev ? { user, reason } : null,
     });
   });
 };
@@ -128,6 +135,7 @@ const message = (m) => {
           groupId: group ? group.id : '', // string
           groupName: group ? resultList[2] : '', // string
         },
+        dev: dev ? { message: m } : null,
       });
     });
     // cache
@@ -190,6 +198,7 @@ const scan = (qrcode, status) => {
         qrcode: global.loginApproach.qrcode, // string
         timestamp: global.loginApproach.timestamp, // number as long
       },
+      dev: dev ? { qrcode, status } : null,
     });
   });
 };
