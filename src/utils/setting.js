@@ -97,24 +97,6 @@ const validate = (new Ajv()).compile({
           ],
           additionalProperties: false,
           properties: {
-            log: {
-              $id: '#/properties/http/properties/sender/properties/log',
-              type: 'object',
-              required: [
-                'serverList',
-              ],
-              additionalProperties: false,
-              properties: {
-                serverList: {
-                  $id: '#/properties/http/properties/sender/properties/log/properties/serverList',
-                  type: 'array',
-                  additionalItems: false,
-                  items: {
-                    $ref: '#/properties/http/properties/sender/properties/id/properties/server',
-                  },
-                },
-              },
-            },
             id: {
               $id: '#/properties/http/properties/sender/properties/id',
               type: 'object',
@@ -142,6 +124,24 @@ const validate = (new Ajv()).compile({
                       type: 'string',
                       minLength: 1,
                     },
+                  },
+                },
+              },
+            },
+            log: {
+              $id: '#/properties/http/properties/sender/properties/log',
+              type: 'object',
+              required: [
+                'serverList',
+              ],
+              additionalProperties: false,
+              properties: {
+                serverList: {
+                  $id: '#/properties/http/properties/sender/properties/log/properties/serverList',
+                  type: 'array',
+                  additionalItems: false,
+                  items: {
+                    $ref: '#/properties/http/properties/sender/properties/id/properties/server',
                   },
                 },
               },
