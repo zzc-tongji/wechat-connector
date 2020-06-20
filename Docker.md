@@ -14,7 +14,8 @@ docker build -t zzcgwu/wechat-worker .
 #### Script
 
 ``` sh
-docker run -d --restart always --name wechat-worker -v host-directory/runtime/:/usr/src/app/runtime/ -p http-receiver-port:http-receiver-port zzcgwu/wechat-worker
+cp ./runtime/setting.example.json ./runtime/setting.json
+docker run -d --restart always --name wechat-worker -v ./runtime/:/usr/src/app/runtime/ -p 8080:8080 zzcgwu/wechat-worker
 ```
 
 #### Compose
@@ -26,9 +27,9 @@ services:
     restart: always
     container_name: wechat-worker
     volumes:
-      - "host-directory/runtime/:/usr/src/app/runtime/"
+      - "./runtime/:/usr/src/app/runtime/"
     ports:
-      - "http-receiver-port:http-receiver-port"
+      - "8080:8080"
     image: zzcgwu/wechat-worker
 ```
 
