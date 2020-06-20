@@ -5,5 +5,27 @@
   "cache": {
     "expirationSecond": 600
   },
-  "mode": "terminal"
+  "mode": "http",
+  "http": {
+    "receiver": {
+      "port": 8080,
+      "token": "wechaty-receiver-token"
+    },
+    "sender": {
+      "id": {
+        "server": {
+          "url": "http://127.0.0.1:8080/rpc/id",
+          "token": "wechaty-sender-id"
+        }
+      },
+      "log": {
+        "serverList": [
+          {
+            "url": "http://127.0.0.1:8080/rpc/log",
+            "token": "wechaty-sender-log-0"
+          }
+        ]
+      }
+    }
+  }
 }
