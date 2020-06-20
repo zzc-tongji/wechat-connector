@@ -101,7 +101,10 @@ const message = async (m) => {
       one.alias(), // [0]
     ];
     if (group) {
-      promiseList.push(group.alias(one)); // [1]
+      promiseList.push(group.alias(one).catch(() => {
+        // conceal a bug
+        // https://github.com/wechaty/wechaty-puppet-puppeteer/issues/122
+      })); // [1]
       promiseList.push(group.topic()); // [2]
     }
     Promise.all(promiseList).then((resultList) => {
