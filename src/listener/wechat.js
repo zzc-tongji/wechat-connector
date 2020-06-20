@@ -87,7 +87,7 @@ const logout = (user, reason) => {
   });
 };
 
-const message = async (m) => {
+const message = (m) => {
   // (m: Message)
   if (m.self()) {
     // ingore sent message
@@ -116,7 +116,6 @@ const message = async (m) => {
         type: 'wechat-worker.listener.wechat.message',
         timestamp: Date.now(),
         content: {
-          messageId: m.id, // string
           messageType: Message.Type[m.type()], // string
           messageText: m.type() === Message.Type.Text ? m.text() : '', // string
           messageTimestamp: m.date().valueOf(), // number as long
