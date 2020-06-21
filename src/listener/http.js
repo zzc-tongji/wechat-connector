@@ -44,21 +44,6 @@ app.post('/rpc/forward', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.send();
 });
 
-// POST => /rpc/forward/await
-app.post('/rpc/forward/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
-  // request
-  const data = errorhandler('.listener.http.forward.await', forwardValidate, req, res);
-  if (data.status !== 200) {
-    return;
-  }
-  // forward
-  delete data.payload.token;
-  await wechat.forward(data.payload);
-  // response
-  res.status(204);
-  res.send();
-});
-
 // POST => /rpc/login-approach
 app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
@@ -126,21 +111,6 @@ app.post('/rpc/reply', bodyParser.text({ type: '*/*' }), (req, res) => {
   res.send();
 });
 
-// POST => /rpc/reply/await
-app.post('/rpc/reply/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
-  // request
-  const data = errorhandler('.listener.http.reply.await', replyValidate, req, res);
-  if (data.status !== 200) {
-    return;
-  }
-  // reply
-  delete data.payload.token;
-  await wechat.reply(data.payload);
-  // response
-  res.status(204);
-  res.send();
-});
-
 // POST => /rpc/send
 app.post('/rpc/send', bodyParser.text({ type: '*/*' }), (req, res) => {
   // request
@@ -153,21 +123,6 @@ app.post('/rpc/send', bodyParser.text({ type: '*/*' }), (req, res) => {
   wechat.send(data.payload);
   // response
   res.status(202);
-  res.send();
-});
-
-// POST => /rpc/send/await
-app.post('/rpc/send/await', bodyParser.text({ type: '*/*' }), async (req, res) => {
-  // request
-  const data = errorhandler('.listener.http.send.await', sendValidate, req, res);
-  if (data.status !== 200) {
-    return;
-  }
-  // send
-  delete data.payload.token;
-  await wechat.send(data.payload);
-  // response
-  res.status(204);
   res.send();
 });
 
