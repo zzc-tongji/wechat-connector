@@ -2,11 +2,11 @@ POST http://127.0.0.1:8080/rpc/forward HTTP/1.1
 Content-Type: application/json
 
 {
-  "id": 0,
+  "id": 8926017981181411,
   "receiver": {
-    "name": "wechaty-user",
+    "name": "name-or-alias",
     "isAlias": false,
     "category": "friend"
   },
-  "token": "wechaty-receiver-token"
+  "token": "receiver-token"
 }

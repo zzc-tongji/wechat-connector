@@ -9,20 +9,20 @@
   "http": {
     "receiver": {
       "port": 8080,
-      "token": "wechaty-receiver-token"
+      "token": "receiver-token"
     },
     "sender": {
       "id": {
         "server": {
           "url": "http://127.0.0.1:8080/rpc/id",
-          "token": "wechaty-sender-id"
+          "token": "sender-id-token"
         }
       },
       "log": {
         "serverList": [
           {
             "url": "http://127.0.0.1:8080/rpc/log",
-            "token": "wechaty-sender-log-0"
+            "token": "sender-log-0-token"
           }
         ]
       }

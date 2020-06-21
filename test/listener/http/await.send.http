@@ -4,9 +4,9 @@ Content-Type: application/json
 {
   "message": "wechaty-message",
   "receiver": {
-    "name": "wechaty-user",
+    "name": "name-or-alias",
     "isAlias": false,
     "category": "friend"
   },
-  "token": "wechaty-receiver-token"
+  "token": "receiver-token"
 }

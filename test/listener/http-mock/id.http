@@ -2,5 +2,5 @@ POST http://127.0.0.1:8080/rpc/id HTTP/1.1
 Content-Type: application/json; charset=UTF-8
 
 {
-  "token": "wechaty-sender-id"
+  "token": "sender-id-token"
 }
