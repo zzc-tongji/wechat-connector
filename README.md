@@ -28,6 +28,10 @@ npm run start-first-windows # windows
 npm start
 ```
 
+#### API
+
+- [HTTP Listener](https://editor.swagger.io/?url=https%3a%2f%2fraw.githubusercontent.com%2fzzc-tongji%2fwechat-worker%2fmaster%2fdoc%2fhttp-listener.yaml)
+
 (TODO)
 
 ### Others

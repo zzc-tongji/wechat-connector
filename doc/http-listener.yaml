@@ -1,0 +1,560 @@
+openapi: 3.0.1
+info:
+  title: HTTP Listener
+  description: 'The document is a part of [wechat-worker](https://github.com/zzc-tongji/WeChat-worker). It defines all requests that the worker **will accept**. A simple authorization by `token` is always needed when calling these APIs.'
+  version: 1.0.0
+tags:
+  - name: 'Control'
+  - name: 'Message'
+  - name: 'Asynchronous'
+  - name: 'Synchronous'
+paths:
+  '/rpc/exit':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Control'
+      summary: 'exit'
+      operationId: 'rpcExit'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        202:
+          description: 'The process will exit soon.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/forward':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Message'
+      summary: 'forward a message to a friend or a group'
+      operationId: 'rpcForward'
+      requestBody:
+        description: '`id` indicates which message to be forwarded. If `receiver.category` is "group", the worker will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the worker will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the worker will forward the message.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Forward'
+      responses:
+        202:
+          description: 'The message is forwarding.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/login-approach':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Control'
+      summary: 'get the link of WeChat login'
+      operationId: 'rpcStatusAwait'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        200:
+          description: 'The link of WeChat login is shown in the body.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginApproach'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/logout':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Control'
+      summary: 'logout from WeChat'
+      operationId: 'rpcLogout'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        202:
+          description: 'Logout request is in process.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/logout/await':
+    post:
+      tags:
+        - 'Synchronous'
+        - 'Control'
+      summary: 'logout from WeChat, wait until done'
+      operationId: 'rpcLogoutAwait'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        204:
+          description: 'You have been logged out.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/reply':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Message'
+      summary: 'reply a message'
+      operationId: 'rpcReply'
+      requestBody:
+        description: '`id` indicates which message to be replyed and who is the receiver. `message` indicates the reply content which accept text and small sticker 文本和小表情.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reply'
+      responses:
+        202:
+          description: 'The reply content is sending.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/send':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Message'
+      summary: 'send message to a friend or a group'
+      operationId: 'rpcSend'
+      requestBody:
+        description: '`message` indicates the content to send which accept text and small sticker 文本和小表情. If `receiver.category` is "group", the worker will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the worker will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the worker will send the content.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Send'
+      responses:
+        202:
+          description: 'The message is sending.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/start':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Control'
+      summary: 'start the robot'
+      operationId: 'rpcStart'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        202:
+          description: 'The robot will start soon.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/start/await':
+    post:
+      tags:
+        - 'Synchronous'
+        - 'Control'
+      summary: 'start the robot, wait until done'
+      operationId: 'rpcStartAwait'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        204:
+          description: 'The robot is started.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/status':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Control'
+      summary: 'get the status of the robot'
+      operationId: 'rpcStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        200:
+          description: 'The status is shown in the body.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/stop':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Control'
+      summary: 'stop the robot'
+      operationId: 'rpcStop'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        202:
+          description: 'The robot will stop soon.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/stop/await':
+    post:
+      tags:
+        - 'Synchronous'
+        - 'Control'
+      summary: 'stop the WeChat worker, wait until done'
+      operationId: 'rpcStopAwait'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        204:
+          description: 'The robot is stopped.'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/sync':
+    post:
+      tags:
+        - 'Asynchronous'
+        - 'Control'
+      summary: 'update data of all friends 朋友 and groups 群聊'
+      operationId: 'rpcSynchronous'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        202:
+          description: 'in-process'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/rpc/sync/await':
+    post:
+      tags:
+        - 'Synchronous'
+        - 'Control'
+      summary: 'update data of all friends 朋友 and groups 群聊, wait until done'
+      operationId: 'rpcSynchronousAwait'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        204:
+          description: 'up-to-date'
+        400:
+          description: 'The request body is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: 'The token is invalid.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: 'object'
+      required:
+        - 'reason'
+      properties:
+        reason:
+          type: 'string'
+          example: 'error-reason'
+    Forward:
+      description: 'The json schema is defined in [forward.js](https://github.com/zzc-tongji/WeChat-worker/blob/master/src/listener/utils/http-validator/forward.js). '
+      type: 'object'
+      required:
+        - 'id'
+        - 'receiver'
+        - 'token'
+      additionalProperties: false
+      properties:
+        id:
+          type: 'integer'
+          maximum: 9007199254740991
+          minimum: -9007199254740991
+          example: 8926017981181411
+        receiver:
+          type: 'object'
+          required:
+            - 'name'
+            - 'isAlias'
+            - 'category'
+          additionalProperties: false
+          properties:
+            name:
+              type: 'string'
+              minLength: 1
+              example: 'name-or-alias'
+            isAlias:
+              type: 'boolean'
+              example: false
+            category:
+              type: 'string'
+              enum:
+                - 'friend'
+                - 'group'
+              example: 'friend'
+        token:
+          type: 'string'
+          maxLength: 64
+          minLength: 1
+          example: 'receiver-token'
+    LoginApproach:
+      type: 'object'
+      required:
+        - 'status'
+        - 'url'
+        - 'qrcode'
+        - 'timestamp'
+      properties:
+        status:
+          type: 'string'
+          enum:
+            - 'Confirmed'
+            - 'Timeout'
+            - 'Unknown'
+            - 'Cancel'
+            - 'Waiting'
+            - 'Scanned'
+          example: 'Waiting'
+        url:
+          type: 'string'
+          example: 'https://login.weixin.qq.com/l/Yeibnms7rg=='
+        qrcode:
+          type: 'string'
+          example: 'https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Flogin.weixin.qq.com%2Fl%2FYeibnms7rg%3D%3D'
+        timestamp:
+          type: 'integer'
+          example: 1592700000551
+    Reply:
+      description: 'The json schema is defined in [reply.js](https://github.com/zzc-tongji/WeChat-worker/blob/master/src/listener/utils/http-validator/reply.js)'
+      type: 'object'
+      required:
+        - 'id'
+        - 'message'
+        - 'token'
+      additionalProperties: false
+      properties:
+        id:
+          type: 'integer'
+          maximum: 9007199254740991
+          minimum: -9007199254740991
+          example: 6946070168688469
+        message:
+          type: 'string'
+          minLength: 1
+          example: 'text-and-small-sticker'
+        token:
+          type: 'string'
+          maxLength: 64
+          minLength: 1
+          example: 'receiver-token'
+    Send:
+      description: 'The json schema is defined in [send.js](https://github.com/zzc-tongji/WeChat-worker/blob/master/src/listener/utils/http-validator/send.js)'
+      type: 'object'
+      required:
+        - 'message'
+        - 'receiver'
+        - 'token'
+      properties:
+        message:
+          type: 'string'
+          minLength: 1
+          example: 'text-and-small-sticker'
+        receiver:
+          type: 'object'
+          required:
+            - 'name'
+            - 'isAlias'
+            - 'category'
+          additionalProperties: false
+          properties:
+            name:
+              type: 'string'
+              minLength: 1
+              example: 'name-or-alias'
+            isAlias:
+              type: 'boolean'
+              example: false
+            category:
+              type: 'string'
+              enum:
+                - 'friend'
+                - 'group'
+              example: 'friend'
+        token:
+          type: 'string'
+          maxLength: 64
+          minLength: 1
+          example: 'receiver-token'
+    Status:
+      type: 'object'
+      required:
+        - 'status'
+      properties:
+        status:
+          type: 'string'
+          enum:
+            - 'stopped'
+            - 'logged-out'
+            - 'logged-in'
+          example: 'logged-in'
+    Token:
+      type: 'object'
+      required:
+        - 'token'
+      properties:
+        token:
+          type: 'string'
+          maxLength: 64
+          minLength: 1
+          example: 'receiver-token'
