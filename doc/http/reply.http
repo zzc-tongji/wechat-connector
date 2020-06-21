@@ -3,6 +3,6 @@ Content-Type: application/json; charset=UTF-8
 
 {
   "id": 6946070168688469,
-  "message": "wechaty-message",
+  "message": "text-and-small-sticker",
   "token": "receiver-token"
 }
