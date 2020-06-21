@@ -25,7 +25,7 @@ const validate = (new Ajv()).compile({
     token: {
       $id: '#/properties/token',
       type: 'string',
-      maxlength: 64,
+      maxLength: 64,
       minLength: 1,
     },
   },
