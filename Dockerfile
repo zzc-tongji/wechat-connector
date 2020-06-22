@@ -4,6 +4,7 @@ FROM node:lts
 WORKDIR /usr/src/app
 
 COPY ./src/ ./src/
+COPY ./static/ ./static/
 COPY ./.babelrc ./
 COPY ./package.json ./
 COPY ./prerequisite.sh ./

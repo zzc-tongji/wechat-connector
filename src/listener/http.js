@@ -1,3 +1,6 @@
+import * as fs from 'fs';
+import { sep } from 'path';
+
 import bodyParser from 'body-parser';
 import express from 'express';
 
@@ -12,8 +15,25 @@ import { global } from '../utils/global';
 
 const app = express();
 
+const html = fs.readFileSync(`${__dirname}${sep}..${sep}..${sep}static${sep}wechat-worker.html`, { encoding: 'utf-8', flag: 'r' });
+
+const getStatus = () => {
+  return global.robot ? (global.robot.logonoff() ? 'logged-in' : 'logged-out') : 'stopped';
+};
+
 // mock
 mock(app);
+
+// Get - /
+app.get('/', (_req, res) => {
+  // response
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', 'no-store');
+  res.set('Surrogate-Control', 'no-store');
+  res.send(html.replace('${instance}', global.setting.wechaty.name).replace('${status}', getStatus()));
+});
 
 // POST /rpc/exit
 app.post('/rpc/exit', bodyParser.text({ type: '*/*' }), (req, res) => {
@@ -65,7 +85,7 @@ app.post('/rpc/status', bodyParser.text({ type: '*/*' }), (req, res) => {
   }
   // response
   res.set('Content-Type', 'application/json; charset=UTF-8');
-  res.send(JSON.stringify({ status: global.robot ? (global.robot.logonoff() ? 'logged-in' : 'logged-out') : 'stopped' }));
+  res.send(JSON.stringify({ status: getStatus() }));
 });
 
 // POST => /rpc/logout
