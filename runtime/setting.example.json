@@ -3,7 +3,8 @@
     "name": "wechat-worker"
   },
   "cache": {
-    "expirationSecond": 600
+    "expirationSecond": 600,
+    "enableLog": false
   },
   "mode": "http",
   "http": {

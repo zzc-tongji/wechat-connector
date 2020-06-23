@@ -37,6 +37,7 @@ const validate = (new Ajv()).compile({
       type: 'object',
       required: [
         'expirationSecond',
+        'enableLog',
       ],
       additionalProperties: false,
       properties: {
@@ -45,6 +46,10 @@ const validate = (new Ajv()).compile({
           type: 'integer',
           maximum: 3600,
           minimun: 60,
+        },
+        enableLog: {
+          $id: '#/properties/cache/properties/enableLog',
+          type: 'boolean',
         },
       },
     },

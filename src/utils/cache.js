@@ -26,6 +26,9 @@ const removeExpired = () => {
   remove.forEach((key) => {
     cache.delete(key);
   });
+  if (!global.setting.cache.enableLog) {
+    return;
+  }
   global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -40,6 +43,9 @@ const removeExpired = () => {
 
 const get = (key) => {
   const value = cache.get(key);
+  if (!global.setting.cache.enableLog) {
+    return;
+  }
   global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
@@ -61,6 +67,9 @@ const set = (key, value) => {
     value.timestamp = Date.now();
   }
   cache.set(key, value);
+  if (!global.setting.cache.enableLog) {
+    return;
+  }
   global.requestor.id().then((id) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
