@@ -24,10 +24,10 @@ const error = (error) => {
   // (error: Error)
   global.requestor.id().then((id) => {
     global.requestor.log({
-      instance: global.setting.wechaty.name,
       id,
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.listener.wechat.error',
+      category: 'wechat-worker.listener.wechat.error',
       timestamp: Date.now(),
       content: {
         name: error.name, // string
@@ -48,10 +48,10 @@ const heatbeat = (data) => {
   // (data: any)
   global.requestor.id().then((id) => {
     global.requestor.log({
-      instance: global.setting.wechaty.name,
       id,
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.listener.wechat.heatbeat',
+      category: 'wechat-worker.listener.wechat.heatbeat',
       timestamp: Date.now(),
       // content: null,
       dev: dev ? { data } : null,
@@ -63,10 +63,10 @@ const login = (user) => {
   // (user: ContactSelf)
   global.requestor.id().then((id) => {
     global.requestor.log({
-      instance: global.setting.wechaty.name,
       id,
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.listener.wechat.login',
+      category: 'wechat-worker.listener.wechat.login',
       timestamp: Date.now(),
       content: {
         name: user.name(), // string
@@ -80,10 +80,10 @@ const logout = (user, reason) => {
   // (user: ContactSelf, reason?: string)
   global.requestor.id().then((id) => {
     global.requestor.log({
-      instance: global.setting.wechaty.name,
       id,
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.listener.wechat.logout',
+      category: 'wechat-worker.listener.wechat.logout',
       timestamp: Date.now(),
       content: {
         name: user.name(), // string
@@ -117,10 +117,10 @@ const message = (m) => {
     Promise.all(promiseList).then((resultList) => {
       // log
       global.requestor.log({
-        instance: global.setting.wechaty.name,
         id,
+        instance: global.setting.wechaty.name,
         level: 'info',
-        type: 'wechat-worker.listener.wechat.message',
+        category: 'wechat-worker.listener.wechat.message',
         timestamp: Date.now(),
         content: {
           messageType: Message.Type[m.type()], // string
@@ -146,10 +146,10 @@ const message = (m) => {
 const ready = () => {
   global.requestor.id().then((id) => {
     global.requestor.log({
-      instance: global.setting.wechaty.name,
       id,
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.listener.wechat.ready',
+      category: 'wechat-worker.listener.wechat.ready',
       timestamp: Date.now(),
       // content: null,
     });
@@ -187,10 +187,10 @@ const scan = (qrcode, status) => {
   //
   global.requestor.id().then((id) => {
     global.requestor.log({
-      instance: global.setting.wechaty.name,
       id,
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.listener.wechat.scan',
+      category: 'wechat-worker.listener.wechat.scan',
       timestamp: Date.now(),
       content: {
         status: global.loginApproach.status, // string
@@ -206,10 +206,10 @@ const scan = (qrcode, status) => {
 const start = () => {
   global.requestor.id().then((id) => {
     global.requestor.log({
-      instance: global.setting.wechaty.name,
       id,
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.listener.wechat.start',
+      category: 'wechat-worker.listener.wechat.start',
       timestamp: Date.now(),
       // content: null,
     });
@@ -219,10 +219,10 @@ const start = () => {
 const stop = () => {
   global.requestor.id().then((id) => {
     global.requestor.log({
-      instance: global.setting.wechaty.name,
       id,
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.listener.wechat.stop',
+      category: 'wechat-worker.listener.wechat.stop',
       timestamp: Date.now(),
       // content: null,
     });

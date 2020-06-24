@@ -6,10 +6,10 @@ import { Message } from 'wechaty';
 const logError = async (reason, contextType, payload) => {
   // (reason: string, callerType: string, payload: object)
   await global.requestor.log({
-    instance: global.setting.wechaty.name,
     id: await global.requestor.id(),
+    instance: global.setting.wechaty.name,
     level: 'error',
-    type: 'wechat-worker.requestor.wechat.error',
+    category: 'wechat-worker.requestor.wechat.error',
     timestamp: Date.now(),
     content: {
       reason, // string
@@ -63,10 +63,10 @@ const forward = async (payload) => {
     }
     // log
     await global.requestor.log({
-      instance: global.setting.wechaty.name,
       id: await global.requestor.id(),
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.requestor.wechat.forward',
+      category: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
       content: {
         messageId: context.message.id, // string
@@ -93,10 +93,10 @@ const forward = async (payload) => {
     }
     // log
     await global.requestor.log({
-      instance: global.setting.wechaty.name,
       id: await global.requestor.id(),
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.requestor.wechat.forward',
+      category: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
       content: {
         messageId: context.message.id, // string
@@ -132,10 +132,10 @@ const reply = async (payload) => {
     }
     // log
     await global.requestor.log({
-      instance: global.setting.wechaty.name,
       id: await global.requestor.id(),
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.requestor.wechat.reply',
+      category: 'wechat-worker.requestor.wechat.reply',
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string
@@ -156,10 +156,10 @@ const reply = async (payload) => {
     }
     // log
     await global.requestor.log({
-      instance: global.setting.wechaty.name,
       id: await global.requestor.id(),
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.requestor.wechat.reply',
+      category: 'wechat-worker.requestor.wechat.reply',
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string
@@ -197,10 +197,10 @@ const send = async (payload) => {
     }
     // log
     await global.requestor.log({
-      instance: global.setting.wechaty.name,
       id: await global.requestor.id(),
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.requestor.wechat.send',
+      category: 'wechat-worker.requestor.wechat.send',
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string
@@ -225,10 +225,10 @@ const send = async (payload) => {
     }
     // log
     await global.requestor.log({
-      instance: global.setting.wechaty.name,
       id: await global.requestor.id(),
+      instance: global.setting.wechaty.name,
       level: 'info',
-      type: 'wechat-worker.requestor.wechat.send',
+      category: 'wechat-worker.requestor.wechat.send',
       timestamp: Date.now(),
       content: {
         messageText: payload.message, // string

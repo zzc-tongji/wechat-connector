@@ -72,7 +72,7 @@ app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => 
     return;
   }
   // response
-  res.set('content-type', 'application/json; charset=UTF-8');
+  res.set('content-type', 'application/json;charset=UTF-8');
   res.send(JSON.stringify({ loginApproach: global.loginApproach }));
 });
 
@@ -84,7 +84,7 @@ app.post('/rpc/status', bodyParser.text({ type: '*/*' }), (req, res) => {
     return;
   }
   // response
-  res.set('content-type', 'application/json; charset=UTF-8');
+  res.set('content-type', 'application/json;charset=UTF-8');
   res.send(JSON.stringify({ status: getStatus() }));
 });
 
@@ -235,10 +235,10 @@ const listen = () => {
     // log
     global.requestor.id().then((id) => {
       global.requestor.log({
-        instance: global.setting.wechaty.name,
         id,
+        instance: global.setting.wechaty.name,
         level: 'info',
-        type: 'wechat-worker.listener.http.listen',
+        category: 'wechat-worker.listener.http.listen',
         timestamp: Date.now(),
         content: {
           port: global.setting.http.receiver.port, // number as integer

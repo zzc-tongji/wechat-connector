@@ -10,7 +10,7 @@ let idUrl;
 let idBody;
 
 const init = () => {
-  headers = new Headers({ 'content-type': 'application/json; charset=UTF-8' });
+  headers = new Headers({ 'content-type': 'application/json;charset=UTF-8' });
   idUrl = global.setting.http.sender.id.server.url;
   idBody = JSON.stringify({ token: global.setting.http.sender.id.server.token });
 };
