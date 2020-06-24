@@ -37,10 +37,12 @@ const id = () => {
 
 const log = (content) => {
   // (content: object)
+  const logHeaders = new Headers(headers);
+  logHeaders.append('x-category', typeof content.category === 'string' ? content.category : 'wechat-worker');
   return new Promise((resolve) => {
     global.setting.http.sender.log.serverList.forEach((server) => {
       content.token = server.token;
-      fetch(server.url, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
+      fetch(server.url, { method: 'POST', logHeaders, body: JSON.stringify(content) }).then((response) => {
         if (!response.ok) {
           throw `fetch ${server.url} => ${response.status}`;
         }
