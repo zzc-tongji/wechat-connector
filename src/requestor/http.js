@@ -38,10 +38,9 @@ const id = () => {
 const log = (content) => {
   // (content: object)
   return new Promise((resolve) => {
-    const contentCopy = JSON.parse(JSON.stringify(content));
     global.setting.http.sender.log.serverList.forEach((server) => {
-      contentCopy.token = server.token;
-      fetch(server.url, { method: 'POST', headers, body: JSON.stringify(contentCopy) }).then((response) => {
+      content.token = server.token;
+      fetch(server.url, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
         if (!response.ok) {
           throw `fetch ${server.url} => ${response.status}`;
         }

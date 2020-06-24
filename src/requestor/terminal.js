@@ -6,34 +6,33 @@ const id = () => {
   });
 };
 
-const log = (payload) => {
-  // (payloadCopy: object, fullText?: boolean)
+const log = (content) => {
+  // (content: object, fullText?: boolean)
   return new Promise((resolve) => {
-    const payloadCopy = JSON.parse(JSON.stringify(payload));
-    switch (payloadCopy.level) {
+    switch (content.level) {
       case 'error':
-        delete payloadCopy.level;
-        wechatyLog.error(JSON.stringify(payloadCopy));
+        delete content.level;
+        wechatyLog.error(JSON.stringify(content));
         console.log();
         break;
       case 'warn':
-        delete payloadCopy.level;
-        wechatyLog.warn(JSON.stringify(payloadCopy));
+        delete content.level;
+        wechatyLog.warn(JSON.stringify(content));
         console.log();
         break;
       case 'verbose':
-        delete payloadCopy.level;
-        wechatyLog.verbose(JSON.stringify(payloadCopy));
+        delete content.level;
+        wechatyLog.verbose(JSON.stringify(content));
         console.log();
         break;
       case 'silly':
-        delete payloadCopy.level;
-        wechatyLog.silly(JSON.stringify(payloadCopy));
+        delete content.level;
+        wechatyLog.silly(JSON.stringify(content));
         console.log();
         break;
       default: // 'info'
-        delete payloadCopy.level;
-        wechatyLog.info(JSON.stringify(payloadCopy));
+        delete content.level;
+        wechatyLog.info(JSON.stringify(content));
         console.log();
         break;
     }
