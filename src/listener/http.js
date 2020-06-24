@@ -27,11 +27,11 @@ mock(app);
 // Get - /
 app.get('/', (_req, res) => {
   // response
-  res.set('Content-Type', 'text/html; charset=utf-8');
-  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  res.set('Pragma', 'no-cache');
-  res.set('Expires', 'no-store');
-  res.set('Surrogate-Control', 'no-store');
+  res.set('content-type', 'text/html; charset=utf-8');
+  res.set('cache-control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('pragma', 'no-cache');
+  res.set('expires', 'no-store');
+  res.set('surrogate-control', 'no-store');
   res.send(html.replace('${instance}', global.setting.wechaty.name).replace('${status}', getStatus()));
 });
 
@@ -72,7 +72,7 @@ app.post('/rpc/login-approach', bodyParser.text({ type: '*/*' }), (req, res) => 
     return;
   }
   // response
-  res.set('Content-Type', 'application/json; charset=UTF-8');
+  res.set('content-type', 'application/json; charset=UTF-8');
   res.send(JSON.stringify({ loginApproach: global.loginApproach }));
 });
 
@@ -84,7 +84,7 @@ app.post('/rpc/status', bodyParser.text({ type: '*/*' }), (req, res) => {
     return;
   }
   // response
-  res.set('Content-Type', 'application/json; charset=UTF-8');
+  res.set('content-type', 'application/json; charset=UTF-8');
   res.send(JSON.stringify({ status: getStatus() }));
 });
 

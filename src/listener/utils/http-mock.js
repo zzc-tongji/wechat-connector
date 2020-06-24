@@ -13,7 +13,7 @@ const mock = (app) => {
       return;
     }
     // response
-    res.set('Content-Type', 'application/json; charset=UTF-8');
+    res.set('content-type', 'application/json; charset=UTF-8');
     res.send({ id: Math.floor(Math.random() * 9007199254740991) });
   });
   // POST => /rpc/log

@@ -44,7 +44,7 @@ const errorhandler = (type, validate, req, res, mock = false) => {
   const data = test(validate, req.body, mock);
   if (data.status !== 200) {
     res.status(data.status);
-    res.set('Content-Type', 'application/json; charset=UTF-8');
+    res.set('content-type', 'application/json; charset=UTF-8');
     res.send(data.payload);
     // local log
     wechatyLog.error(`local${type}`, JSON.stringify(data.payload));
