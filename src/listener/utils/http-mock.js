@@ -17,7 +17,7 @@ const mock = (app) => {
     res.send({ id: Math.floor(Math.random() * 9007199254740991) });
   });
   // POST => /rpc/log
-  app.post('/rpc/log', bodyParser.text({ type: '*/*' }), (req, res) => {
+  app.post('/rpc/log', bodyParser.text({ type: '*/*', limit: '30mb' }), (req, res) => {
     // request
     const data = errorhandler('.listener.http-mock.log', tokenValidate, req, res, true);
     if (data.status !== 200) {

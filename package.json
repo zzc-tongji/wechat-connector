@@ -9,7 +9,9 @@
     "start-install": "cd runtime/ && INSTALL=TRUE babel-node ../src/main.js",
     "start-install-windows": "set INSTALL=TRUE && cd runtime/ && babel-node ../src/main.js",
     "start-dev": "cd runtime/ && DEV=TRUE babel-node ../src/main.js",
-    "start-dev-windows": "set DEV=TRUE && cd runtime/ && babel-node ../src/main.js"
+    "start-dev-windows": "set DEV=TRUE && cd runtime/ && babel-node ../src/main.js",
+    "start-dev-silly": "cd runtime/ && DEV=TRUE WECHATY_LOG=silly babel-node ../src/main.js",
+    "start-dev-silly-windows": "set DEV=TRUE && set WECHATY_LOG=silly && cd runtime/ && babel-node ../src/main.js"
   },
   "repository": "git+https://github.com/zzc-tongji/wechat-worker.git",
   "author": "Zhicheng Zhang",

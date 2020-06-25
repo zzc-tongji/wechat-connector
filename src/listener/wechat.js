@@ -1,9 +1,9 @@
-import { Message, ScanStatus } from 'wechaty';
+import { Message, ScanStatus /* , log as wechatyLog */ } from 'wechaty';
 
 import { global } from '../utils/global';
 import * as cache from '../utils/cache';
 
-const dev = process.env.DEV ? true : false;
+// const dev = process.env.DEV ? true : false;
 
 const dong = (data) => {
   // (data?: string)
@@ -15,7 +15,6 @@ const dong = (data) => {
       type: 'wechat-worker.listener.wechat.dong',
       timestamp: Date.now(),
       // content: null,
-      dev: dev ? { data } : null,
     });
   });
 };
@@ -33,7 +32,6 @@ const error = (error) => {
         name: error.name, // string
         message: error.message, // string
       },
-      dev: dev ? { error } : null,
     });
   });
 };
@@ -54,7 +52,6 @@ const heatbeat = (data) => {
       category: 'wechat-worker.listener.wechat.heatbeat',
       timestamp: Date.now(),
       // content: null,
-      dev: dev ? { data } : null,
     });
   });
 };
@@ -71,7 +68,6 @@ const login = (user) => {
       content: {
         name: user.name(), // string
       },
-      dev: dev ? { user } : null,
     });
   });
 };
@@ -89,7 +85,6 @@ const logout = (user, reason) => {
         name: user.name(), // string
         reason, // string
       },
-      dev: dev ? { user, reason } : null,
     });
   });
 };
@@ -106,14 +101,13 @@ const message = (m) => {
   global.requestor.id().then((id) => {
     const promiseList = [
       one.alias(), // [0]
-    ];
-    if (group) {
-      promiseList.push(group.alias(one).catch(() => {
+      group ? group.alias(one).catch(() => {
         // conceal a bug
         // https://github.com/wechaty/wechaty-puppet-puppeteer/issues/122
-      })); // [1]
-      promiseList.push(group.topic()); // [2]
-    }
+      }) : Promise.resolve(undefined), // [1]
+      group ? group.topic() : Promise.resolve(undefined), // [2]
+      Promise.resolve(undefined), // getFileBase64(m), // [3]
+    ];
     Promise.all(promiseList).then((resultList) => {
       // log
       global.requestor.log({
@@ -125,23 +119,49 @@ const message = (m) => {
         content: {
           messageType: Message.Type[m.type()], // string
           messageText: m.type() === Message.Type.Text ? m.text() : '', // string
+          messageFileBase64: '', // resultList[3] ? (dev ? '[base64-encoded]' : resultList[3].base64) : '', // string
+          messageFileName: '', // resultList[3] ? resultList[3].name : '', // string
           messageTimestamp: m.date().valueOf(), // number as long
           messageAgeMillisecond: m.age() * 1000, // number as long
           oneId: one.id, // string
           oneName: one.name(), // string
-          oneAlias: resultList[0] ? resultList[0] : '', // string
-          oneAliasInGroup: resultList[1] ? resultList[1] : '', // string
+          oneAlias: typeof resultList[0] === 'string' ? resultList[0] : '', // string
+          oneAliasInGroup: typeof resultList[1] === 'string' ? resultList[1] : '', // string
           oneIsFriend: one.friend() ? true : false, // boolean
           groupId: group ? group.id : '', // string
-          groupName: group ? resultList[2] : '', // string
+          groupName: typeof resultList[2] === 'string' ? resultList[2] : '', // string
         },
-        dev: dev ? { message: m } : null,
       });
     });
     // cache
     cache.set(id, { message: m, one, group });
   });
 };
+
+/*
+const getFileBase64 = async (message) => {
+  // There is a bug which may terminate the whole process.
+  // https://github.com/wechaty/wechaty-puppet-puppeteer/issues/124
+  try {
+    if (message.type() === Message.Type.Text) {
+      return undefined;
+    } else {
+      const file = await message.toFileBox();
+      if (file) {
+        return {
+          base64: await file.toBase64(),
+          name: file.name,
+        };
+      }
+      return undefined;
+    }
+  } catch (e) {
+    wechatyLog.error('local.listener.wechat.message.file', JSON.stringify(error));
+    console.log();
+    return undefined;
+  }
+};
+*/
 
 const ready = () => {
   global.requestor.id().then((id) => {
@@ -198,7 +218,6 @@ const scan = (qrcode, status) => {
         qrcode: global.loginApproach.qrcode, // string
         timestamp: global.loginApproach.timestamp, // number as long
       },
-      dev: dev ? { qrcode, status } : null,
     });
   });
 };
