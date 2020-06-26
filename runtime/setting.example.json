@@ -12,7 +12,7 @@
       "maxCount": 3
     },
     "unexpectedLogout": {
-      "timeSecond": 60,
+      "timeSecond": 120,
       "maxCount": 3
     }
   },
@@ -33,7 +33,7 @@
         "serverList": [
           {
             "url": "http://127.0.0.1:8080/rpc/log",
-            "token": "sender-log-0-token"
+            "token": "sender-log-token"
           }
         ]
       },
