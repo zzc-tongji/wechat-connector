@@ -5,7 +5,7 @@ import { Message } from 'wechaty';
 
 const logError = async (reason, contextType, payload) => {
   // (reason: string, callerType: string, payload: object)
-  await global.requestor.log({
+  global.requestor.log({
     id: await global.requestor.id(),
     instance: global.setting.wechaty.name,
     level: 'error',
@@ -62,7 +62,7 @@ const forward = async (payload) => {
       return;
     }
     // log
-    await global.requestor.log({
+    global.requestor.log({
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'info',
@@ -92,7 +92,7 @@ const forward = async (payload) => {
       return;
     }
     // log
-    await global.requestor.log({
+    global.requestor.log({
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'info',
@@ -131,7 +131,7 @@ const reply = async (payload) => {
       return;
     }
     // log
-    await global.requestor.log({
+    global.requestor.log({
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'info',
@@ -155,7 +155,7 @@ const reply = async (payload) => {
       return;
     }
     // log
-    await global.requestor.log({
+    global.requestor.log({
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'info',
@@ -196,7 +196,7 @@ const send = async (payload) => {
       return;
     }
     // log
-    await global.requestor.log({
+    global.requestor.log({
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'info',
@@ -224,7 +224,7 @@ const send = async (payload) => {
       return;
     }
     // log
-    await global.requestor.log({
+    global.requestor.log({
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'info',
