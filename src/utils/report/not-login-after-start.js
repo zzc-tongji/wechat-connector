@@ -35,7 +35,7 @@ const f = () => {
   });
   global.requestor.report({
     instance: global.setting.wechaty.name,
-    reason: 'not-login-after-start',
+    category: 'wechat-worker.report.not-login-after-start',
   });
   count += 1;
   if (count >= maxCount) {

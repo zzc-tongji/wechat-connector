@@ -196,7 +196,7 @@ const validate = (new Ajv()).compile({
             },
             report: {
               $id: '#/properties/http/properties/sender/properties/report',
-              $ref: '#/properties/http/properties/sender/properties/id',
+              $ref: '#/properties/http/properties/sender/properties/log',
             },
           },
         },

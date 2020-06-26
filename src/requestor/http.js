@@ -8,13 +8,11 @@ import { id as terminalGetId } from './terminal';
 let headers;
 let idUrl;
 let idBody;
-let reportUrl;
 
 const init = () => {
   headers = new Headers({ 'content-type': 'application/json;charset=UTF-8' });
   idUrl = global.setting.http.sender.id.server.url;
   idBody = JSON.stringify({ token: global.setting.http.sender.id.server.token });
-  reportUrl = global.setting.http.sender.report.server.url;
 };
 
 const id = () => {
@@ -61,18 +59,22 @@ const log = (content) => {
 
 const report = (content) => {
   // (content: object)
+  const logHeaders = new Headers(headers);
+  logHeaders.append('x-category', typeof content.category === 'string' ? content.category : 'wechat-worker');
   return new Promise((resolve) => {
-    content.token = global.setting.http.sender.report.server.token;
-    fetch(reportUrl, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
-      if (!response.ok) {
-        throw `fetch ${reportUrl} => ${response.status}`;
-      }
-      resolve();
-    }).catch((error) => {
-      // local log
-      wechatyLog.warn('local.requestor.http.report', error);
-      console.log();
-      resolve();
+    global.setting.http.sender.report.serverList.forEach((server) => {
+      content.token = server.token;
+      fetch(server.url, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
+        if (!response.ok) {
+          throw `fetch ${server.url} => ${response.status}`;
+        }
+        resolve();
+      }).catch((error) => {
+        // local log
+        wechatyLog.warn('local.requestor.http.report', error);
+        console.log();
+        resolve();
+      });
     });
   });
 };

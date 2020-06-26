@@ -35,7 +35,7 @@ const f = () => {
   });
   global.requestor.report({
     instance: global.setting.wechaty.name,
-    reason: 'unexpected-logout',
+    category: 'wechat-worker.report.unexpected-logout',
   });
   count += 1;
   if (count >= maxCount) {
