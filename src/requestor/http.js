@@ -35,6 +35,31 @@ const id = () => {
   });
 };
 
+const validate = (new Ajv()).compile({
+  $schema: 'http://json-schema.org/draft-07/schema',
+  $id: 'http://example.com/example.json',
+  type: 'object',
+  required: [
+    'id',
+  ],
+  additionalProperties: false,
+  properties: {
+    id: {
+      $id: '#/properties/id',
+      type: 'integer',
+    },
+  },
+});
+
+const x = (error, resolve) => {
+  // local log
+  wechatyLog.warn('local.requestor.http.id', error);
+  console.log();
+  terminalGetId().then((id) => {
+    resolve(id);
+  });
+};
+
 const log = (content) => {
   // (content: object)
   const logHeaders = new Headers(headers);
@@ -68,31 +93,6 @@ const report = (content) => {
       wechatyLog.warn('local.requestor.http.report', error);
       console.log();
     });
-  });
-};
-
-const validate = (new Ajv()).compile({
-  $schema: 'http://json-schema.org/draft-07/schema',
-  $id: 'http://example.com/example.json',
-  type: 'object',
-  required: [
-    'id',
-  ],
-  additionalProperties: false,
-  properties: {
-    id: {
-      $id: '#/properties/id',
-      type: 'integer',
-    },
-  },
-});
-
-const x = (error, resolve) => {
-  // local log
-  wechatyLog.warn('local.requestor.http.id', error);
-  console.log();
-  terminalGetId().then((id) => {
-    resolve(id);
   });
 };
 
