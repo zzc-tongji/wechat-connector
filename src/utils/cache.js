@@ -17,6 +17,9 @@ const init = () => {
 };
 
 const removeExpired = () => {
+  if (expiration <= 0) {
+    return;
+  }
   const remove = [];
   cache.forEach((value, key) => {
     if (Date.now() - value.timestamp > expiration) {
@@ -26,62 +29,65 @@ const removeExpired = () => {
   remove.forEach((key) => {
     cache.delete(key);
   });
-  if (!global.setting.cache.enableLog) {
-    return;
-  }
-  global.requestor.id().then((id) => {
-    global.requestor.log({
-      id,
-      instance: global.setting.wechaty.name,
-      level: 'info',
-      category: 'wechat-worker.cache.remove-expired',
-      timestamp: Date.now(),
-      // content: null,
+  if (global.setting.cache.enableLog) {
+    global.requestor.id().then((id) => {
+      global.requestor.log({
+        id,
+        instance: global.setting.wechaty.name,
+        level: 'info',
+        category: 'wechat-worker.cache.remove-expired',
+        timestamp: Date.now(),
+        // content: null,
+      });
     });
-  });
+  }
 };
 
 const get = (key) => {
-  const value = cache.get(key);
-  if (!global.setting.cache.enableLog) {
-    return;
+  if (expiration <= 0) {
+    return undefined;
   }
-  global.requestor.id().then((id) => {
-    global.requestor.log({
-      id,
-      instance: global.setting.wechaty.name,
-      level: 'info',
-      category: 'wechat-worker.cache.get',
-      timestamp: Date.now(),
-      content: {
-        key, // number as long
-        success: value ? true : false, // boolean
-      },
+  const value = cache.get(key);
+  if (global.setting.cache.enableLog) {
+    global.requestor.id().then((id) => {
+      global.requestor.log({
+        id,
+        instance: global.setting.wechaty.name,
+        level: 'info',
+        category: 'wechat-worker.cache.get',
+        timestamp: Date.now(),
+        content: {
+          key, // number as long
+          success: value ? true : false, // boolean
+        },
+      });
     });
-  });
+  }
   return value;
 };
 
 const set = (key, value) => {
+  if (expiration <= 0) {
+    return;
+  }
   if (!value.timestamp) {
     value.timestamp = Date.now();
   }
   cache.set(key, value);
-  if (!global.setting.cache.enableLog) {
-    return;
-  }
-  global.requestor.id().then((id) => {
-    global.requestor.log({
-      id,
-      instance: global.setting.wechaty.name,
-      level: 'info',
-      category: 'wechat-worker.cache.set',
-      timestamp: Date.now(),
-      content: {
-        key, // number as long
-      },
+  if (global.setting.cache.enableLog) {
+    global.requestor.id().then((id) => {
+      global.requestor.log({
+        id,
+        instance: global.setting.wechaty.name,
+        level: 'info',
+        category: 'wechat-worker.cache.set',
+        timestamp: Date.now(),
+        content: {
+          key, // number as long
+        },
+      });
     });
-  });
+  }
 };
 
 export { init, get, set };

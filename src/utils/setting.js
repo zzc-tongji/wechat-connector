@@ -44,6 +44,7 @@ const validate = (new Ajv()).compile({
         expirationSecond: {
           $id: '#/properties/cache/properties/expirationSecond',
           type: 'integer',
+          minimum: 0,
         },
         enableLog: {
           $id: '#/properties/cache/properties/enableLog',
@@ -128,6 +129,8 @@ const validate = (new Ajv()).compile({
             port: {
               $id: '#/properties/http/properties/receiver/properties/port',
               type: 'integer',
+              maximum: 65535,
+              minimum: 1024,
             },
             token: {
               $id: '#/properties/http/properties/receiver/properties/token',
