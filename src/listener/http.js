@@ -4,22 +4,19 @@ import { sep } from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
 
+import * as wechat from '../requestor/wechat';
+import { global } from '../utils/global';
+import { getStatus } from '../utils/status';
 import { mock } from './utils/http-mock';
 import { validate as forwardValidate } from './utils/http-validator/forward';
 import { validate as replyValidate } from './utils/http-validator/reply';
 import { validate as sendValidate } from './utils/http-validator/send';
 import { validate as tokenValidate } from './utils/http-validator/token';
 import { errorhandler } from './utils/http-error-handler';
-import * as wechat from '../requestor/wechat';
-import { global } from '../utils/global';
 
 const app = express();
 
 const html = fs.readFileSync(`${__dirname}${sep}..${sep}..${sep}static${sep}wechat-worker.html`, { encoding: 'utf-8', flag: 'r' });
-
-const getStatus = () => {
-  return global.robot ? (global.robot.logonoff() ? 'logged-in' : 'logged-out') : 'stopped';
-};
 
 // mock
 mock(app);

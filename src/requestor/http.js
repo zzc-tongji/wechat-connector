@@ -8,11 +8,13 @@ import { id as terminalGetId } from './terminal';
 let headers;
 let idUrl;
 let idBody;
+let reportUrl;
 
 const init = () => {
   headers = new Headers({ 'content-type': 'application/json;charset=UTF-8' });
   idUrl = global.setting.http.sender.id.server.url;
   idBody = JSON.stringify({ token: global.setting.http.sender.id.server.token });
+  reportUrl = global.setting.http.sender.report.server.url;
 };
 
 const id = () => {
@@ -57,6 +59,24 @@ const log = (content) => {
   });
 };
 
+const report = (content) => {
+  // (content: object)
+  return new Promise((resolve) => {
+    content.token = global.setting.http.sender.report.server.token;
+    fetch(reportUrl, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
+      if (!response.ok) {
+        throw `fetch ${reportUrl} => ${response.status}`;
+      }
+      resolve();
+    }).catch((error) => {
+      // local log
+      wechatyLog.warn('local.requestor.http.report', error);
+      console.log();
+      resolve();
+    });
+  });
+};
+
 const validate = (new Ajv()).compile({
   $schema: 'http://json-schema.org/draft-07/schema',
   $id: 'http://example.com/example.json',
@@ -82,4 +102,4 @@ const x = (error, resolve) => {
   });
 };
 
-export { init, id, log };
+export { init, id, log, report };

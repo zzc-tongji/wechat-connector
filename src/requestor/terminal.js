@@ -7,7 +7,7 @@ const id = () => {
 };
 
 const log = (content) => {
-  // (content: object, fullText?: boolean)
+  // (content: object)
   return new Promise((resolve) => {
     switch (content.level) {
       case 'error':
@@ -40,4 +40,8 @@ const log = (content) => {
   });
 };
 
-export { id, log };
+const report = (content) => {
+  // (content: object)
+};
+
+export { id, log, report };

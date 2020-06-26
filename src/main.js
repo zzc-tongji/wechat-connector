@@ -6,6 +6,8 @@ import { listen as httpListen } from './listener/http';
 import * as wechat from './listener/wechat';
 import * as cache from './utils/cache';
 import { global } from './utils/global';
+import * as notLoginAfterStart from './utils/report/not-login-after-start';
+import * as unexpectedLogout from './utils/report/unexpected-logout';
 import * as setting from './utils/setting';
 
 const install = async () => {
@@ -47,6 +49,9 @@ const setGlobal = () => {
     global.requestor = terminal;
   }
   cache.init();
+  unexpectedLogout.init();
+  notLoginAfterStart.init();
+  notLoginAfterStart.enable();
   global.logout = async () => {
     if (global.robot === null) {
       return;
@@ -56,6 +61,7 @@ const setGlobal = () => {
     global.loginApproach.timestamp = null;
     if (global.robot.logonoff()) {
       await global.robot.logout();
+      unexpectedLogout.disable();
     }
   };
   global.start = async () => {
@@ -75,6 +81,7 @@ const setGlobal = () => {
     global.loginApproach.timestamp = null;
     await global.robot.stop();
     global.robot = null;
+    unexpectedLogout.disable();
   };
   // Global variable `global.robot` will be set when executing function `start`.
 };

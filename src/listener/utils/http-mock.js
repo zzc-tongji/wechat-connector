@@ -24,7 +24,21 @@ const mock = (app) => {
       return;
     }
     // echo
-    wechatyLog.info('[MOCK]', req.body);
+    wechatyLog.info('[MOCK::LOG]', req.body);
+    console.log();
+    // response
+    res.status(202);
+    res.send();
+  });
+  // POST => /rpc/report
+  app.post('/rpc/report', bodyParser.text({ type: '*/*' }), (req, res) => {
+    // request
+    const data = errorhandler('.listener.http-mock.report', tokenValidate, req, res, true);
+    if (data.status !== 200) {
+      return;
+    }
+    // echo
+    wechatyLog.info('[MOCK::REPORT]', req.body);
     console.log();
     // response
     res.status(202);

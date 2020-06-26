@@ -10,6 +10,7 @@ const global = {
   requestor: {
     id: null, // async function
     log: null, // async function
+    report: null, // async function
   },
   robot: null,
   setting: null,

@@ -10,12 +10,13 @@ const validate = (new Ajv()).compile({
   $schema: 'http://json-schema.org/draft-07/schema',
   $id: '',
   type: 'object',
-  additionalProperties: false,
   required: [
     'wechaty',
     'cache',
+    'report',
     'mode',
   ],
+  additionalProperties: true,
   properties: {
     wechaty: {
       $id: '#/properties/wechaty',
@@ -28,7 +29,6 @@ const validate = (new Ajv()).compile({
         name: {
           $id: '#/properties/wechaty/properties/name',
           type: 'string',
-          minLength: 1,
         },
       },
     },
@@ -44,8 +44,6 @@ const validate = (new Ajv()).compile({
         expirationSecond: {
           $id: '#/properties/cache/properties/expirationSecond',
           type: 'integer',
-          maximum: 3600,
-          minimun: 60,
         },
         enableLog: {
           $id: '#/properties/cache/properties/enableLog',
@@ -53,13 +51,61 @@ const validate = (new Ajv()).compile({
         },
       },
     },
+    report: {
+      $id: '#/properties/report',
+      type: 'object',
+      required: [
+        'notLoginAfterStart',
+        'unexpectedLogout',
+      ],
+      additionalProperties: true,
+      properties: {
+        notLoginAfterStart: {
+          $id: '#/properties/report/properties/notLoginAfterStart',
+          type: 'object',
+          required: [
+            'timeSecond',
+            'maxCount',
+          ],
+          additionalProperties: true,
+          properties: {
+            timeSecond: {
+              $id: '#/properties/report/properties/notLoginAfterStart/properties/timeSecond',
+              type: 'integer',
+              minimum: 600,
+            },
+            maxCount: {
+              $id: '#/properties/report/properties/notLoginAfterStart/properties/maxCount',
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        },
+        unexpectedLogout: {
+          $id: '#/properties/report/properties/unexpectedLogout',
+          type: 'object',
+          required: [
+            'timeSecond',
+            'maxCount',
+          ],
+          additionalProperties: true,
+          properties: {
+            timeSecond: {
+              $id: '#/properties/report/properties/unexpectedLogout/properties/timeSecond',
+              type: 'integer',
+              minimum: 60,
+            },
+            maxCount: {
+              $id: '#/properties/report/properties/unexpectedLogout/properties/maxCount',
+              $ref: '#/properties/report/properties/notLoginAfterStart/properties/maxCount',
+            },
+          },
+        },
+      },
+    },
     mode: {
       $id: '#/properties/mode',
       type: 'string',
-      enum: [
-        'http',
-        'terminal',
-      ],
     },
     http: {
       $id: '#/properties/http',
@@ -82,14 +128,10 @@ const validate = (new Ajv()).compile({
             port: {
               $id: '#/properties/http/properties/receiver/properties/port',
               type: 'integer',
-              maximum: 65535,
-              minimun: 1024,
             },
             token: {
               $id: '#/properties/http/properties/receiver/properties/token',
               type: 'string',
-              maxLength: 64,
-              minLength: 1,
             },
           },
         },
@@ -97,8 +139,9 @@ const validate = (new Ajv()).compile({
           $id: '#/properties/http/properties/sender',
           type: 'object',
           required: [
-            'log',
             'id',
+            'log',
+            'report',
           ],
           additionalProperties: false,
           properties: {
@@ -121,13 +164,10 @@ const validate = (new Ajv()).compile({
                   properties: {
                     url: {
                       $id: '#/properties/http/properties/sender/properties/id/properties/server/properties/url',
-                      type: 'string',
-                      minLength: 1,
                     },
                     token: {
                       $id: '#/properties/http/properties/sender/properties/id/properties/server/properties/token',
                       type: 'string',
-                      minLength: 1,
                     },
                   },
                 },
@@ -150,6 +190,10 @@ const validate = (new Ajv()).compile({
                   },
                 },
               },
+            },
+            report: {
+              $id: '#/properties/http/properties/sender/properties/report',
+              $ref: '#/properties/http/properties/sender/properties/id',
             },
           },
         },

@@ -6,6 +6,16 @@
     "expirationSecond": 600,
     "enableLog": false
   },
+  "report": {
+    "notLoginAfterStart": {
+      "timeSecond": 600,
+      "maxCount": 3
+    },
+    "unexpectedLogout": {
+      "timeSecond": 60,
+      "maxCount": 3
+    }
+  },
   "mode": "http",
   "http": {
     "receiver": {
@@ -26,6 +36,12 @@
             "token": "sender-log-0-token"
           }
         ]
+      },
+      "report": {
+        "server": {
+          "url": "http://127.0.0.1:8080/rpc/report",
+          "token": "sender-report-token"
+        }
       }
     }
   }

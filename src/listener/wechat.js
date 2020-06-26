@@ -1,5 +1,7 @@
 import { ScanStatus } from 'wechaty';
 
+import * as notLoginAfterStart from '../utils/report/not-login-after-start';
+import * as unexpectedLogout from '../utils/report/unexpected-logout';
 import { global } from '../utils/global';
 import { message } from './utils/wechat-message';
 
@@ -68,6 +70,10 @@ const login = (user) => {
       },
     });
   });
+  notLoginAfterStart.disable();
+  // reset
+  unexpectedLogout.disable();
+  unexpectedLogout.enable();
 };
 
 const logout = (user, reason) => {
@@ -85,6 +91,7 @@ const logout = (user, reason) => {
       },
     });
   });
+  notLoginAfterStart.enable();
 };
 
 const ready = () => {
