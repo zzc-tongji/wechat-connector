@@ -130,7 +130,10 @@ const scan = (qrcode, status) => {
   // (qrcode: string, status: ScanStatus, data?: string)
   global.loginApproach.status = ScanStatus[status];
   global.loginApproach.url = qrcode;
-  global.loginApproach.qrcode = `https://wechaty.github.io/qrcode/${qrcode}`;
+  global.loginApproach.qrcode = [
+    'https://api.qrserver.com/v1/create-qr-code/?data=',
+    encodeURIComponent(qrcode),
+  ].join('');
   global.loginApproach.timestamp = Date.now();
   //
   global.requestor.id().then((id) => {
