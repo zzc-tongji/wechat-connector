@@ -144,7 +144,6 @@ const validate = (new Ajv()).compile({
           required: [
             'id',
             'log',
-            'report',
           ],
           additionalProperties: false,
           properties: {
@@ -193,10 +192,6 @@ const validate = (new Ajv()).compile({
                   },
                 },
               },
-            },
-            report: {
-              $id: '#/properties/http/properties/sender/properties/report',
-              $ref: '#/properties/http/properties/sender/properties/log',
             },
           },
         },

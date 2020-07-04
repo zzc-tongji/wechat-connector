@@ -34,10 +34,6 @@ const f = () => {
       content: '{}',
     });
   });
-  global.requestor.report({
-    instance: global.setting.wechaty.name,
-    category: 'wechat-worker.report.not-login-after-start',
-  });
   count += 1;
   if (count >= maxCount) {
     disable();

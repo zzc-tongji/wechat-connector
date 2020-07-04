@@ -78,22 +78,4 @@ const log = (content) => {
   });
 };
 
-const report = (content) => {
-  // (content: object)
-  const logHeaders = new Headers(headers);
-  logHeaders.append('x-category', typeof content.category === 'string' ? content.category : 'wechat-worker');
-  global.setting.http.sender.report.serverList.forEach((server) => {
-    content.token = server.token;
-    fetch(server.url, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
-      if (!response.ok) {
-        throw `fetch ${server.url} => ${response.status}`;
-      }
-    }).catch((error) => {
-      // local log
-      wechatyLog.warn('local.requestor.http.report', error);
-      console.log();
-    });
-  });
-};
-
-export { init, id, log, report };
+export { init, id, log };

@@ -7,11 +7,7 @@ const global = {
     qrcode: '',
     timestamp: 0,
   },
-  requestor: {
-    id: null, // async function
-    log: null, // async function
-    report: null, // async function
-  },
+  requestor: null, // choose `terminal` or `http` as requestor
   robot: null,
   setting: null,
   logout: null, // async function

@@ -40,8 +40,4 @@ const log = (content) => {
   });
 };
 
-const report = (content) => {
-  // (content: object)
-};
-
-export { id, log, report };
+export { id, log };
