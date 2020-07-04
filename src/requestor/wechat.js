@@ -11,11 +11,11 @@ const logError = async (reason, contextType, payload) => {
     level: 'error',
     category: 'wechat-worker.requestor.wechat.error',
     timestamp: Date.now(),
-    content: {
+    content: JSON.stringify({
       reason, // string
       contextType, // string
       contextRequest: JSON.stringify(payload), // string
-    },
+    }),
   });
 };
 
@@ -68,14 +68,14 @@ const forward = async (payload) => {
       level: 'info',
       category: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
-      content: {
+      content: JSON.stringify({
         messageId: context.message.id, // string
         messageType: Message.Type[context.message.type()], // string
         messageText: context.message.type() === Message.Type.Text ? context.message.text() : '', // string
         receiverId: recipient.id, // string
         receiverType: 'friend', // string
         receiverName: recipient.name(), // string
-      },
+      }),
     });
   } else if (payload.receiver.category === 'group') {
     // to group
@@ -98,14 +98,14 @@ const forward = async (payload) => {
       level: 'info',
       category: 'wechat-worker.requestor.wechat.forward',
       timestamp: Date.now(),
-      content: {
+      content: JSON.stringify({
         messageId: context.message.id, // string
         messageType: Message.Type[context.message.type()], // string
         messageText: context.message.type() === Message.Type.Text ? context.message.text() : '', // string
         receiverId: recipient.id, // string
         receiverType: 'group', // string
         receiverName: await recipient.topic(), // string
-      },
+      }),
     });
   }
 };
@@ -137,12 +137,12 @@ const reply = async (payload) => {
       level: 'info',
       category: 'wechat-worker.requestor.wechat.reply',
       timestamp: Date.now(),
-      content: {
+      content: JSON.stringify({
         messageText: payload.message, // string
         receiverId: context.group.id, // string
         receiverType: 'group', // string
         receiverName: await context.group.topic(), // string
-      },
+      }),
     });
   } else {
     // from friend
@@ -161,12 +161,12 @@ const reply = async (payload) => {
       level: 'info',
       category: 'wechat-worker.requestor.wechat.reply',
       timestamp: Date.now(),
-      content: {
+      content: JSON.stringify({
         messageText: payload.message, // string
         receiverId: context.one.id, // string
         receiverType: 'friend', // string
         receiverName: context.one.name(), // string
-      },
+      }),
     });
   }
 };
@@ -202,12 +202,12 @@ const send = async (payload) => {
       level: 'info',
       category: 'wechat-worker.requestor.wechat.send',
       timestamp: Date.now(),
-      content: {
+      content: JSON.stringify({
         messageText: payload.message, // string
         receiverId: recipient.id, // string
         receiverType: 'friend', // string
         receiverName: recipient.name(), // string
-      },
+      }),
     });
   } else if (payload.receiver.category === 'group') {
     // to group
@@ -230,12 +230,12 @@ const send = async (payload) => {
       level: 'info',
       category: 'wechat-worker.requestor.wechat.send',
       timestamp: Date.now(),
-      content: {
+      content: JSON.stringify({
         messageText: payload.message, // string
         receiverId: recipient.id, // string
         receiverType: 'group', // string
         receiverName: await recipient.topic(), // string
-      },
+      }),
     });
   }
 };

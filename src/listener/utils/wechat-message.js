@@ -57,7 +57,7 @@ const message = (m) => {
         level: 'info',
         category: 'wechat-worker.listener.wechat.message',
         timestamp: Date.now(),
-        content: {
+        content: JSON.stringify({
           messageType: Message.Type[m.type()], // string
           messageText: m.type() === Message.Type.Text ? m.text() : '', // string
           messageFileBase64: '', // resultList[3] ? (dev ? '[base64-encoded]' : resultList[3].base64) : '', // string
@@ -71,7 +71,7 @@ const message = (m) => {
           oneIsFriend: one.friend() ? true : false, // boolean
           groupId: group ? group.id : '', // string
           groupName: typeof resultList[2] === 'string' ? resultList[2] : '', // string
-        },
+        }),
       });
     });
     // cache

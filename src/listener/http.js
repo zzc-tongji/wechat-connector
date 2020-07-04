@@ -237,9 +237,9 @@ const listen = () => {
         level: 'info',
         category: 'wechat-worker.listener.http.listen',
         timestamp: Date.now(),
-        content: {
+        content: JSON.stringify({
           port: global.setting.http.receiver.port, // number as integer
-        },
+        }),
       });
     });
   });

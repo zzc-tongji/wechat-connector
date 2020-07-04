@@ -31,6 +31,7 @@ const f = () => {
       level: 'error',
       category: 'wechat-worker.report.unexpected-logout',
       timestamp: Date.now(),
+      content: '{}',
     });
   });
   global.requestor.report({

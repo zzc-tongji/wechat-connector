@@ -14,7 +14,7 @@ const dong = (data) => {
       level: 'info',
       type: 'wechat-worker.listener.wechat.dong',
       timestamp: Date.now(),
-      // content: null,
+      content: '{}',
     });
   });
 };
@@ -28,10 +28,10 @@ const error = (error) => {
       level: 'info',
       category: 'wechat-worker.listener.wechat.error',
       timestamp: Date.now(),
-      content: {
+      content: JSON.stringify({
         name: error.name, // string
         message: error.message, // string
-      },
+      }),
     });
   });
 };
@@ -51,7 +51,7 @@ const heatbeat = (data) => {
       level: 'info',
       category: 'wechat-worker.listener.wechat.heatbeat',
       timestamp: Date.now(),
-      // content: null,
+      content: '{}',
     });
   });
 };
@@ -65,9 +65,9 @@ const login = (user) => {
       level: 'info',
       category: 'wechat-worker.listener.wechat.login',
       timestamp: Date.now(),
-      content: {
+      content: JSON.stringify({
         name: user.name(), // string
-      },
+      }),
     });
   });
   notLoginAfterStart.disable();
@@ -102,7 +102,7 @@ const ready = () => {
       level: 'info',
       category: 'wechat-worker.listener.wechat.ready',
       timestamp: Date.now(),
-      // content: null,
+      content: '{}',
     });
   });
 };
@@ -143,12 +143,12 @@ const scan = (qrcode, status) => {
       level: 'info',
       category: 'wechat-worker.listener.wechat.scan',
       timestamp: Date.now(),
-      content: {
+      content: JSON.stringify({
         status: global.loginApproach.status, // string
         url: global.loginApproach.url, // string
         qrcode: global.loginApproach.qrcode, // string
         timestamp: global.loginApproach.timestamp, // number as long
-      },
+      }),
     });
   });
 };
@@ -161,7 +161,7 @@ const start = () => {
       level: 'info',
       category: 'wechat-worker.listener.wechat.start',
       timestamp: Date.now(),
-      // content: null,
+      content: '{}',
     });
   });
 };
@@ -174,7 +174,7 @@ const stop = () => {
       level: 'info',
       category: 'wechat-worker.listener.wechat.stop',
       timestamp: Date.now(),
-      // content: null,
+      content: '{}',
     });
   });
 };

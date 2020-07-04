@@ -31,6 +31,7 @@ const f = () => {
       level: 'warn',
       category: 'wechat-worker.report.not-login-after-start',
       timestamp: Date.now(),
+      content: '{}',
     });
   });
   global.requestor.report({

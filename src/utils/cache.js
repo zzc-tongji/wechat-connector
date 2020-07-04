@@ -37,7 +37,7 @@ const removeExpired = () => {
         level: 'info',
         category: 'wechat-worker.cache.remove-expired',
         timestamp: Date.now(),
-        // content: null,
+        content: '{}',
       });
     });
   }
@@ -56,10 +56,10 @@ const get = (key) => {
         level: 'info',
         category: 'wechat-worker.cache.get',
         timestamp: Date.now(),
-        content: {
+        content: JSON.stringify({
           key, // number as long
           success: value ? true : false, // boolean
-        },
+        }),
       });
     });
   }
@@ -82,9 +82,9 @@ const set = (key, value) => {
         level: 'info',
         category: 'wechat-worker.cache.set',
         timestamp: Date.now(),
-        content: {
+        content: JSON.stringify({
           key, // number as long
-        },
+        }),
       });
     });
   }
