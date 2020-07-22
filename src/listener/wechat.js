@@ -36,7 +36,9 @@ const error = (error) => {
       }),
     }).then(() => {
       autoStart.set(true);
-      process.exit(1);
+      global.stop().then(() => {
+        process.exit(1);
+      });
     });
   });
 };
