@@ -11,9 +11,9 @@ const dong = (data) => {
     global.requestor.log({
       instance: global.setting.wechaty.name,
       id,
-      level: 'info',
+      level: 'INFO',
       type: 'wechat-worker.listener.wechat.dong',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: '{}',
     });
   });
@@ -25,9 +25,9 @@ const error = (error) => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'info',
+      level: 'INFO',
       category: 'wechat-worker.listener.wechat.error',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: JSON.stringify({
         name: error.name, // string
         message: error.message, // string
@@ -48,9 +48,9 @@ const heatbeat = (data) => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'info',
+      level: 'INFO',
       category: 'wechat-worker.listener.wechat.heatbeat',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: '{}',
     });
   });
@@ -62,9 +62,9 @@ const login = (user) => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'info',
+      level: 'INFO',
       category: 'wechat-worker.listener.wechat.login',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: JSON.stringify({
         name: user.name(), // string
       }),
@@ -82,9 +82,9 @@ const logout = (user, reason) => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'info',
+      level: 'INFO',
       category: 'wechat-worker.listener.wechat.logout',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: {
         name: user.name(), // string
         reason, // string
@@ -99,9 +99,9 @@ const ready = () => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'info',
+      level: 'INFO',
       category: 'wechat-worker.listener.wechat.ready',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: '{}',
     });
   });
@@ -140,14 +140,14 @@ const scan = (qrcode, status) => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'info',
+      level: 'INFO',
       category: 'wechat-worker.listener.wechat.scan',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: JSON.stringify({
         status: global.loginApproach.status, // string
         url: global.loginApproach.url, // string
         qrcode: global.loginApproach.qrcode, // string
-        timestamp: global.loginApproach.timestamp, // number as long
+        timestampMs: global.loginApproach.timestamp, // number as long
       }),
     });
   });
@@ -158,9 +158,9 @@ const start = () => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'info',
+      level: 'INFO',
       category: 'wechat-worker.listener.wechat.start',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: '{}',
     });
   });
@@ -171,9 +171,9 @@ const stop = () => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'info',
+      level: 'INFO',
       category: 'wechat-worker.listener.wechat.stop',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: '{}',
     });
   });

@@ -483,7 +483,7 @@ components:
         qrcode:
           type: 'string'
           example: 'https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Flogin.weixin.qq.com%2Fl%2FYeibnms7rg%3D%3D'
-        timestamp:
+        timestampMs:
           type: 'integer'
           example: 1592700000551
     Reply:

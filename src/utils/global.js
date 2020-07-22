@@ -5,7 +5,7 @@ const global = {
     status: ScanStatus[ScanStatus.Unknown],
     url: '',
     qrcode: '',
-    timestamp: 0,
+    timestampMs: 0,
   },
   requestor: null, // choose `terminal` or `http` as requestor
   robot: null,

@@ -28,9 +28,9 @@ const f = () => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'warn',
+      level: 'WARN',
       category: 'wechat-worker.report.not-login-after-start',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: '{}',
     });
   });

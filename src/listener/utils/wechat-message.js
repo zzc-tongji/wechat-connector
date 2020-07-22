@@ -54,15 +54,15 @@ const message = (m) => {
       global.requestor.log({
         id,
         instance: global.setting.wechaty.name,
-        level: 'info',
+        level: 'INFO',
         category: 'wechat-worker.listener.wechat.message',
-        timestamp: Date.now(),
+        timestampMs: Date.now(),
         content: JSON.stringify({
           messageType: Message.Type[m.type()], // string
           messageText: m.type() === Message.Type.Text ? m.text() : '', // string
           messageFileBase64: '', // resultList[3] ? (dev ? '[base64-encoded]' : resultList[3].base64) : '', // string
           messageFileName: '', // resultList[3] ? resultList[3].name : '', // string
-          messageTimestamp: m.date().valueOf(), // number as long
+          messageTimestampMs: m.date().valueOf(), // number as long
           messageAgeMillisecond: m.age() * 1000, // number as long
           oneId: one.id, // string
           oneName: one.name(), // string

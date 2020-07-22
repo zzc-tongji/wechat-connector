@@ -34,9 +34,9 @@ const removeExpired = () => {
       global.requestor.log({
         id,
         instance: global.setting.wechaty.name,
-        level: 'info',
+        level: 'INFO',
         category: 'wechat-worker.cache.remove-expired',
-        timestamp: Date.now(),
+        timestampMs: Date.now(),
         content: '{}',
       });
     });
@@ -53,9 +53,9 @@ const get = (key) => {
       global.requestor.log({
         id,
         instance: global.setting.wechaty.name,
-        level: 'info',
+        level: 'INFO',
         category: 'wechat-worker.cache.get',
-        timestamp: Date.now(),
+        timestampMs: Date.now(),
         content: JSON.stringify({
           key, // number as long
           success: value ? true : false, // boolean
@@ -79,9 +79,9 @@ const set = (key, value) => {
       global.requestor.log({
         id,
         instance: global.setting.wechaty.name,
-        level: 'info',
+        level: 'INFO',
         category: 'wechat-worker.cache.set',
-        timestamp: Date.now(),
+        timestampMs: Date.now(),
         content: JSON.stringify({
           key, // number as long
         }),

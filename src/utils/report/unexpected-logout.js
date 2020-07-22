@@ -28,9 +28,9 @@ const f = () => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'error',
+      level: 'ERR',
       category: 'wechat-worker.report.unexpected-logout',
-      timestamp: Date.now(),
+      timestampMs: Date.now(),
       content: '{}',
     });
   });
