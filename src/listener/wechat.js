@@ -5,6 +5,8 @@ import * as unexpectedLogout from '../utils/report/unexpected-logout';
 import { global } from '../utils/global';
 import { message } from './utils/wechat-message';
 
+import * as autoStart from '../utils/auto-start';
+
 const dong = (data) => {
   // (data?: string)
   global.requestor.id().then((id) => {
@@ -32,6 +34,9 @@ const error = (error) => {
         name: error.name, // string
         message: error.message, // string
       }),
+    }).then(() => {
+      autoStart.set(true);
+      process.exit(1);
     });
   });
 };

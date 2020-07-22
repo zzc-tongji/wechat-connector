@@ -10,6 +10,8 @@ import * as notLoginAfterStart from './utils/report/not-login-after-start';
 import * as unexpectedLogout from './utils/report/unexpected-logout';
 import * as setting from './utils/setting';
 
+import * as autoStart from './utils/auto-start';
+
 const install = async () => {
   // local log
   wechatyLog.info('local.install', 'begin');
@@ -33,6 +35,20 @@ const run = () => {
   switch (global.setting.mode) {
     case 'http':
       httpListen();
+      if (autoStart.get()) {
+        autoStart.set(false);
+        global.start();
+        global.requestor.id().then((id) => {
+          global.requestor.log({
+            id,
+            instance: global.setting.wechaty.name,
+            level: 'INFO',
+            category: 'wechat-worker.auto-start',
+            timestampMs: Date.now(),
+            content: '{}',
+          });
+        });
+      }
       break;
     default: // 'terminal'
       global.start();

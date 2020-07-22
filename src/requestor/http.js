@@ -64,18 +64,24 @@ const log = (content) => {
   // (content: object)
   const logHeaders = new Headers(headers);
   logHeaders.append('x-category', typeof content.category === 'string' ? content.category : 'wechat-worker');
+  const promiseList = [];
   global.setting.http.sender.log.serverList.forEach((server) => {
     content.token = server.token;
-    fetch(server.url, { method: 'POST', logHeaders, body: JSON.stringify(content) }).then((response) => {
-      if (!response.ok) {
-        throw `fetch ${server.url} => ${response.status}`;
-      }
-    }).catch((error) => {
-      // local log
-      wechatyLog.warn('local.requestor.http.log', error);
-      console.log();
-    });
+    promiseList.push(new Promise((resolve) => {
+      fetch(server.url, { method: 'POST', logHeaders, body: JSON.stringify(content) }).then((response) => {
+        if (!response.ok) {
+          throw `fetch ${server.url} => ${response.status}`;
+        }
+        resolve();
+      }).catch((error) => {
+        // local log
+        wechatyLog.warn('local.requestor.http.log', error);
+        console.log();
+        resolve();
+      });
+    }));
   });
+  return Promise.all(promiseList);
 };
 
 export { init, id, log };
