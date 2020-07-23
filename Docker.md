@@ -15,7 +15,7 @@ docker build -t zzcgwu/wechat-worker .
 
 ``` sh
 cp ./runtime/setting.example.json ./runtime/setting.json
-docker run -d --restart always --name wechat-worker -v ./runtime/:/usr/src/app/runtime/ -p 8080:8080 zzcgwu/wechat-worker
+docker run -d --restart on-failure --name wechat-worker -v ./runtime/:/usr/src/app/runtime/ -p 8080:8080 zzcgwu/wechat-worker
 ```
 
 #### Compose
@@ -24,7 +24,7 @@ docker run -d --restart always --name wechat-worker -v ./runtime/:/usr/src/app/r
 version: "3.3"
 services:
   wechat-worker:
-    restart: always
+    restart: on-failure
     container_name: wechat-worker
     volumes:
       - "./runtime/:/usr/src/app/runtime/"
