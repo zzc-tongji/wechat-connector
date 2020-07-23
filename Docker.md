@@ -14,7 +14,6 @@ docker build -t zzcgwu/wechat-worker .
 #### Script
 
 ``` sh
-cp ./runtime/setting.example.json ./runtime/setting.json
 docker run -d --restart on-failure --name wechat-worker -v ./runtime/:/usr/src/app/runtime/ -p 8080:8080 zzcgwu/wechat-worker
 ```
 
