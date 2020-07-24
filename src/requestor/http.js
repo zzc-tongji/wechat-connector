@@ -10,7 +10,7 @@ let idUrl;
 let idBody;
 
 const init = () => {
-  headers = new Headers({ 'content-type': 'application/json;charset=UTF-8' });
+  headers = new Headers([['Content-Type', 'application/json;charset=UTF-8']]);
   idUrl = global.setting.http.sender.id.server.url;
   idBody = JSON.stringify({ token: global.setting.http.sender.id.server.token });
 };
@@ -62,13 +62,11 @@ const x = (error, resolve) => {
 
 const log = (content) => {
   // (content: object)
-  const logHeaders = new Headers(headers);
-  logHeaders.append('x-category', typeof content.category === 'string' ? content.category : 'wechat-worker');
   const promiseList = [];
   global.setting.http.sender.log.serverList.forEach((server) => {
     content.token = server.token;
     promiseList.push(new Promise((resolve) => {
-      fetch(server.url, { method: 'POST', logHeaders, body: JSON.stringify(content) }).then((response) => {
+      fetch(server.url, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
         if (!response.ok) {
           throw `fetch ${server.url} => ${response.status}`;
         }
