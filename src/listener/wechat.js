@@ -11,10 +11,10 @@ const dong = (data) => {
   // (data?: string)
   global.requestor.id().then((id) => {
     global.requestor.log({
-      instance: global.setting.wechaty.name,
       id,
+      instance: global.setting.wechaty.name,
       level: 'INFO',
-      type: 'wechat-worker.listener.wechat.dong',
+      category: 'wechat-worker.listener.wechat.dong',
       timestampMs: Date.now(),
       content: '{}',
     });
