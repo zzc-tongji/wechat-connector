@@ -3,22 +3,13 @@ import { ScanStatus } from 'wechaty';
 import * as notLoginAfterStart from '../utils/report/not-login-after-start';
 import * as unexpectedLogout from '../utils/report/unexpected-logout';
 import { global } from '../utils/global';
+import { friendship } from './utils/wechat-friendship';
 import { message } from './utils/wechat-message';
 
 import * as autoStart from '../utils/auto-start';
 
 const dong = (data) => {
   // (data?: string)
-  // global.requestor.id().then((id) => {
-  //   global.requestor.log({
-  //     id,
-  //     instance: global.setting.wechaty.name,
-  //     level: 'INFO',
-  //     category: 'wechat-worker.listener.wechat.dong',
-  //     timestampMs: Date.now(),
-  //     content: '{}',
-  //   });
-  // });
 };
 
 const error = (error) => {
@@ -42,12 +33,6 @@ const error = (error) => {
     });
   });
 };
-
-/*
-const friendship = (friendship) => {
-  // (friendship: Friendship)
-};
-*/
 
 const heatbeat = (data) => {
   // (data: any)
@@ -142,22 +127,6 @@ const scan = (qrcode, status) => {
     encodeURIComponent(qrcode),
   ].join('');
   global.loginApproach.timestamp = Date.now();
-  //
-  // global.requestor.id().then((id) => {
-  //   global.requestor.log({
-  //     id,
-  //     instance: global.setting.wechaty.name,
-  //     level: 'INFO',
-  //     category: 'wechat-worker.listener.wechat.scan',
-  //     timestampMs: Date.now(),
-  //     content: JSON.stringify({
-  //       status: global.loginApproach.status, // string
-  //       url: global.loginApproach.url, // string
-  //       qrcode: global.loginApproach.qrcode, // string
-  //       timestampMs: global.loginApproach.timestamp, // number as long
-  //     }),
-  //   });
-  // });
 };
 
 const start = () => {
@@ -190,7 +159,7 @@ const listen = () => {
   // event
   global.robot.on('dong', dong);
   global.robot.on('error', error);
-  // global.robot.on('friendship', friendship);
+  global.robot.on('friendship', friendship);
   global.robot.on('heatbeat', heatbeat);
   global.robot.on('login', login);
   global.robot.on('logout', logout);
