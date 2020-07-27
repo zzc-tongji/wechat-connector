@@ -19,20 +19,20 @@
   "mode": "http",
   "http": {
     "receiver": {
-      "port": 8080,
+      "port": 8002,
       "token": "receiver-token"
     },
     "sender": {
       "id": {
         "server": {
-          "url": "http://127.0.0.1:8080/rpc/id",
+          "url": "http://127.0.0.1:8002/rpc/id",
           "token": "sender-id-token"
         }
       },
       "log": {
         "serverList": [
           {
-            "url": "http://127.0.0.1:8080/rpc/log",
+            "url": "http://127.0.0.1:8002/rpc/log",
             "token": "sender-log-token"
           }
         ]

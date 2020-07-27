@@ -14,7 +14,7 @@ docker build -t zzcgwu/wechat-worker .
 #### Script
 
 ``` sh
-docker run -d --restart on-failure --name wechat-worker -v ./runtime/:/usr/src/app/runtime/ -p 8080:8080 zzcgwu/wechat-worker
+docker run -d --restart on-failure --name wechat-worker -v ./runtime/:/usr/src/app/runtime/ -p 8002:8002 zzcgwu/wechat-worker
 ```
 
 #### Compose
@@ -28,7 +28,7 @@ services:
     volumes:
       - "./runtime/:/usr/src/app/runtime/"
     ports:
-      - "8080:8080"
+      - "8002:8002"
     image: zzcgwu/wechat-worker
 ```
 
