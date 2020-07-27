@@ -1,7 +1,7 @@
 import * as cache from '../utils/cache';
 import { global } from '../utils/global';
 
-import { Message } from 'wechaty';
+import { Contact, Message, Room } from 'wechaty';
 
 const logError = async (reason, contextType, payload) => {
   // (reason: string, callerType: string, payload: object)
@@ -240,7 +240,7 @@ const send = async (payload) => {
   }
 };
 
-const sync = async () => {
+const syncAll = async () => {
   if (!await checkRobot('sync', null)) {
     return;
   }
@@ -248,16 +248,51 @@ const sync = async () => {
   await Promise.all([
     global.robot.Contact.findAll().then((resultList) => {
       resultList.forEach((contact) => {
-        promiseList.push(contact.sync());
+        promiseList.push(sync(contact));
       });
     }),
     global.robot.Room.findAll().then((resultList) => {
       resultList.forEach((room) => {
-        promiseList.push(room.sync());
+        promiseList.push(sync(room));
       });
     }),
   ]);
   await Promise.all(promiseList);
+  await global.requestor.log({
+    id: await global.requestor.id(),
+    instance: global.setting.wechaty.name,
+    level: 'INFO',
+    category: 'wechat-worker.requestor.wechat.sync-all',
+    timestampMs: Date.now(),
+    content: '{}',
+  });
 };
 
-export { forward, reply, send, sync };
+const sync = async (obj) => {
+  let payload;
+  if (obj instanceof Contact) {
+    payload = {
+      objectType: 'friend',
+      objectName: obj.name(),
+    };
+  } else if (obj instanceof Room) {
+    payload = {
+      objectType: 'group',
+      objectName: await obj.topic(),
+    };
+  } else {
+    // invalid type
+    return;
+  }
+  await obj.sync();
+  await global.requestor.log({
+    id: await global.requestor.id(),
+    instance: global.setting.wechaty.name,
+    level: 'INFO',
+    category: 'wechat-worker.requestor.wechat.sync',
+    timestampMs: Date.now(),
+    content: JSON.stringify(payload),
+  });
+};
+
+export { forward, reply, send, syncAll, sync };

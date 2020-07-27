@@ -207,7 +207,7 @@ app.post('/rpc/sync', bodyParser.text({ type: '*/*' }), (req, res) => {
     return;
   }
   // sync
-  wechat.sync();
+  wechat.syncAll();
   // response
   res.status(202);
   res.send();
@@ -221,7 +221,7 @@ app.post('/rpc/sync/await', bodyParser.text({ type: '*/*' }), async (req, res) =
     return;
   }
   // sync
-  await wechat.sync();
+  await wechat.syncAll();
   // response
   res.status(204);
   res.send();

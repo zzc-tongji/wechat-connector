@@ -117,7 +117,7 @@ const ready = () => {
 
 const roomInvite = (roomInvitation) => {
   // (roomInvitation: RoomInvitation)
-  roomInvitation.topic((t) => {
+  roomInvitation.topic().then((t) => {
     global.requestor.id().then((id) => {
       // CACHE
       cache.set(id, { roomInvitation });
@@ -139,17 +139,10 @@ const roomInvite = (roomInvitation) => {
 const roomJoin = (room, inviteeList, inviter, date) => {
   // (room: Room, inviteeList: Contact[], inviter: Contact, date?: Date)
   //
-  // update friends and groups
-  if (inviteeList instanceof Array) {
-    for (let i = 0; i < inviteeList.length; i++) {
-      if (inviteeList[i].id === global.robot.userSelf().id) {
-        sync();
-        break;
-      }
-    }
-  }
+  // update
+  sync(room);
   //
-  room.topic((t) => {
+  room.topic().then((t) => {
     global.requestor.id().then((id) => {
       // log
       global.requestor.log({
@@ -168,7 +161,7 @@ const roomJoin = (room, inviteeList, inviter, date) => {
 
 const roomLeave = (room, leaverList, remover, date) => {
   // (room: Room, leaverList: Contact[],  remover?: Contact, date?: Date)
-  room.topic((t) => {
+  room.topic().then((t) => {
     global.requestor.id().then((id) => {
       // log
       global.requestor.log({
@@ -188,8 +181,8 @@ const roomLeave = (room, leaverList, remover, date) => {
 const roomTopic = (room, newTopic, oldTopic, changer, date) => {
   // (room: Room, newTopic: string, oldTopic: string, changer: Contact, date?: Date)
   //
-  // update friends and groups
-  sync();
+  // update
+  sync(room);
   //
   global.requestor.id().then((id) => {
     // log
@@ -200,8 +193,9 @@ const roomTopic = (room, newTopic, oldTopic, changer, date) => {
       category: 'wechat-worker.listener.wechat.room-topic',
       timestampMs: Date.now(),
       content: JSON.stringify({
-        oldGroupName: oldTopic,
-        newGropuName: newTopic,
+        // bug
+        oldGroupName: typeof oldTopic === 'string' ? oldTopic : '',
+        newGropuName: typeof newTopic === 'string' ? newTopic : '',
       }),
     });
   });
