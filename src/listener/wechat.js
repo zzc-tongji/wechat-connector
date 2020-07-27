@@ -9,16 +9,16 @@ import * as autoStart from '../utils/auto-start';
 
 const dong = (data) => {
   // (data?: string)
-  global.requestor.id().then((id) => {
-    global.requestor.log({
-      id,
-      instance: global.setting.wechaty.name,
-      level: 'INFO',
-      category: 'wechat-worker.listener.wechat.dong',
-      timestampMs: Date.now(),
-      content: '{}',
-    });
-  });
+  // global.requestor.id().then((id) => {
+  //   global.requestor.log({
+  //     id,
+  //     instance: global.setting.wechaty.name,
+  //     level: 'INFO',
+  //     category: 'wechat-worker.listener.wechat.dong',
+  //     timestampMs: Date.now(),
+  //     content: '{}',
+  //   });
+  // });
 };
 
 const error = (error) => {
@@ -143,21 +143,21 @@ const scan = (qrcode, status) => {
   ].join('');
   global.loginApproach.timestamp = Date.now();
   //
-  global.requestor.id().then((id) => {
-    global.requestor.log({
-      id,
-      instance: global.setting.wechaty.name,
-      level: 'INFO',
-      category: 'wechat-worker.listener.wechat.scan',
-      timestampMs: Date.now(),
-      content: JSON.stringify({
-        status: global.loginApproach.status, // string
-        url: global.loginApproach.url, // string
-        qrcode: global.loginApproach.qrcode, // string
-        timestampMs: global.loginApproach.timestamp, // number as long
-      }),
-    });
-  });
+  // global.requestor.id().then((id) => {
+  //   global.requestor.log({
+  //     id,
+  //     instance: global.setting.wechaty.name,
+  //     level: 'INFO',
+  //     category: 'wechat-worker.listener.wechat.scan',
+  //     timestampMs: Date.now(),
+  //     content: JSON.stringify({
+  //       status: global.loginApproach.status, // string
+  //       url: global.loginApproach.url, // string
+  //       qrcode: global.loginApproach.qrcode, // string
+  //       timestampMs: global.loginApproach.timestamp, // number as long
+  //     }),
+  //   });
+  // });
 };
 
 const start = () => {
