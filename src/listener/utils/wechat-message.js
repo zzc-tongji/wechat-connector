@@ -63,7 +63,7 @@ const message = (m) => {
           messageFileBase64: '', // resultList[3] ? (dev ? '[base64-encoded]' : resultList[3].base64) : '', // string
           messageFileName: '', // resultList[3] ? resultList[3].name : '', // string
           messageTimestampMs: m.date().valueOf(), // number as long
-          messageAgeMillisecond: m.age() * 1000, // number as long
+          messageAgeMs: m.age() * 1000, // number as long
           oneId: one.id, // string
           oneName: one.name(), // string
           oneAlias: typeof resultList[0] === 'string' ? resultList[0] : '', // string
