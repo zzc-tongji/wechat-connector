@@ -3,19 +3,43 @@ import { Message /* , log as wechatyLog */ } from 'wechaty';
 import { global } from '../../utils/global';
 import * as cache from '../../utils/cache';
 
+/*
+const dev = process.env.DEV ? true : false;
+
+const getFileBase64 = async (message) => {
+  // There is a bug which may terminate the whole process.
+  // https://github.com/wechaty/wechaty-puppet-puppeteer/issues/124
+  try {
+    if (message.type() === Message.Type.Text) {
+      return undefined;
+    } else {
+      const file = await message.toFileBox();
+      if (file) {
+        return {
+          base64: await file.toBase64(),
+          name: file.name,
+        };
+      }
+      return undefined;
+    }
+  } catch (e) {
+    wechatyLog.error('local.listener.wechat.message.file', JSON.stringify(error));
+    console.log();
+    return undefined;
+  }
+};
+*/
+
 const message = (m) => {
   // (m: Message)
   if (m.self()) {
-    // ignore sent message
+    // ingore sent message
     return;
   }
   const one = m.from();
   const group = m.room();
   // id
   global.requestor.id().then((id) => {
-    // cache
-    cache.set(id, { message: m, one, group });
-    // additional data
     const promiseList = [
       one.alias(), // [0]
       group ? group.alias(one).catch(() => {
@@ -23,6 +47,7 @@ const message = (m) => {
         // https://github.com/wechaty/wechaty-puppet-puppeteer/issues/122
       }) : Promise.resolve(undefined), // [1]
       group ? group.topic() : Promise.resolve(undefined), // [2]
+      Promise.resolve(undefined), // getFileBase64(m), // [3]
     ];
     Promise.all(promiseList).then((resultList) => {
       // log
@@ -35,8 +60,8 @@ const message = (m) => {
         content: JSON.stringify({
           messageType: Message.Type[m.type()], // string
           messageText: m.type() === Message.Type.Text ? m.text() : '', // string
-          messageFileBase64: '', // string
-          messageFileName: '', // string
+          messageFileBase64: '', // resultList[3] ? (dev ? '[base64-encoded]' : resultList[3].base64) : '', // string
+          messageFileName: '', // resultList[3] ? resultList[3].name : '', // string
           messageTimestampMs: m.date().valueOf(), // number as long
           messageAgeMs: m.age() * 1000, // number as long
           oneId: one.id, // string
@@ -49,6 +74,8 @@ const message = (m) => {
         }),
       });
     });
+    // cache
+    cache.set(id, { message: m, one, group });
   });
 };
 
