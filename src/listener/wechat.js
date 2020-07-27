@@ -193,7 +193,6 @@ const roomTopic = (room, newTopic, oldTopic, changer, date) => {
       category: 'wechat-worker.listener.wechat.room-topic',
       timestampMs: Date.now(),
       content: JSON.stringify({
-        // bug
         oldGroupName: typeof oldTopic === 'string' ? oldTopic : '',
         newGropuName: typeof newTopic === 'string' ? newTopic : '',
       }),
