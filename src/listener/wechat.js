@@ -7,9 +7,14 @@ import * as cache from '../utils/cache';
 import { global } from '../utils/global';
 import { message } from './utils/wechat-message';
 
+import { sync } from '../requestor/wechat';
+
 const error = (error) => {
   // (error: Error)
+  //
+  // id
   global.requestor.id().then((id) => {
+    // log
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
@@ -17,10 +22,12 @@ const error = (error) => {
       category: 'wechat-worker.listener.wechat.error',
       timestampMs: Date.now(),
       content: JSON.stringify({
-        name: error.name, // string
-        message: error.message, // string
+        name: typeof error.name === 'string' ? error.name : '', // string
+        message: typeof error.message === 'string' ? error.message : '', // string
+        stack: typeof error.stack === 'string' ? error.stack : '', // string
       }),
     }).then(() => {
+      // prepare for restart
       autoStart.set(true);
       global.stop().then(() => {
         process.exit(1);
@@ -31,8 +38,12 @@ const error = (error) => {
 
 const friendship = (f) => {
   // (f: Friendship)
+  //
+  // id
   global.requestor.id().then((id) => {
+    // CACHE
     cache.set(id, { friendship: f, contact: f.contact() });
+    // log
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
@@ -41,8 +52,8 @@ const friendship = (f) => {
       timestampMs: Date.now(),
       content: JSON.stringify({
         friendshipType: Friendship.Type[f.type()],
-        friendshipMessage: f.hello(),
-        friendshipContactName: f.contact().name(),
+        requestMessage: f.hello(),
+        name: f.contact().name(),
       }),
     });
   });
@@ -50,44 +61,48 @@ const friendship = (f) => {
 
 const login = (user) => {
   // (user: ContactSelf)
+  //
+  // prepare for report
+  notLoginAfterStart.disable();
+  unexpectedLogout.disable();
+  unexpectedLogout.enable();
+  // id
   global.requestor.id().then((id) => {
+    // log
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
       category: 'wechat-worker.listener.wechat.login',
       timestampMs: Date.now(),
-      content: JSON.stringify({
-        name: user.name(), // string
-      }),
+      content: '{}',
     });
   });
-  notLoginAfterStart.disable();
-  // reset
-  unexpectedLogout.disable();
-  unexpectedLogout.enable();
 };
 
 const logout = (user, reason) => {
   // (user: ContactSelf, reason?: string)
+  //
+  // prepare for report
+  notLoginAfterStart.enable();
+  // id
   global.requestor.id().then((id) => {
+    // log
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
       category: 'wechat-worker.listener.wechat.logout',
       timestampMs: Date.now(),
-      content: {
-        name: user.name(), // string
-        reason, // string
-      },
+      content: '{}',
     });
   });
-  notLoginAfterStart.enable();
 };
 
 const ready = () => {
+  // id
   global.requestor.id().then((id) => {
+    // log
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
@@ -99,24 +114,98 @@ const ready = () => {
   });
 };
 
-/*
+
 const roomInvite = (roomInvitation) => {
   // (roomInvitation: RoomInvitation)
-  // TODO: bug - event connot be emitted.
+  roomInvitation.topic((t) => {
+    global.requestor.id().then((id) => {
+      // CACHE
+      cache.set(id, { roomInvitation });
+      // log
+      global.requestor.log({
+        id,
+        instance: global.setting.wechaty.name,
+        level: 'INFO',
+        category: 'wechat-worker.listener.wechat.room-invite',
+        timestampMs: Date.now(),
+        content: JSON.stringify({
+          groupName: t,
+        }),
+      });
+    });
+  });
 };
 
 const roomJoin = (room, inviteeList, inviter, date) => {
   // (room: Room, inviteeList: Contact[], inviter: Contact, date?: Date)
+  //
+  // update friends and groups
+  if (inviteeList instanceof Array) {
+    for (let i = 0; i < inviteeList.length; i++) {
+      if (inviteeList[i].id === global.robot.userSelf().id) {
+        sync();
+        break;
+      }
+    }
+  }
+  //
+  room.topic((t) => {
+    global.requestor.id().then((id) => {
+      // log
+      global.requestor.log({
+        id,
+        instance: global.setting.wechaty.name,
+        level: 'INFO',
+        category: 'wechat-worker.listener.wechat.room-join',
+        timestampMs: Date.now(),
+        content: JSON.stringify({
+          groupName: t,
+        }),
+      });
+    });
+  });
 };
 
-const roomLeave = (room, leaverList) => {
+const roomLeave = (room, leaverList, remover, date) => {
   // (room: Room, leaverList: Contact[],  remover?: Contact, date?: Date)
+  room.topic((t) => {
+    global.requestor.id().then((id) => {
+      // log
+      global.requestor.log({
+        id,
+        instance: global.setting.wechaty.name,
+        level: 'INFO',
+        category: 'wechat-worker.listener.wechat.room-leave',
+        timestampMs: Date.now(),
+        content: JSON.stringify({
+          groupName: t,
+        }),
+      });
+    });
+  });
 };
 
 const roomTopic = (room, newTopic, oldTopic, changer, date) => {
   // (room: Room, newTopic: string, oldTopic: string, changer: Contact, date?: Date)
+  //
+  // update friends and groups
+  sync();
+  //
+  global.requestor.id().then((id) => {
+    // log
+    global.requestor.log({
+      id,
+      instance: global.setting.wechaty.name,
+      level: 'INFO',
+      category: 'wechat-worker.listener.wechat.room-topic',
+      timestampMs: Date.now(),
+      content: JSON.stringify({
+        oldGroupName: oldTopic,
+        newGropuName: newTopic,
+      }),
+    });
+  });
 };
-*/
 
 const scan = (qrcode, status) => {
   // (qrcode: string, status: ScanStatus, data?: string)
@@ -131,6 +220,7 @@ const scan = (qrcode, status) => {
 
 const start = () => {
   global.requestor.id().then((id) => {
+    // log
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
@@ -144,6 +234,7 @@ const start = () => {
 
 const stop = () => {
   global.requestor.id().then((id) => {
+    // log
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
@@ -163,10 +254,10 @@ const listen = () => {
   global.robot.on('logout', logout);
   global.robot.on('message', message);
   global.robot.on('ready', ready);
-  // global.robot.on('room-invite', roomInvite);
-  // global.robot.on('room-join', roomJoin);
-  // global.robot.on('room-leave', roomLeave);
-  // global.robot.on('room-topic', roomTopic);
+  global.robot.on('room-invite', roomInvite);
+  global.robot.on('room-join', roomJoin);
+  global.robot.on('room-leave', roomLeave);
+  global.robot.on('room-topic', roomTopic);
   global.robot.on('scan', scan);
   global.robot.on('start', start);
   global.robot.on('stop', stop);
