@@ -1,12 +1,11 @@
-import { ScanStatus } from 'wechaty';
+import { ScanStatus, Friendship } from 'wechaty';
 
 import * as notLoginAfterStart from '../utils/report/not-login-after-start';
 import * as unexpectedLogout from '../utils/report/unexpected-logout';
-import { global } from '../utils/global';
-import { friendship } from './utils/wechat-friendship';
-import { message } from './utils/wechat-message';
-
 import * as autoStart from '../utils/auto-start';
+import * as cache from '../utils/cache';
+import { global } from '../utils/global';
+import { message } from './utils/wechat-message';
 
 const error = (error) => {
   // (error: Error)
@@ -26,6 +25,25 @@ const error = (error) => {
       global.stop().then(() => {
         process.exit(1);
       });
+    });
+  });
+};
+
+const friendship = (f) => {
+  // (f: Friendship)
+  global.requestor.id().then((id) => {
+    cache.set(id, { friendship: f, contact: f.contact() });
+    global.requestor.log({
+      id,
+      instance: global.setting.wechaty.name,
+      level: 'INFO',
+      category: 'wechat-worker.listener.wechat.friendship',
+      timestampMs: Date.now(),
+      content: JSON.stringify({
+        friendshipType: Friendship.Type[f.type()],
+        friendshipMessage: f.hello(),
+        friendshipContactName: f.contact().name(),
+      }),
     });
   });
 };
