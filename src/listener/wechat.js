@@ -8,10 +8,6 @@ import { message } from './utils/wechat-message';
 
 import * as autoStart from '../utils/auto-start';
 
-const dong = (data) => {
-  // (data?: string)
-};
-
 const error = (error) => {
   // (error: Error)
   global.requestor.id().then((id) => {
@@ -30,20 +26,6 @@ const error = (error) => {
       global.stop().then(() => {
         process.exit(1);
       });
-    });
-  });
-};
-
-const heatbeat = (data) => {
-  // (data: any)
-  global.requestor.id().then((id) => {
-    global.requestor.log({
-      id,
-      instance: global.setting.wechaty.name,
-      level: 'INFO',
-      category: 'wechat-worker.listener.wechat.heatbeat',
-      timestampMs: Date.now(),
-      content: '{}',
     });
   });
 };
@@ -157,10 +139,8 @@ const stop = () => {
 
 const listen = () => {
   // event
-  global.robot.on('dong', dong);
   global.robot.on('error', error);
   global.robot.on('friendship', friendship);
-  global.robot.on('heatbeat', heatbeat);
   global.robot.on('login', login);
   global.robot.on('logout', logout);
   global.robot.on('message', message);
