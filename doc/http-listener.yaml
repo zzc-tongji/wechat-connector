@@ -465,7 +465,7 @@ components:
         - 'status'
         - 'url'
         - 'qrcode'
-        - 'timestamp'
+        - 'timestampMs'
       properties:
         status:
           type: 'string'

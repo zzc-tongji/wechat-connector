@@ -74,7 +74,7 @@ const setGlobal = () => {
     }
     global.loginApproach.url = null;
     global.loginApproach.qrcode = null;
-    global.loginApproach.timestamp = null;
+    global.loginApproach.timestampMs = null;
     if (global.robot.logonoff()) {
       await global.robot.logout();
       unexpectedLogout.disable();
@@ -94,7 +94,7 @@ const setGlobal = () => {
     }
     global.loginApproach.url = null;
     global.loginApproach.qrcode = null;
-    global.loginApproach.timestamp = null;
+    global.loginApproach.timestampMs = null;
     await global.robot.stop();
     global.robot = null;
     unexpectedLogout.disable();

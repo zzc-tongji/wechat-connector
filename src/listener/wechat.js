@@ -208,7 +208,7 @@ const scan = (qrcode, status) => {
     'https://api.qrserver.com/v1/create-qr-code/?data=',
     encodeURIComponent(qrcode),
   ].join('');
-  global.loginApproach.timestamp = Date.now();
+  global.loginApproach.timestampMs = Date.now();
 };
 
 const start = () => {

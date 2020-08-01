@@ -1,4 +1,4 @@
 POST http://127.0.0.1:8002/rpc/log HTTP/1.1
 content-type: application/json;charset=UTF-8; charset=UTF-8
 
-{"id":6433796102126135,"level":"info","type":"wechat-worker.listener.http.listen","content":{"port":8002},"timestamp":1592494055696,"token":"sender-log-0-token"}
+{"id":6433796102126135,"level":"info","type":"wechat-worker.listener.http.listen","content":{"port":8002},"timestampMs":1592494055696,"token":"sender-log-0-token"}
