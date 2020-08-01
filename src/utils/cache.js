@@ -22,7 +22,7 @@ const removeExpired = () => {
   }
   const remove = [];
   cache.forEach((value, key) => {
-    if (Date.now() - value.timestamp > expiration) {
+    if (Date.now() - value.timestampMs > expiration) {
       remove.push(key);
     }
   });
@@ -70,8 +70,8 @@ const set = (key, value) => {
   if (expiration <= 0) {
     return;
   }
-  if (!value.timestamp) {
-    value.timestamp = Date.now();
+  if (!value.timestampMs) {
+    value.timestampMs = Date.now();
   }
   cache.set(key, value);
   if (global.setting.cache.enableLog) {
