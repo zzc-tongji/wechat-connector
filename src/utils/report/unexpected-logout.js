@@ -29,7 +29,7 @@ const f = () => {
       id,
       instance: global.setting.wechaty.name,
       level: 'ERR',
-      category: 'wechat-worker.report.unexpected-logout',
+      category: 'wechat-connector.report.unexpected-logout',
       timestampMs: Date.now(),
       content: '{}',
     });

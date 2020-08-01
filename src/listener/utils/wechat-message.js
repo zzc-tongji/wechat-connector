@@ -30,12 +30,12 @@ const message = (m) => {
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
-        category: 'wechat-worker.listener.wechat.message',
+        category: 'wechat-connector.listener.wechat.message',
         timestampMs: Date.now(),
         content: JSON.stringify({
           messageType: Message.Type[m.type()], // string
           messageText: m.type() === Message.Type.Text ? m.text() : '', // string
-          messageFileBase64: '', // string
+          messageFile: '', // string
           messageFileName: '', // string
           messageTimestampMs: m.date().valueOf(), // number as long
           messageAgeMs: m.age() * 1000, // number as long

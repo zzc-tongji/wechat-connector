@@ -29,7 +29,7 @@ const f = () => {
       id,
       instance: global.setting.wechaty.name,
       level: 'WARN',
-      category: 'wechat-worker.report.not-login-after-start',
+      category: 'wechat-connector.report.not-login-after-start',
       timestampMs: Date.now(),
       content: '{}',
     });

@@ -35,7 +35,7 @@ const removeExpired = () => {
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
-        category: 'wechat-worker.cache.remove-expired',
+        category: 'wechat-connector.cache.remove-expired',
         timestampMs: Date.now(),
         content: '{}',
       });
@@ -54,7 +54,7 @@ const get = (key) => {
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
-        category: 'wechat-worker.cache.get',
+        category: 'wechat-connector.cache.get',
         timestampMs: Date.now(),
         content: JSON.stringify({
           key, // number as long
@@ -80,7 +80,7 @@ const set = (key, value) => {
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
-        category: 'wechat-worker.cache.set',
+        category: 'wechat-connector.cache.set',
         timestampMs: Date.now(),
         content: JSON.stringify({
           key, // number as long

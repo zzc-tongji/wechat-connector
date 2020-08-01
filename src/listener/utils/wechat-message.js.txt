@@ -55,7 +55,7 @@ const message = (m) => {
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
-        category: 'wechat-worker.listener.wechat.message',
+        category: 'wechat-connector.listener.wechat.message',
         timestampMs: Date.now(),
         content: JSON.stringify({
           messageType: Message.Type[m.type()], // string

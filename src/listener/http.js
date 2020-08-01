@@ -235,7 +235,7 @@ const listen = () => {
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
-        category: 'wechat-worker.listener.http.listen',
+        category: 'wechat-connector.listener.http.listen',
         timestampMs: Date.now(),
         content: JSON.stringify({
           port: global.setting.http.receiver.port, // number as integer

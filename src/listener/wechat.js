@@ -19,7 +19,7 @@ const error = (error) => {
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.listener.wechat.error',
+      category: 'wechat-connector.listener.wechat.error',
       timestampMs: Date.now(),
       content: JSON.stringify({
         name: typeof error.name === 'string' ? error.name : '', // string
@@ -48,12 +48,12 @@ const friendship = (f) => {
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.listener.wechat.friendship',
+      category: 'wechat-connector.listener.wechat.friendship',
       timestampMs: Date.now(),
       content: JSON.stringify({
         friendshipType: Friendship.Type[f.type()],
         requestMessage: f.hello(),
-        name: f.contact().name(),
+        requesterName: f.contact().name(),
       }),
     });
   });
@@ -73,7 +73,7 @@ const login = (user) => {
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.listener.wechat.login',
+      category: 'wechat-connector.listener.wechat.login',
       timestampMs: Date.now(),
       content: '{}',
     });
@@ -92,7 +92,7 @@ const logout = (user, reason) => {
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.listener.wechat.logout',
+      category: 'wechat-connector.listener.wechat.logout',
       timestampMs: Date.now(),
       content: '{}',
     });
@@ -107,7 +107,7 @@ const ready = () => {
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.listener.wechat.ready',
+      category: 'wechat-connector.listener.wechat.ready',
       timestampMs: Date.now(),
       content: '{}',
     });
@@ -126,7 +126,7 @@ const roomInvite = (roomInvitation) => {
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
-        category: 'wechat-worker.listener.wechat.room-invite',
+        category: 'wechat-connector.listener.wechat.room-invite',
         timestampMs: Date.now(),
         content: JSON.stringify({
           groupName: t,
@@ -149,7 +149,7 @@ const roomJoin = (room, inviteeList, inviter, date) => {
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
-        category: 'wechat-worker.listener.wechat.room-join',
+        category: 'wechat-connector.listener.wechat.room-join',
         timestampMs: Date.now(),
         content: JSON.stringify({
           groupName: t,
@@ -168,7 +168,7 @@ const roomLeave = (room, leaverList, remover, date) => {
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
-        category: 'wechat-worker.listener.wechat.room-leave',
+        category: 'wechat-connector.listener.wechat.room-leave',
         timestampMs: Date.now(),
         content: JSON.stringify({
           groupName: t,
@@ -190,7 +190,7 @@ const roomTopic = (room, newTopic, oldTopic, changer, date) => {
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.listener.wechat.room-topic',
+      category: 'wechat-connector.listener.wechat.room-topic',
       timestampMs: Date.now(),
       content: JSON.stringify({
         oldGroupName: typeof oldTopic === 'string' ? oldTopic : '',
@@ -218,7 +218,7 @@ const start = () => {
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.listener.wechat.start',
+      category: 'wechat-connector.listener.wechat.start',
       timestampMs: Date.now(),
       content: '{}',
     });
@@ -232,7 +232,7 @@ const stop = () => {
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.listener.wechat.stop',
+      category: 'wechat-connector.listener.wechat.stop',
       timestampMs: Date.now(),
       content: '{}',
     });

@@ -9,7 +9,7 @@ const logError = async (reason, contextType, payload) => {
     id: await global.requestor.id(),
     instance: global.setting.wechaty.name,
     level: 'ERR',
-    category: 'wechat-worker.requestor.wechat.error',
+    category: 'wechat-connector.requestor.wechat.error',
     timestampMs: Date.now(),
     content: JSON.stringify({
       reason, // string
@@ -66,7 +66,7 @@ const forward = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.requestor.wechat.forward',
+      category: 'wechat-connector.requestor.wechat.forward',
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageId: context.message.id, // string
@@ -96,7 +96,7 @@ const forward = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.requestor.wechat.forward',
+      category: 'wechat-connector.requestor.wechat.forward',
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageId: context.message.id, // string
@@ -135,7 +135,7 @@ const reply = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.requestor.wechat.reply',
+      category: 'wechat-connector.requestor.wechat.reply',
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageText: payload.message, // string
@@ -159,7 +159,7 @@ const reply = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.requestor.wechat.reply',
+      category: 'wechat-connector.requestor.wechat.reply',
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageText: payload.message, // string
@@ -200,7 +200,7 @@ const send = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.requestor.wechat.send',
+      category: 'wechat-connector.requestor.wechat.send',
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageText: payload.message, // string
@@ -228,7 +228,7 @@ const send = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-worker.requestor.wechat.send',
+      category: 'wechat-connector.requestor.wechat.send',
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageText: payload.message, // string
@@ -262,7 +262,7 @@ const syncAll = async () => {
     id: await global.requestor.id(),
     instance: global.setting.wechaty.name,
     level: 'INFO',
-    category: 'wechat-worker.requestor.wechat.sync-all',
+    category: 'wechat-connector.requestor.wechat.sync-all',
     timestampMs: Date.now(),
     content: '{}',
   });
@@ -289,7 +289,7 @@ const sync = async (obj) => {
     id: await global.requestor.id(),
     instance: global.setting.wechaty.name,
     level: 'INFO',
-    category: 'wechat-worker.requestor.wechat.sync',
+    category: 'wechat-connector.requestor.wechat.sync',
     timestampMs: Date.now(),
     content: JSON.stringify(payload),
   });

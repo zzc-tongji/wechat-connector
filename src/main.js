@@ -43,7 +43,7 @@ const run = () => {
             id,
             instance: global.setting.wechaty.name,
             level: 'INFO',
-            category: 'wechat-worker.auto-start',
+            category: 'wechat-connector.auto-start',
             timestampMs: Date.now(),
             content: '{}',
           });
