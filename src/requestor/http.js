@@ -27,10 +27,10 @@ const id = () => {
         }
         resolve(data.id);
       }).catch((e) => {
-        x(e, resolve);
+        idHelper(e, resolve);
       });
     }).catch((error) => {
-      x(error, resolve);
+      idHelper(error, resolve);
     });
   });
 };
@@ -51,7 +51,7 @@ const validate = (new Ajv()).compile({
   },
 });
 
-const x = (error, resolve) => {
+const idHelper = (error, resolve) => {
   // local log
   wechatyLog.warn('local.requestor.http.id', error);
   console.log();
@@ -67,19 +67,28 @@ const log = (content) => {
     content.token = server.token;
     promiseList.push(new Promise((resolve) => {
       fetch(server.url, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
-        if (!response.ok) {
-          throw `fetch ${server.url} => ${response.status}`;
+        if (response.ok) {
+          resolve();
+          return;
         }
-        resolve();
+        response.text().then((text) => {
+          // local log
+          throw `fetch ${server.url} => ${response.status} => ${text}`;
+        }).catch((error) => {
+          logHelper(error, resolve);
+        });
       }).catch((error) => {
-        // local log
-        wechatyLog.warn('local.requestor.http.log', error);
-        console.log();
-        resolve();
+        logHelper(error, resolve);
       });
     }));
   });
   return Promise.all(promiseList);
+};
+
+const logHelper = (error, resolve) => {
+  wechatyLog.warn('local.requestor.http.log', error);
+  console.log();
+  resolve();
 };
 
 export { init, id, log };
