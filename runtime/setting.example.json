@@ -25,8 +25,7 @@
     "sender": {
       "id": {
         "server": {
-          "url": "http://127.0.0.1:8002/rpc/id",
-          "token": "sender-id-token"
+          "url": "http://127.0.0.1:8002/rpc/id"
         }
       },
       "log": {

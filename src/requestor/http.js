@@ -7,17 +7,15 @@ import { id as terminalGetId } from './terminal';
 
 let headers;
 let idUrl;
-let idBody;
 
 const init = () => {
   headers = new Headers([['content-type', 'application/json;charset=UTF-8']]);
   idUrl = global.setting.http.sender.id.server.url;
-  idBody = JSON.stringify({ token: global.setting.http.sender.id.server.token });
 };
 
 const id = () => {
   return new Promise((resolve) => {
-    fetch(idUrl, { method: 'POST', headers, body: idBody }).then((response) => {
+    fetch(idUrl).then((response) => {
       if (!response.ok) {
         throw `fetch ${idUrl} => ${response.status}`;
       }

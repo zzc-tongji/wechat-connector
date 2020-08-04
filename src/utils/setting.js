@@ -160,16 +160,11 @@ const validate = (new Ajv()).compile({
                   type: 'object',
                   required: [
                     'url',
-                    'token',
                   ],
                   additionalProperties: false,
                   properties: {
                     url: {
                       $id: '#/properties/http/properties/sender/properties/id/properties/server/properties/url',
-                    },
-                    token: {
-                      $id: '#/properties/http/properties/sender/properties/id/properties/server/properties/token',
-                      type: 'string',
                     },
                   },
                 },
@@ -188,7 +183,22 @@ const validate = (new Ajv()).compile({
                   type: 'array',
                   additionalItems: false,
                   items: {
-                    $ref: '#/properties/http/properties/sender/properties/id/properties/server',
+                    $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items',
+                    type: 'object',
+                    required: [
+                      'url',
+                      'token',
+                    ],
+                    additionalProperties: false,
+                    properties: {
+                      url: {
+                        $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items/properties/url',
+                      },
+                      token: {
+                        $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items/properties/token',
+                        type: 'string',
+                      },
+                    },
                   },
                 },
               },
