@@ -28,7 +28,7 @@ const f = () => {
     global.requestor.log({
       id,
       instance: global.setting.wechaty.name,
-      level: 'WARN',
+      level: 'ERR',
       category: 'wechat-connector.report.not-login-after-start',
       timestampMs: Date.now(),
       content: '{}',

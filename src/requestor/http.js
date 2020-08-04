@@ -53,7 +53,7 @@ const validate = (new Ajv()).compile({
 
 const idHelper = (error, resolve) => {
   // local log
-  wechatyLog.warn('local.requestor.http.id', error);
+  wechatyLog.error('local.requestor.http.id', error);
   console.log();
   terminalGetId().then((id) => {
     resolve(id);
@@ -86,7 +86,7 @@ const log = (content) => {
 };
 
 const logHelper = (error, resolve) => {
-  wechatyLog.warn('local.requestor.http.log', error);
+  wechatyLog.error('local.requestor.http.log', error);
   console.log();
   resolve();
 };
