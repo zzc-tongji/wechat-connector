@@ -5,17 +5,6 @@ import { errorhandler } from './http-error-handler';
 import { validate as tokenValidate } from './http-validator/token';
 
 const mock = (app) => {
-  // POST => /rpc/id
-  app.post('/rpc/id', bodyParser.text({ type: 'application/json' }), (req, res) => {
-    // request
-    const data = errorhandler('.listener.http-mock.id', tokenValidate, req, res, true);
-    if (data.status !== 200) {
-      return;
-    }
-    // response
-    res.set('content-type', 'application/json;charset=UTF-8');
-    res.send({ id: Math.floor(Math.random() * 9007199254740991) });
-  });
   // POST => /rpc/log
   app.post('/rpc/log', bodyParser.text({ type: 'application/json', limit: '30mb' }), (req, res) => {
     // request
