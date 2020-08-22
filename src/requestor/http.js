@@ -10,7 +10,7 @@ let idUrl;
 
 const init = () => {
   headers = new Headers([['content-type', 'application/json;charset=UTF-8']]);
-  idUrl = global.setting.http.sender.id.server.url;
+  idUrl = global.setting.http.sender.id;
 };
 
 const id = () => {
@@ -62,7 +62,7 @@ const log = (content) => {
   // (content: object)
   const promiseList = [];
   global.setting.http.sender.log.serverList.forEach((server) => {
-    content.token = server.token;
+    content.rpcToken = server.rpcToken;
     promiseList.push(new Promise((resolve) => {
       fetch(server.url, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
         if (response.ok) {

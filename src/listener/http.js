@@ -54,7 +54,7 @@ app.post('/rpc/forward', bodyParser.text({ type: 'application/json' }), (req, re
     return;
   }
   // forward
-  delete data.payload.token;
+  delete data.payload.rpcToken;
   wechat.forward(data.payload);
   // response
   res.status(202);
@@ -121,7 +121,7 @@ app.post('/rpc/reply', bodyParser.text({ type: 'application/json' }), (req, res)
     return;
   }
   // reply
-  delete data.payload.token;
+  delete data.payload.rpcToken;
   wechat.reply(data.payload);
   // response
   res.status(202);
@@ -136,7 +136,7 @@ app.post('/rpc/send', bodyParser.text({ type: 'application/json' }), (req, res) 
     return;
   }
   // send
-  delete data.payload.token;
+  delete data.payload.rpcToken;
   wechat.send(data.payload);
   // response
   res.status(202);

@@ -4,12 +4,12 @@ const validate = (new Ajv()).compile({
   $schema: 'http://json-schema.org/draft-07/schema',
   $id: '',
   required: [
-    'token',
+    'rpcToken',
   ],
   additionalProperties: true,
   properties: {
-    token: {
-      $id: '#/properties/token',
+    rpcToken: {
+      $id: '#/properties/rpcToken',
       type: 'string',
       maxLength: 64,
       minLength: 1,

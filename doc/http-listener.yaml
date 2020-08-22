@@ -17,7 +17,7 @@ paths:
       summary: 'exit'
       operationId: 'rpcExit'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [exit.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/exit.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [exit.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/exit.http).'
         content:
           application/json:
             schema:
@@ -32,7 +32,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -60,7 +60,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -73,7 +73,7 @@ paths:
       summary: 'get the link of WeChat login'
       operationId: 'rpcStatusAwait'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [login-approach.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/login-approach.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [login-approach.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/login-approach.http).'
         content:
           application/json:
             schema:
@@ -92,7 +92,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -105,7 +105,7 @@ paths:
       summary: 'logout from WeChat'
       operationId: 'rpcLogout'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [logout.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/logout.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [logout.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/logout.http).'
         content:
           application/json:
             schema:
@@ -120,7 +120,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -133,7 +133,7 @@ paths:
       summary: 'logout from WeChat, wait until done'
       operationId: 'rpcLogoutAwait'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [await.logout.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.logout.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [await.logout.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.logout.http).'
         content:
           application/json:
             schema:
@@ -148,7 +148,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -176,7 +176,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -204,7 +204,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -217,7 +217,7 @@ paths:
       summary: 'start the robot'
       operationId: 'rpcStart'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [start.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/start.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [start.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/start.http).'
         content:
           application/json:
             schema:
@@ -232,7 +232,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -245,7 +245,7 @@ paths:
       summary: 'start the robot, wait until done'
       operationId: 'rpcStartAwait'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [await.start.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.start.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [await.start.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.start.http).'
         content:
           application/json:
             schema:
@@ -260,7 +260,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -273,7 +273,7 @@ paths:
       summary: 'get the status of the robot'
       operationId: 'rpcStatus'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [status.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/status.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [status.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/status.http).'
         content:
           application/json:
             schema:
@@ -292,7 +292,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -305,7 +305,7 @@ paths:
       summary: 'stop the robot'
       operationId: 'rpcStop'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [stop.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/stop.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [stop.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/stop.http).'
         content:
           application/json:
             schema:
@@ -320,7 +320,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -333,7 +333,7 @@ paths:
       summary: 'stop the WeChat worker, wait until done'
       operationId: 'rpcStopAwait'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [await.stop.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.stop.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [await.stop.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.stop.http).'
         content:
           application/json:
             schema:
@@ -348,7 +348,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -361,7 +361,7 @@ paths:
       summary: 'update data of all friends 朋友 and groups 群聊'
       operationId: 'rpcSynchronous'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [sync.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/sync.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [sync.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/sync.http).'
         content:
           application/json:
             schema:
@@ -376,7 +376,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -389,7 +389,7 @@ paths:
       summary: 'update data of all friends 朋友 and groups 群聊, wait until done'
       operationId: 'rpcSynchronousAwait'
       requestBody:
-        description: '`token` is used for authorization. Here is a request example in [await.sync.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.sync.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [await.sync.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.sync.http).'
         content:
           application/json:
             schema:
@@ -404,7 +404,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         403:
-          description: 'The token is invalid.'
+          description: 'The RPC token is invalid.'
           content:
             application/json:
               schema:
@@ -425,7 +425,7 @@ components:
       required:
         - 'id'
         - 'receiver'
-        - 'token'
+        - 'rpcToken'
       additionalProperties: false
       properties:
         id:
@@ -454,11 +454,11 @@ components:
                 - 'friend'
                 - 'group'
               example: 'friend'
-        token:
+        rpcToken:
           type: 'string'
           maxLength: 64
           minLength: 1
-          example: 'receiver-token'
+          example: 'wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s'
     LoginApproach:
       type: 'object'
       required:
@@ -492,7 +492,7 @@ components:
       required:
         - 'id'
         - 'message'
-        - 'token'
+        - 'rpcToken'
       additionalProperties: false
       properties:
         id:
@@ -504,18 +504,18 @@ components:
           type: 'string'
           minLength: 1
           example: 'text-and-small-sticker'
-        token:
+        rpcToken:
           type: 'string'
           maxLength: 64
           minLength: 1
-          example: 'receiver-token'
+          example: 'wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s'
     Send:
       description: 'The json schema is defined in [send.js](https://github.com/zzc-tongji/WeChat-worker/blob/master/src/listener/utils/http-validator/send.js)'
       type: 'object'
       required:
         - 'message'
         - 'receiver'
-        - 'token'
+        - 'rpcToken'
       properties:
         message:
           type: 'string'
@@ -542,11 +542,11 @@ components:
                 - 'friend'
                 - 'group'
               example: 'friend'
-        token:
+        rpcToken:
           type: 'string'
           maxLength: 64
           minLength: 1
-          example: 'receiver-token'
+          example: 'wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s'
     Status:
       type: 'object'
       required:
@@ -562,10 +562,10 @@ components:
     Token:
       type: 'object'
       required:
-        - 'token'
+        - 'rpcToken'
       properties:
-        token:
+        rpcToken:
           type: 'string'
           maxLength: 64
           minLength: 1
-          example: 'receiver-token'
+          example: 'wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s'

@@ -7,7 +7,7 @@ const validate = (new Ajv()).compile({
   required: [
     'message',
     'receiver',
-    'token',
+    'rpcToken',
   ],
   additionalProperties: false,
   properties: {
@@ -45,8 +45,8 @@ const validate = (new Ajv()).compile({
         },
       },
     },
-    token: {
-      $id: '#/properties/token',
+    rpcToken: {
+      $id: '#/properties/rpcToken',
       type: 'string',
       maxLength: 64,
       minLength: 1,

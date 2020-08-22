@@ -14,11 +14,11 @@ const test = (validate, json, mock = false) => {
         },
       };
     }
-    if (!mock && payload.token !== global.setting.http.receiver.token) {
+    if (!mock && payload.rpcToken !== global.setting.http.receiver.rpcToken) {
       throw {
         status: 403,
         payload: {
-          reason: 'invalid token',
+          reason: 'invalid rpc token',
         },
       };
     }

@@ -20,19 +20,15 @@
   "http": {
     "receiver": {
       "port": 8002,
-      "token": "receiver-token"
+      "rpcToken": "wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s"
     },
     "sender": {
-      "id": {
-        "server": {
-          "url": "http://127.0.0.1:8002/rpc/id"
-        }
-      },
+      "id": "https://id.zzc.icu/",
       "log": {
         "serverList": [
           {
             "url": "http://127.0.0.1:8002/rpc/log",
-            "token": "sender-log-token"
+            "rpcToken": "x"
           }
         ]
       }

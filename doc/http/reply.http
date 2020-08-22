@@ -4,5 +4,5 @@ content-type: application/json;charset=UTF-8
 {
   "id": 6946070168688469,
   "message": "text-and-small-sticker",
-  "token": "receiver-token"
+  "rpcToken": "wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s"
 }

@@ -8,5 +8,5 @@ content-type: application/json;charset=UTF-8
     "isAlias": false,
     "category": "friend"
   },
-  "token": "receiver-token"
+  "rpcToken": "wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s"
 }

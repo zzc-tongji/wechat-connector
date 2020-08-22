@@ -2,5 +2,5 @@ POST http://127.0.0.1:8002/rpc/start HTTP/1.1
 content-type: application/json;charset=UTF-8
 
 {
-  "token": "receiver-token"
+  "rpcToken": "wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s"
 }

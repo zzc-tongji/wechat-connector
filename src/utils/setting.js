@@ -122,7 +122,7 @@ const validate = (new Ajv()).compile({
           type: 'object',
           required: [
             'port',
-            'token',
+            'rpcToken',
           ],
           additionalProperties: false,
           properties: {
@@ -132,8 +132,8 @@ const validate = (new Ajv()).compile({
               maximum: 65535,
               minimum: 1024,
             },
-            token: {
-              $id: '#/properties/http/properties/receiver/properties/token',
+            rpcToken: {
+              $id: '#/properties/http/properties/receiver/properties/rpcToken',
               type: 'string',
             },
           },
@@ -149,26 +149,7 @@ const validate = (new Ajv()).compile({
           properties: {
             id: {
               $id: '#/properties/http/properties/sender/properties/id',
-              type: 'object',
-              required: [
-                'server',
-              ],
-              additionalProperties: false,
-              properties: {
-                server: {
-                  $id: '#/properties/http/properties/sender/properties/id/properties/server',
-                  type: 'object',
-                  required: [
-                    'url',
-                  ],
-                  additionalProperties: false,
-                  properties: {
-                    url: {
-                      $id: '#/properties/http/properties/sender/properties/id/properties/server/properties/url',
-                    },
-                  },
-                },
-              },
+              type: 'string',
             },
             log: {
               $id: '#/properties/http/properties/sender/properties/log',
@@ -187,15 +168,15 @@ const validate = (new Ajv()).compile({
                     type: 'object',
                     required: [
                       'url',
-                      'token',
+                      'rpcToken',
                     ],
                     additionalProperties: false,
                     properties: {
                       url: {
                         $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items/properties/url',
                       },
-                      token: {
-                        $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items/properties/token',
+                      rpcToken: {
+                        $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items/properties/rpcToken',
                         type: 'string',
                       },
                     },
