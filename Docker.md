@@ -4,7 +4,7 @@
 
 ``` sh
 git clean -xfd
-docker build -t zzcgwu/wechat-worker .
+docker build -t zzcgwu/wechat-connector .
 ```
 
 ### Run
@@ -14,7 +14,7 @@ docker build -t zzcgwu/wechat-worker .
 #### Script
 
 ``` sh
-docker run -d --restart on-failure --name wechat-worker -v ./runtime/:/usr/src/app/runtime/ -p 8002:8002 zzcgwu/wechat-worker
+docker run -d --restart on-failure --name wechat-connector -v ./runtime/:/usr/src/app/runtime/ -p 8002:8002 zzcgwu/wechat-connector
 ```
 
 #### Compose
@@ -22,14 +22,14 @@ docker run -d --restart on-failure --name wechat-worker -v ./runtime/:/usr/src/a
 ``` yaml
 version: "3.3"
 services:
-  wechat-worker:
+  wechat-connector:
     restart: on-failure
-    container_name: wechat-worker
+    container_name: wechat-connector
     volumes:
       - "./runtime/:/usr/src/app/runtime/"
     ports:
       - "8002:8002"
-    image: zzcgwu/wechat-worker
+    image: zzcgwu/wechat-connector
 ```
 
 ``` sh

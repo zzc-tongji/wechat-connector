@@ -16,7 +16,7 @@ import { errorhandler } from './utils/http-error-handler';
 
 const app = express();
 
-const html = fs.readFileSync(`${__dirname}${sep}..${sep}..${sep}static${sep}wechat-worker.html`, { encoding: 'utf-8', flag: 'r' });
+const html = fs.readFileSync(`${__dirname}${sep}..${sep}..${sep}static${sep}wechat-connector.html`, { encoding: 'utf-8', flag: 'r' });
 
 // mock
 mock(app);

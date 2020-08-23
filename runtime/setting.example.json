@@ -1,6 +1,6 @@
 {
   "wechaty": {
-    "name": "wechat-worker"
+    "name": "wechat-connector"
   },
   "cache": {
     "expirationSecond": 600,

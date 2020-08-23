@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: HTTP Listener
-  description: 'The document is a part of [wechat-worker](https://github.com/zzc-tongji/WeChat-worker) which  defines all requests that the worker **will accept**.'
+  description: 'The document is a part of [wechat-connector](https://github.com/zzc-tongji/WeChat-worker) which  defines all requests that the worker **will accept**.'
   version: 1.0.0
 tags:
   - name: 'Control'
@@ -17,7 +17,7 @@ paths:
       summary: 'exit'
       operationId: 'rpcExit'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [exit.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/exit.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [exit.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/exit.http).'
         content:
           application/json:
             schema:
@@ -45,7 +45,7 @@ paths:
       summary: 'forward a message to a friend 朋友 or a group 群聊'
       operationId: 'rpcForward'
       requestBody:
-        description: '`id` indicates which message to be forwarded. If `receiver.category` is "group", the worker will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the worker will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the worker will forward the message. Here is a request example in [forward.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/forward.http).'
+        description: '`id` indicates which message to be forwarded. If `receiver.category` is "group", the worker will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the worker will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the worker will forward the message. Here is a request example in [forward.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/forward.http).'
         content:
           application/json:
             schema:
@@ -73,7 +73,7 @@ paths:
       summary: 'get the link of WeChat login'
       operationId: 'rpcStatusAwait'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [login-approach.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/login-approach.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [login-approach.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/login-approach.http).'
         content:
           application/json:
             schema:
@@ -105,7 +105,7 @@ paths:
       summary: 'logout from WeChat'
       operationId: 'rpcLogout'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [logout.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/logout.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [logout.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/logout.http).'
         content:
           application/json:
             schema:
@@ -133,7 +133,7 @@ paths:
       summary: 'logout from WeChat, wait until done'
       operationId: 'rpcLogoutAwait'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [await.logout.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.logout.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [await.logout.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/await.logout.http).'
         content:
           application/json:
             schema:
@@ -161,7 +161,7 @@ paths:
       summary: 'reply a message'
       operationId: 'rpcReply'
       requestBody:
-        description: '`id` indicates which message to be replyed and who is the receiver. `message` indicates the reply content which accepts text and small sticker 文本和小表情. Here is a request example in [reply.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/reply.http).'
+        description: '`id` indicates which message to be replyed and who is the receiver. `message` indicates the reply content which accepts text and small sticker 文本和小表情. Here is a request example in [reply.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/reply.http).'
         content:
           application/json:
             schema:
@@ -189,7 +189,7 @@ paths:
       summary: 'send message to a friend 朋友 or a group 群聊'
       operationId: 'rpcSend'
       requestBody:
-        description: '`message` indicates the content to send which accepts text and small sticker 文本和小表情. If `receiver.category` is "group", the worker will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the worker will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the worker will send the content. Here is a request example in [send.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/send.http).'
+        description: '`message` indicates the content to send which accepts text and small sticker 文本和小表情. If `receiver.category` is "group", the worker will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the worker will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the worker will send the content. Here is a request example in [send.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/send.http).'
         content:
           application/json:
             schema:
@@ -217,7 +217,7 @@ paths:
       summary: 'start the robot'
       operationId: 'rpcStart'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [start.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/start.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [start.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/start.http).'
         content:
           application/json:
             schema:
@@ -245,7 +245,7 @@ paths:
       summary: 'start the robot, wait until done'
       operationId: 'rpcStartAwait'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [await.start.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.start.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [await.start.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/await.start.http).'
         content:
           application/json:
             schema:
@@ -273,7 +273,7 @@ paths:
       summary: 'get the status of the robot'
       operationId: 'rpcStatus'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [status.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/status.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [status.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/status.http).'
         content:
           application/json:
             schema:
@@ -305,7 +305,7 @@ paths:
       summary: 'stop the robot'
       operationId: 'rpcStop'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [stop.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/stop.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [stop.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/stop.http).'
         content:
           application/json:
             schema:
@@ -333,7 +333,7 @@ paths:
       summary: 'stop the WeChat worker, wait until done'
       operationId: 'rpcStopAwait'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [await.stop.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.stop.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [await.stop.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/await.stop.http).'
         content:
           application/json:
             schema:
@@ -361,7 +361,7 @@ paths:
       summary: 'update data of all friends 朋友 and groups 群聊'
       operationId: 'rpcSynchronous'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [sync.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/sync.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [sync.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/sync.http).'
         content:
           application/json:
             schema:
@@ -389,7 +389,7 @@ paths:
       summary: 'update data of all friends 朋友 and groups 群聊, wait until done'
       operationId: 'rpcSynchronousAwait'
       requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [await.sync.http](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/await.sync.http).'
+        description: '`rpcToken` is used for authorization. Here is a request example in [await.sync.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/await.sync.http).'
         content:
           application/json:
             schema:
@@ -420,7 +420,7 @@ components:
           type: 'string'
           example: 'error-reason'
     Forward:
-      description: 'The json schema is defined in [forward.js](https://github.com/zzc-tongji/WeChat-worker/blob/master/src/listener/utils/http-validator/forward.js). [Example](https://github.com/zzc-tongji/wechat-worker/blob/master/doc/http/exit.http)'
+      description: 'The json schema is defined in [forward.js](https://github.com/zzc-tongji/WeChat-worker/blob/master/src/listener/utils/http-validator/forward.js). [Example](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/exit.http)'
       type: 'object'
       required:
         - 'id'

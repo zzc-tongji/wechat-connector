@@ -39,7 +39,7 @@ const forward = async (payload) => {
   }
   const context = cache.get(payload.id);
   if (!context) {
-    await logError('message expired', 'wechat-worker.requestor.wechat.forward', payload);
+    await logError('message expired', 'wechat-connector.requestor.wechat.forward', payload);
     return;
   }
   let recipient;
@@ -51,14 +51,14 @@ const forward = async (payload) => {
       recipient = await global.robot.Contact.find({ name: payload.receiver.name });
     }
     if (!recipient) {
-      await logError('friend not found', 'wechat-worker.requestor.wechat.forward', payload);
+      await logError('friend not found', 'wechat-connector.requestor.wechat.forward', payload);
       return;
     }
     try {
       // forward
       await context.message.forward(recipient);
     } catch (error) {
-      await logError(error.message, 'wechat-worker.requestor.wechat.forward', payload);
+      await logError(error.message, 'wechat-connector.requestor.wechat.forward', payload);
       return;
     }
     // log
@@ -81,14 +81,14 @@ const forward = async (payload) => {
     // to group
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
-      await logError('group not found', 'wechat-worker.requestor.wechat.forward', payload);
+      await logError('group not found', 'wechat-connector.requestor.wechat.forward', payload);
       return;
     }
     try {
       // forward
       await context.message.forward(recipient);
     } catch (error) {
-      await logError(error.message, 'wechat-worker.requestor.wechat.forward', payload);
+      await logError(error.message, 'wechat-connector.requestor.wechat.forward', payload);
       return;
     }
     // log
@@ -117,7 +117,7 @@ const reply = async (payload) => {
   }
   const context = cache.get(payload.id);
   if (!context) {
-    await logError('message expired', 'wechat-worker.requestor.wechat.reply', payload);
+    await logError('message expired', 'wechat-connector.requestor.wechat.reply', payload);
     return;
   }
   if (context.group) {
@@ -127,7 +127,7 @@ const reply = async (payload) => {
       // reply
       context.group.say(payload.message, context.one);
     } catch (error) {
-      await logError(error.message, 'wechat-worker.requestor.wechat.reply', payload);
+      await logError(error.message, 'wechat-connector.requestor.wechat.reply', payload);
       return;
     }
     // log
@@ -151,7 +151,7 @@ const reply = async (payload) => {
       // reply
       context.one.say(payload.message);
     } catch (error) {
-      await logError(error.message, 'wechat-worker.requestor.wechat.reply', payload);
+      await logError(error.message, 'wechat-connector.requestor.wechat.reply', payload);
       return;
     }
     // log
@@ -185,14 +185,14 @@ const send = async (payload) => {
       recipient = await global.robot.Contact.find({ name: payload.receiver.name });
     }
     if (!recipient) {
-      await logError('friend not found', 'wechat-worker.requestor.wechat.send', payload);
+      await logError('friend not found', 'wechat-connector.requestor.wechat.send', payload);
       return;
     }
     try {
       // send
       await recipient.say(payload.message);
     } catch (error) {
-      await logError(error.message, 'wechat-worker.requestor.wechat.send', payload);
+      await logError(error.message, 'wechat-connector.requestor.wechat.send', payload);
       return;
     }
     // log
@@ -213,14 +213,14 @@ const send = async (payload) => {
     // to group
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
-      await logError('group not found', 'wechat-worker.requestor.wechat.send', payload);
+      await logError('group not found', 'wechat-connector.requestor.wechat.send', payload);
       return;
     }
     try {
       // send
       await recipient.say(payload.message);
     } catch (error) {
-      await logError(error.message, 'wechat-worker.requestor.wechat.send', payload);
+      await logError(error.message, 'wechat-connector.requestor.wechat.send', payload);
       return;
     }
     // log

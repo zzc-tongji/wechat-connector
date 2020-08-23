@@ -1,4 +1,4 @@
-# wechat-worker
+# wechat-connector
 
 ### Introduction
 

@@ -1,5 +1,5 @@
 {
-  "name": "wechat-worker",
+  "name": "wechat-connector",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -11,13 +11,13 @@
     "start-silly": "cd runtime/ && WECHATY_LOG=silly babel-node ../src/main.js",
     "start-silly-windows": "set WECHATY_LOG=silly && cd runtime/ && babel-node ../src/main.js"
   },
-  "repository": "git+https://github.com/zzc-tongji/wechat-worker.git",
+  "repository": "git+https://github.com/zzc-tongji/wechat-connector.git",
   "author": "Zhicheng Zhang",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/zzc-tongji/wechat-worker/issues"
+    "url": "https://github.com/zzc-tongji/wechat-connector/issues"
   },
-  "homepage": "https://github.com/zzc-tongji/wechat-worker#readme",
+  "homepage": "https://github.com/zzc-tongji/wechat-connector#readme",
   "dependencies": {
     "ajv": "^6.12.2",
     "babel-cli": "^6.26.0",
