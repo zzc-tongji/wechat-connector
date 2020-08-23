@@ -4,7 +4,7 @@
 
 ``` sh
 git clean -xfd
-docker build -t zzcgwu/wechat-connector .
+docker build -t messagehelper/wechat-connector .
 ```
 
 ### Run
@@ -14,7 +14,7 @@ docker build -t zzcgwu/wechat-connector .
 #### Script
 
 ``` sh
-docker run -d --restart on-failure --name wechat-connector -v ./runtime/:/usr/src/app/runtime/ -p 8002:8002 zzcgwu/wechat-connector
+docker run -d --restart on-failure --name wechat-connector -v ./runtime/:/usr/src/app/runtime/ -p 8002:8002 messagehelper/wechat-connector
 ```
 
 #### Compose
@@ -29,7 +29,7 @@ services:
       - "./runtime/:/usr/src/app/runtime/"
     ports:
       - "8002:8002"
-    image: zzcgwu/wechat-connector
+    image: messagehelper/wechat-connector
 ```
 
 ``` sh
