@@ -61,7 +61,7 @@ const idHelper = (error, resolve) => {
 const log = (content) => {
   // (content: object)
   const promiseList = [];
-  global.setting.http.sender.log.serverList.forEach((server) => {
+  global.setting.http.sender.log.forEach((server) => {
     content.rpcToken = server.rpcToken;
     promiseList.push(new Promise((resolve) => {
       fetch(server.url, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {

@@ -153,33 +153,23 @@ const validate = (new Ajv()).compile({
             },
             log: {
               $id: '#/properties/http/properties/sender/properties/log',
-              type: 'object',
-              required: [
-                'serverList',
-              ],
-              additionalProperties: false,
-              properties: {
-                serverList: {
-                  $id: '#/properties/http/properties/sender/properties/log/properties/serverList',
-                  type: 'array',
-                  additionalItems: false,
-                  items: {
-                    $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items',
-                    type: 'object',
-                    required: [
-                      'url',
-                      'rpcToken',
-                    ],
-                    additionalProperties: false,
-                    properties: {
-                      url: {
-                        $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items/properties/url',
-                      },
-                      rpcToken: {
-                        $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items/properties/rpcToken',
-                        type: 'string',
-                      },
-                    },
+              type: 'array',
+              additionalItems: false,
+              items: {
+                $id: '#/properties/http/properties/sender/properties/log/items',
+                type: 'object',
+                required: [
+                  'url',
+                  'rpcToken',
+                ],
+                additionalProperties: false,
+                properties: {
+                  url: {
+                    $id: '#/properties/http/properties/sender/properties/log/items/properties/url',
+                  },
+                  rpcToken: {
+                    $id: '#/properties/http/properties/sender/properties/log/properties/serverList/items/properties/rpcToken',
+                    type: 'string',
                   },
                 },
               },

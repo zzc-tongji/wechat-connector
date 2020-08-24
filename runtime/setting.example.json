@@ -24,14 +24,12 @@
     },
     "sender": {
       "id": "https://id.zzc.icu/",
-      "log": {
-        "serverList": [
-          {
-            "url": "http://127.0.0.1:8002/rpc/log",
-            "rpcToken": "x"
-          }
-        ]
-      }
+      "log": [
+        {
+          "url": "http://127.0.0.1:8002/rpc/log",
+          "rpcToken": "x"
+        }
+      ]
     }
   }
 }
