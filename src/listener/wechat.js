@@ -6,16 +6,16 @@ import * as autoStart from '../utils/auto-start';
 import * as cache from '../utils/cache';
 import { global } from '../utils/global';
 import { message } from './wechat-utils/message';
-
+import { id, log } from '../requestor/http';
 import { sync } from '../requestor/wechat';
 
 const error = (error) => {
   // (error: Error)
   //
   // id
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     // log
-    global.requestor.log({
+    log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
@@ -40,11 +40,11 @@ const friendship = (f) => {
   // (f: Friendship)
   //
   // id
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     // CACHE
     cache.set(id, { friendship: f, contact: f.contact() });
     // log
-    global.requestor.log({
+    log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
@@ -67,9 +67,9 @@ const login = (user) => {
   unexpectedLogout.disable();
   unexpectedLogout.enable();
   // id
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     // log
-    global.requestor.log({
+    log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
@@ -86,9 +86,9 @@ const logout = (user, reason) => {
   // prepare for report
   notLoginAfterStart.enable();
   // id
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     // log
-    global.requestor.log({
+    log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
@@ -101,9 +101,9 @@ const logout = (user, reason) => {
 
 const ready = () => {
   // id
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     // log
-    global.requestor.log({
+    log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
@@ -118,11 +118,11 @@ const ready = () => {
 const roomInvite = (roomInvitation) => {
   // (roomInvitation: RoomInvitation)
   roomInvitation.topic().then((t) => {
-    global.requestor.id().then((id) => {
+    id().then((id) => {
       // CACHE
       cache.set(id, { roomInvitation });
       // log
-      global.requestor.log({
+      log({
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
@@ -143,9 +143,9 @@ const roomJoin = (room, inviteeList, inviter, date) => {
   sync(room);
   //
   room.topic().then((t) => {
-    global.requestor.id().then((id) => {
+    id().then((id) => {
       // log
-      global.requestor.log({
+      log({
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
@@ -162,9 +162,9 @@ const roomJoin = (room, inviteeList, inviter, date) => {
 const roomLeave = (room, leaverList, remover, date) => {
   // (room: Room, leaverList: Contact[],  remover?: Contact, date?: Date)
   room.topic().then((t) => {
-    global.requestor.id().then((id) => {
+    id().then((id) => {
       // log
-      global.requestor.log({
+      log({
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
@@ -184,9 +184,9 @@ const roomTopic = (room, newTopic, oldTopic, changer, date) => {
   // update
   sync(room);
   //
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     // log
-    global.requestor.log({
+    log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
@@ -212,9 +212,9 @@ const scan = (qrcode, status) => {
 };
 
 const start = () => {
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     // log
-    global.requestor.log({
+    log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',
@@ -226,9 +226,9 @@ const start = () => {
 };
 
 const stop = () => {
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     // log
-    global.requestor.log({
+    log({
       id,
       instance: global.setting.wechaty.name,
       level: 'INFO',

@@ -1,7 +1,6 @@
 import { Wechaty, log as wechatyLog } from 'wechaty';
 
 import * as http from './requestor/http';
-import * as terminal from './requestor/terminal';
 import { listen as httpListen } from './listener/http';
 import * as wechat from './listener/wechat';
 import * as cache from './utils/cache';
@@ -32,41 +31,31 @@ const install = async () => {
 };
 
 const run = () => {
-  switch (global.setting.mode) {
-    case 'http':
-      httpListen();
-      if (autoStart.get()) {
-        autoStart.set(false);
-        global.start();
-        global.requestor.id().then((id) => {
-          global.requestor.log({
-            id,
-            instance: global.setting.wechaty.name,
-            level: 'INFO',
-            category: 'wechat-connector.main.auto-start',
-            timestampMs: Date.now(),
-            content: '{}',
-          });
-        });
-      }
-      break;
-    default: // 'terminal'
-      global.start();
-      break;
+  httpListen();
+  if (autoStart.get()) {
+    autoStart.set(false);
+    global.start();
+    // log
+    http.id().then((id) => {
+      http.log({
+        id,
+        instance: global.setting.wechaty.name,
+        level: 'INFO',
+        category: 'wechat-connector.main.auto-start',
+        timestampMs: Date.now(),
+        content: '{}',
+      });
+    });
   }
 };
 
 const setGlobal = () => {
   setting.init(); // global.setting
-  if (global.setting.mode === 'http') {
-    http.init();
-    global.requestor = http;
-  } else { // 'terminal'
-    global.requestor = terminal;
-  }
+  http.init();
   cache.init();
   unexpectedLogout.init();
   notLoginAfterStart.init();
+  //
   notLoginAfterStart.enable();
   global.logout = async () => {
     if (global.robot === null) {

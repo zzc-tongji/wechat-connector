@@ -1,5 +1,6 @@
 import * as cache from '../utils/cache';
 import { global } from '../utils/global';
+import { id, log } from './http';
 
 import { Contact, Message, Room, log as wechatyLog } from 'wechaty';
 
@@ -10,8 +11,8 @@ const logError = async (reason, contextType, payload) => {
     request: JSON.stringify(payload), // string
   });
   // log
-  global.requestor.log({
-    id: await global.requestor.id(),
+  log({
+    id: await id(),
     instance: global.setting.wechaty.name,
     level: 'ERR',
     category: `wechat-connector.${contextType}.error`,
@@ -67,8 +68,8 @@ const forward = async (payload) => {
       return;
     }
     // log
-    global.requestor.log({
-      id: await global.requestor.id(),
+    log({
+      id: await id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
       category: `wechat-connector.${contextType}`,
@@ -97,8 +98,8 @@ const forward = async (payload) => {
       return;
     }
     // log
-    global.requestor.log({
-      id: await global.requestor.id(),
+    log({
+      id: await id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
       category: `wechat-connector.${contextType}`,
@@ -137,8 +138,8 @@ const reply = async (payload) => {
       return;
     }
     // log
-    global.requestor.log({
-      id: await global.requestor.id(),
+    log({
+      id: await id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
       category: `wechat-connector.${contextType}`,
@@ -161,8 +162,8 @@ const reply = async (payload) => {
       return;
     }
     // log
-    global.requestor.log({
-      id: await global.requestor.id(),
+    log({
+      id: await id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
       category: `wechat-connector.${contextType}`,
@@ -203,8 +204,8 @@ const send = async (payload) => {
       return;
     }
     // log
-    global.requestor.log({
-      id: await global.requestor.id(),
+    log({
+      id: await id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
       category: `wechat-connector.${contextType}`,
@@ -231,8 +232,8 @@ const send = async (payload) => {
       return;
     }
     // log
-    global.requestor.log({
-      id: await global.requestor.id(),
+    log({
+      id: await id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
       category: `wechat-connector.${contextType}`,
@@ -265,8 +266,8 @@ const syncAll = async () => {
     }),
   ]);
   await Promise.all(promiseList);
-  await global.requestor.log({
-    id: await global.requestor.id(),
+  await log({
+    id: await id(),
     instance: global.setting.wechaty.name,
     level: 'INFO',
     category: 'requestor.wechat.sync-all',
@@ -292,8 +293,8 @@ const sync = async (obj) => {
     return;
   }
   await obj.sync();
-  await global.requestor.log({
-    id: await global.requestor.id(),
+  await log({
+    id: await id(),
     instance: global.setting.wechaty.name,
     level: 'INFO',
     category: 'requestor.wechat.sync',

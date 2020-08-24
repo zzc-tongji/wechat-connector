@@ -14,7 +14,7 @@ const validate = (new Ajv()).compile({
     'wechaty',
     'cache',
     'report',
-    'mode',
+    'http',
   ],
   additionalProperties: true,
   properties: {
@@ -104,10 +104,6 @@ const validate = (new Ajv()).compile({
         },
       },
     },
-    mode: {
-      $id: '#/properties/mode',
-      type: 'string',
-    },
     http: {
       $id: '#/properties/http',
       type: 'object',
@@ -191,20 +187,12 @@ const init = (settingPath = null) => {
     if (!validate(setting)) {
       throw JSON.stringify(validate.errors);
     }
-    switch (setting.mode) {
-      case 'http':
-        if (!setting.http) {
-          throw 'setting.http => not found';
-        }
-        break;
-      default:
-        break;
-    }
     global.setting = setting;
   } catch (error) {
     // local log
-    wechatyLog.error('local.setting', typeof (error) == 'string' ? error : error.message);
+    wechatyLog.error('local.setting', typeof error == 'string' ? error : error.message);
     console.log();
+    //
     process.exit(1);
   }
 };

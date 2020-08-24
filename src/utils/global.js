@@ -7,7 +7,6 @@ const global = {
     qrcode: '',
     timestampMs: 0,
   },
-  requestor: null, // choose `terminal` or `http` as requestor
   robot: null,
   setting: null,
   logout: null, // async function

@@ -45,7 +45,7 @@ const test = (validate, json) => {
 
 const errorhandler = (type, validate, req, res) => {
   let data;
-  if (typeof (req.body) === 'string') {
+  if (typeof req.body === 'string') {
     data = test(validate, req.body);
   } else {
     data = {

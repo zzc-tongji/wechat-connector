@@ -4,6 +4,7 @@ import { sep } from 'path';
 import express from 'express';
 import { log as wechatyLog } from 'wechaty';
 
+import { id, log } from '../requestor/http';
 import * as wechat from '../requestor/wechat';
 import { global } from '../utils/global';
 import { getStatus } from '../utils/status';
@@ -62,7 +63,7 @@ app.post('/rpc/log', express.text({ type: 'application/json' }), (req, res) => {
   // mock
   //
   // echo as local log
-  wechatyLog.info('[MOCK::LOG]', typeof (req.body) == 'string' ? req.body : '{}');
+  wechatyLog.info('[MOCK::LOG]', typeof req.body == 'string' ? req.body : '{}');
   console.log();
   // response
   res.status(202);
@@ -238,8 +239,8 @@ app.post('/rpc/sync/await', express.text({ type: 'application/json' }), async (r
 const listen = () => {
   app.listen(global.setting.http.receiver.port, () => {
     // log
-    global.requestor.id().then((id) => {
-      global.requestor.log({
+    id().then((id) => {
+      log({
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',

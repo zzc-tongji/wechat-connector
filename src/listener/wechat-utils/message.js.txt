@@ -39,7 +39,7 @@ const message = (m) => {
   const one = m.from();
   const group = m.room();
   // id
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     const promiseList = [
       one.alias(), // [0]
       group ? group.alias(one).catch(() => {
@@ -51,7 +51,7 @@ const message = (m) => {
     ];
     Promise.all(promiseList).then((resultList) => {
       // log
-      global.requestor.log({
+      log({
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',

@@ -16,7 +16,6 @@
       "maxCount": 3
     }
   },
-  "mode": "http",
   "http": {
     "receiver": {
       "port": 8002,

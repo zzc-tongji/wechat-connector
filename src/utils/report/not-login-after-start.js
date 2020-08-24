@@ -1,3 +1,4 @@
+import { id, log } from '../../requestor/http';
 import { global } from '../global';
 import { getStatus } from '../status';
 
@@ -24,8 +25,8 @@ const f = () => {
   if (getStatus() === 'logged-in') {
     return;
   }
-  global.requestor.id().then((id) => {
-    global.requestor.log({
+  id().then((id) => {
+    log({
       id,
       instance: global.setting.wechaty.name,
       level: 'ERR',

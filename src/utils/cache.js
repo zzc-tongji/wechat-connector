@@ -1,5 +1,6 @@
 import Hashmap from 'hashmap';
 
+import { id, log } from '../requestor/http';
 import { global } from './global';
 
 let cache;
@@ -30,8 +31,8 @@ const removeExpired = () => {
     cache.delete(key);
   });
   if (global.setting.cache.enableLog) {
-    global.requestor.id().then((id) => {
-      global.requestor.log({
+    id().then((id) => {
+      log({
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
@@ -49,8 +50,8 @@ const get = (key) => {
   }
   const value = cache.get(key);
   if (global.setting.cache.enableLog) {
-    global.requestor.id().then((id) => {
-      global.requestor.log({
+    id().then((id) => {
+      log({
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',
@@ -75,8 +76,8 @@ const set = (key, value) => {
   }
   cache.set(key, value);
   if (global.setting.cache.enableLog) {
-    global.requestor.id().then((id) => {
-      global.requestor.log({
+    id().then((id) => {
+      log({
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',

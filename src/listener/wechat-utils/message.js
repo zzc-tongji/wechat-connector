@@ -1,5 +1,6 @@
 import { Message /* , log as wechatyLog */ } from 'wechaty';
 
+import { id, log } from '../../requestor/http';
 import { global } from '../../utils/global';
 import * as cache from '../../utils/cache';
 
@@ -12,7 +13,7 @@ const message = (m) => {
   const one = m.from();
   const group = m.room();
   // id
-  global.requestor.id().then((id) => {
+  id().then((id) => {
     // cache
     cache.set(id, { message: m, one, group });
     // additional data
@@ -26,7 +27,7 @@ const message = (m) => {
     ];
     Promise.all(promiseList).then((resultList) => {
       // log
-      global.requestor.log({
+      log({
         id,
         instance: global.setting.wechaty.name,
         level: 'INFO',

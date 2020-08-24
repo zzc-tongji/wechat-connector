@@ -3,7 +3,6 @@ import fetch, { Headers } from 'node-fetch';
 import { log as wechatyLog } from 'wechaty';
 
 import { global } from '../utils/global';
-import { id as terminalGetId } from './terminal';
 
 let headers;
 let idUrl;
@@ -51,11 +50,10 @@ const validate = (new Ajv()).compile({
 
 const idHelper = (error, resolve) => {
   // local log
-  wechatyLog.error('local.requestor.http.id', typeof (error) == 'string' ? error : error.message);
+  wechatyLog.error('local.requestor.http.id.error', typeof error == 'string' ? error : error.message);
   console.log();
-  terminalGetId().then((id) => {
-    resolve(id);
-  });
+  //
+  resolve(Math.floor(-1 + Math.random() * -9007199254740991));
 };
 
 const log = (content) => {
@@ -84,8 +82,9 @@ const log = (content) => {
 
 const logHelper = (error, resolve) => {
   // local log
-  wechatyLog.error('local.requestor.http.log', typeof (error) == 'string' ? error : error.message);
+  wechatyLog.error('local.requestor.http.log.error', typeof error == 'string' ? error : error.message);
   console.log();
+  //
   resolve();
 };
 
