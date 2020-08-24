@@ -40,7 +40,7 @@ yarn start
 
 - Status Page: `GET /`
 
-- [API](https://editor.swagger.io/?url=https%3a%2f%2fraw.githubusercontent.com%2fzzc-tongji%2fwechat-worker%2fmaster%2fdoc%2fhttp-listener.yaml)
+- [API](https://editor.swagger.io/?url=https%3a%2f%2fraw.githubusercontent.com%2fzzc-tongji%2fwechat-connector%2fmaster%2fdoc%2fhttp-listener.yaml)
 
 ##### HTTP Sender
 

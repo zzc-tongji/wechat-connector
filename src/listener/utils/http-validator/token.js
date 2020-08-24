@@ -6,7 +6,7 @@ const validate = (new Ajv()).compile({
   required: [
     'rpcToken',
   ],
-  additionalProperties: true,
+  additionalProperties: false,
   properties: {
     rpcToken: {
       $id: '#/properties/rpcToken',

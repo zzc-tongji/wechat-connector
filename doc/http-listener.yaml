@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: HTTP Listener
-  description: 'The document is a part of [wechat-connector](https://github.com/zzc-tongji/WeChat-worker) which  defines all requests that the worker **will accept**.'
+  description: 'The document is a part of [wechat-connector](https://github.com/zzc-tongji/wechat-connector) which  defines all requests that the worker **will accept**.'
   version: 1.0.0
 tags:
   - name: 'Control'
@@ -420,7 +420,7 @@ components:
           type: 'string'
           example: 'error-reason'
     Forward:
-      description: 'The json schema is defined in [forward.js](https://github.com/zzc-tongji/WeChat-worker/blob/master/src/listener/utils/http-validator/forward.js). [Example](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/exit.http)'
+      description: 'The json schema is defined in [forward.js](https://github.com/zzc-tongji/wechat-connector/blob/master/src/listener/utils/http-validator/forward.js). [Example](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/exit.http)'
       type: 'object'
       required:
         - 'id'
@@ -487,7 +487,7 @@ components:
           type: 'integer'
           example: 1592700000551
     Reply:
-      description: 'The json schema is defined in [reply.js](https://github.com/zzc-tongji/WeChat-worker/blob/master/src/listener/utils/http-validator/reply.js)'
+      description: 'The json schema is defined in [reply.js](https://github.com/zzc-tongji/wechat-connector/blob/master/src/listener/utils/http-validator/reply.js)'
       type: 'object'
       required:
         - 'id'
@@ -510,7 +510,7 @@ components:
           minLength: 1
           example: 'wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s'
     Send:
-      description: 'The json schema is defined in [send.js](https://github.com/zzc-tongji/WeChat-worker/blob/master/src/listener/utils/http-validator/send.js)'
+      description: 'The json schema is defined in [send.js](https://github.com/zzc-tongji/wechat-connector/blob/master/src/listener/utils/http-validator/send.js)'
       type: 'object'
       required:
         - 'message'

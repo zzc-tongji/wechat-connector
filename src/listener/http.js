@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import { sep } from 'path';
 
-import bodyParser from 'body-parser';
 import express from 'express';
 
 import * as wechat from '../requestor/wechat';
@@ -33,7 +32,7 @@ app.get('/', (_req, res) => {
 });
 
 // POST /rpc/exit
-app.post('/rpc/exit', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/exit', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.exit', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -47,7 +46,7 @@ app.post('/rpc/exit', bodyParser.text({ type: 'application/json' }), (req, res) 
 });
 
 // POST => /rpc/forward
-app.post('/rpc/forward', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/forward', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.forward', forwardValidate, req, res);
   if (data.status !== 200) {
@@ -62,7 +61,7 @@ app.post('/rpc/forward', bodyParser.text({ type: 'application/json' }), (req, re
 });
 
 // POST => /rpc/login-approach
-app.post('/rpc/login-approach', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/login-approach', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.login-approach', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -74,7 +73,7 @@ app.post('/rpc/login-approach', bodyParser.text({ type: 'application/json' }), (
 });
 
 // POST /rpc/status
-app.post('/rpc/status', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/status', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.status', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -86,7 +85,7 @@ app.post('/rpc/status', bodyParser.text({ type: 'application/json' }), (req, res
 });
 
 // POST => /rpc/logout
-app.post('/rpc/logout', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/logout', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.logout', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -100,7 +99,7 @@ app.post('/rpc/logout', bodyParser.text({ type: 'application/json' }), (req, res
 });
 
 // POST => /rpc/logout/await
-app.post('/rpc/logout/await', bodyParser.text({ type: 'application/json' }), async (req, res) => {
+app.post('/rpc/logout/await', express.text({ type: 'application/json' }), async (req, res) => {
   // request
   const data = errorhandler('.listener.http.logout.await', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -114,7 +113,7 @@ app.post('/rpc/logout/await', bodyParser.text({ type: 'application/json' }), asy
 });
 
 // POST => /rpc/reply
-app.post('/rpc/reply', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/reply', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.reply', replyValidate, req, res);
   if (data.status !== 200) {
@@ -129,7 +128,7 @@ app.post('/rpc/reply', bodyParser.text({ type: 'application/json' }), (req, res)
 });
 
 // POST => /rpc/send
-app.post('/rpc/send', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/send', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.send', sendValidate, req, res);
   if (data.status !== 200) {
@@ -144,7 +143,7 @@ app.post('/rpc/send', bodyParser.text({ type: 'application/json' }), (req, res) 
 });
 
 // POST => /rpc/start
-app.post('/rpc/start', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/start', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.start', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -158,7 +157,7 @@ app.post('/rpc/start', bodyParser.text({ type: 'application/json' }), (req, res)
 });
 
 // POST => /rpc/start/await
-app.post('/rpc/start/await', bodyParser.text({ type: 'application/json' }), async (req, res) => {
+app.post('/rpc/start/await', express.text({ type: 'application/json' }), async (req, res) => {
   // request
   const data = errorhandler('.listener.http.start.await', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -172,7 +171,7 @@ app.post('/rpc/start/await', bodyParser.text({ type: 'application/json' }), asyn
 });
 
 // POST => /rpc/stop
-app.post('/rpc/stop', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/stop', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.stop', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -186,7 +185,7 @@ app.post('/rpc/stop', bodyParser.text({ type: 'application/json' }), (req, res) 
 });
 
 // POST => /rpc/stop/await
-app.post('/rpc/stop/await', bodyParser.text({ type: 'application/json' }), async (req, res) => {
+app.post('/rpc/stop/await', express.text({ type: 'application/json' }), async (req, res) => {
   // request
   const data = errorhandler('.listener.http.stop.await', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -200,7 +199,7 @@ app.post('/rpc/stop/await', bodyParser.text({ type: 'application/json' }), async
 });
 
 // POST => /rpc/sync
-app.post('/rpc/sync', bodyParser.text({ type: 'application/json' }), (req, res) => {
+app.post('/rpc/sync', express.text({ type: 'application/json' }), (req, res) => {
   // request
   const data = errorhandler('.listener.http.sync', tokenValidate, req, res);
   if (data.status !== 200) {
@@ -214,7 +213,7 @@ app.post('/rpc/sync', bodyParser.text({ type: 'application/json' }), (req, res) 
 });
 
 // POST => /rpc/sync/await
-app.post('/rpc/sync/await', bodyParser.text({ type: 'application/json' }), async (req, res) => {
+app.post('/rpc/sync/await', express.text({ type: 'application/json' }), async (req, res) => {
   // request
   const data = errorhandler('.listener.http.sync.await', tokenValidate, req, res);
   if (data.status !== 200) {

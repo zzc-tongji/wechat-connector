@@ -2,7 +2,7 @@ import { log as wechatyLog } from 'wechaty';
 
 import { global } from '../../utils/global';
 
-const test = (validate, json, mock = false) => {
+const test = (validate, json) => {
   let payload;
   try {
     payload = JSON.parse(json);
@@ -14,7 +14,7 @@ const test = (validate, json, mock = false) => {
         },
       };
     }
-    if (!mock && payload.rpcToken !== global.setting.http.receiver.rpcToken) {
+    if (payload.rpcToken !== global.setting.http.receiver.rpcToken) {
       throw {
         status: 403,
         payload: {
@@ -40,8 +40,18 @@ const test = (validate, json, mock = false) => {
   };
 };
 
-const errorhandler = (type, validate, req, res, mock = false) => {
-  const data = test(validate, req.body, mock);
+const errorhandler = (type, validate, req, res) => {
+  let data;
+  if (typeof (req.body) === 'string') {
+    data = test(validate, req.body);
+  } else {
+    data = {
+      status: 400,
+      payload: {
+        reason: 'Header \'content-type\' should be \'application/json\'.',
+      },
+    };
+  }
   if (data.status !== 200) {
     res.status(data.status);
     res.set('content-type', 'application/json;charset=UTF-8');
