@@ -203,7 +203,7 @@ const init = (settingPath = null) => {
     global.setting = setting;
   } catch (error) {
     // local log
-    wechatyLog.error('local.setting', error);
+    wechatyLog.error('local.setting', typeof (error) == 'string' ? error : error.message);
     console.log();
     process.exit(1);
   }

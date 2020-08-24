@@ -5,7 +5,7 @@ import * as unexpectedLogout from '../utils/report/unexpected-logout';
 import * as autoStart from '../utils/auto-start';
 import * as cache from '../utils/cache';
 import { global } from '../utils/global';
-import { message } from './utils/wechat-message';
+import { message } from './wechat-utils/message';
 
 import { sync } from '../requestor/wechat';
 

@@ -14,12 +14,12 @@ import * as autoStart from './utils/auto-start';
 
 const install = async () => {
   // local log
-  wechatyLog.info('local.install', 'begin');
+  wechatyLog.info('local.main.install', 'begin');
   console.log();
   const bot = new Wechaty();
   const exit = () => {
     // local log
-    wechatyLog.info('local.install', 'end');
+    wechatyLog.info('local.main.install', 'end');
     console.log();
     process.exit(0);
   };
@@ -43,7 +43,7 @@ const run = () => {
             id,
             instance: global.setting.wechaty.name,
             level: 'INFO',
-            category: 'wechat-connector.auto-start',
+            category: 'wechat-connector.main.auto-start',
             timestampMs: Date.now(),
             content: '{}',
           });

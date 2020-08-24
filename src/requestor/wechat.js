@@ -1,22 +1,26 @@
 import * as cache from '../utils/cache';
 import { global } from '../utils/global';
 
-import { Contact, Message, Room } from 'wechaty';
+import { Contact, Message, Room, log as wechatyLog } from 'wechaty';
 
 const logError = async (reason, contextType, payload) => {
   // (reason: string, callerType: string, payload: object)
+  const content = JSON.stringify({
+    reason, // string
+    request: JSON.stringify(payload), // string
+  });
+  // log
   global.requestor.log({
     id: await global.requestor.id(),
     instance: global.setting.wechaty.name,
     level: 'ERR',
-    category: 'wechat-connector.requestor.wechat.error',
+    category: `wechat-connector.${contextType}.error`,
     timestampMs: Date.now(),
-    content: JSON.stringify({
-      reason, // string
-      contextType, // string
-      contextRequest: JSON.stringify(payload), // string
-    }),
+    content,
   });
+  // local log
+  wechatyLog.error(`local.${contextType}.error`, content);
+  console.log();
 };
 
 const checkRobot = async (contextType, payload) => {
@@ -34,12 +38,13 @@ const checkRobot = async (contextType, payload) => {
 
 const forward = async (payload) => {
   // (payload: object)
-  if (!await checkRobot('forward', payload)) {
+  const contextType = 'requestor.wechat.forward';
+  if (!await checkRobot(contextType, payload)) {
     return;
   }
   const context = cache.get(payload.id);
   if (!context) {
-    await logError('message expired', 'wechat-connector.requestor.wechat.forward', payload);
+    await logError('message expired', contextType, payload);
     return;
   }
   let recipient;
@@ -51,14 +56,14 @@ const forward = async (payload) => {
       recipient = await global.robot.Contact.find({ name: payload.receiver.name });
     }
     if (!recipient) {
-      await logError('friend not found', 'wechat-connector.requestor.wechat.forward', payload);
+      await logError('friend not found', contextType, payload);
       return;
     }
     try {
       // forward
       await context.message.forward(recipient);
     } catch (error) {
-      await logError(error.message, 'wechat-connector.requestor.wechat.forward', payload);
+      await logError(error.message, contextType, payload);
       return;
     }
     // log
@@ -66,7 +71,7 @@ const forward = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-connector.requestor.wechat.forward',
+      category: `wechat-connector.${contextType}`,
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageId: context.message.id, // string
@@ -81,14 +86,14 @@ const forward = async (payload) => {
     // to group
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
-      await logError('group not found', 'wechat-connector.requestor.wechat.forward', payload);
+      await logError('group not found', contextType, payload);
       return;
     }
     try {
       // forward
       await context.message.forward(recipient);
     } catch (error) {
-      await logError(error.message, 'wechat-connector.requestor.wechat.forward', payload);
+      await logError(error.message, contextType, payload);
       return;
     }
     // log
@@ -96,7 +101,7 @@ const forward = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-connector.requestor.wechat.forward',
+      category: `wechat-connector.${contextType}`,
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageId: context.message.id, // string
@@ -112,12 +117,13 @@ const forward = async (payload) => {
 
 const reply = async (payload) => {
   // (payload: object)
-  if (!await checkRobot('reply', payload)) {
+  const contextType = 'requestor.wechat.reply';
+  if (!await checkRobot(contextType, payload)) {
     return;
   }
   const context = cache.get(payload.id);
   if (!context) {
-    await logError('message expired', 'wechat-connector.requestor.wechat.reply', payload);
+    await logError('message expired', contextType, payload);
     return;
   }
   if (context.group) {
@@ -127,7 +133,7 @@ const reply = async (payload) => {
       // reply
       context.group.say(payload.message, context.one);
     } catch (error) {
-      await logError(error.message, 'wechat-connector.requestor.wechat.reply', payload);
+      await logError(error.message, contextType, payload);
       return;
     }
     // log
@@ -135,7 +141,7 @@ const reply = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-connector.requestor.wechat.reply',
+      category: `wechat-connector.${contextType}`,
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageText: payload.message, // string
@@ -151,7 +157,7 @@ const reply = async (payload) => {
       // reply
       context.one.say(payload.message);
     } catch (error) {
-      await logError(error.message, 'wechat-connector.requestor.wechat.reply', payload);
+      await logError(error.message, contextType, payload);
       return;
     }
     // log
@@ -159,7 +165,7 @@ const reply = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-connector.requestor.wechat.reply',
+      category: `wechat-connector.${contextType}`,
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageText: payload.message, // string
@@ -173,7 +179,8 @@ const reply = async (payload) => {
 
 const send = async (payload) => {
   // (payload: object)
-  if (!await checkRobot('send', payload)) {
+  const contextType = 'requestor.wechat.send';
+  if (!await checkRobot(contextType, payload)) {
     return;
   }
   let recipient;
@@ -185,14 +192,14 @@ const send = async (payload) => {
       recipient = await global.robot.Contact.find({ name: payload.receiver.name });
     }
     if (!recipient) {
-      await logError('friend not found', 'wechat-connector.requestor.wechat.send', payload);
+      await logError('friend not found', contextType, payload);
       return;
     }
     try {
       // send
       await recipient.say(payload.message);
     } catch (error) {
-      await logError(error.message, 'wechat-connector.requestor.wechat.send', payload);
+      await logError(error.message, contextType, payload);
       return;
     }
     // log
@@ -200,7 +207,7 @@ const send = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-connector.requestor.wechat.send',
+      category: `wechat-connector.${contextType}`,
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageText: payload.message, // string
@@ -213,14 +220,14 @@ const send = async (payload) => {
     // to group
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
-      await logError('group not found', 'wechat-connector.requestor.wechat.send', payload);
+      await logError('group not found', contextType, payload);
       return;
     }
     try {
       // send
       await recipient.say(payload.message);
     } catch (error) {
-      await logError(error.message, 'wechat-connector.requestor.wechat.send', payload);
+      await logError(error.message, contextType, payload);
       return;
     }
     // log
@@ -228,7 +235,7 @@ const send = async (payload) => {
       id: await global.requestor.id(),
       instance: global.setting.wechaty.name,
       level: 'INFO',
-      category: 'wechat-connector.requestor.wechat.send',
+      category: `wechat-connector.${contextType}`,
       timestampMs: Date.now(),
       content: JSON.stringify({
         messageText: payload.message, // string
@@ -262,7 +269,7 @@ const syncAll = async () => {
     id: await global.requestor.id(),
     instance: global.setting.wechaty.name,
     level: 'INFO',
-    category: 'wechat-connector.requestor.wechat.sync-all',
+    category: 'requestor.wechat.sync-all',
     timestampMs: Date.now(),
     content: '{}',
   });
@@ -289,7 +296,7 @@ const sync = async (obj) => {
     id: await global.requestor.id(),
     instance: global.setting.wechaty.name,
     level: 'INFO',
-    category: 'wechat-connector.requestor.wechat.sync',
+    category: 'requestor.wechat.sync',
     timestampMs: Date.now(),
     content: JSON.stringify(payload),
   });
