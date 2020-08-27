@@ -22,7 +22,7 @@ const enable = () => {
 };
 
 const f = () => {
-  if (getStatus() === 'logged-in') {
+  if (getStatus() === 'ready') {
     return;
   }
   id().then((id) => {

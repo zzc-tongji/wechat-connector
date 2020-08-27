@@ -557,8 +557,8 @@ components:
           enum:
             - 'stopped'
             - 'logged-out'
-            - 'logged-in'
-          example: 'logged-in'
+            - 'ready'
+          example: 'ready'
     Token:
       type: 'object'
       required:
