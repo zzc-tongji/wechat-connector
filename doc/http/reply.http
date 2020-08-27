@@ -1,8 +1,0 @@
-POST http://127.0.0.1:8002/rpc/reply HTTP/1.1
-content-type: application/json;charset=UTF-8
-
-{
-  "id": 6946070168688469,
-  "message": "text-and-small-sticker",
-  "rpcToken": "wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s"
-}

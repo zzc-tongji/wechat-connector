@@ -177,6 +177,45 @@ const validate = (new Ajv()).compile({
   },
 });
 
+const defaultValue = {
+  wechaty: {
+    name: 'wechat-connector',
+  },
+  cache: {
+    expirationSecond: 600,
+    enableLog: false,
+  },
+  report: {
+    notLoginAfterStart: {
+      timeSecond: 600,
+      maxCount: 3,
+    },
+    unexpectedLogout: {
+      timeSecond: 120,
+      maxCount: 3,
+    },
+  },
+  http: {
+    receiver: {
+      port: 8002,
+      rpcToken: 'wechatconnector70xzkbtynmtpr7apu7w7e1hroaieonx0vyepg7yimdys0bf2s',
+    },
+    sender: {
+      id: 'https://id.zzc.icu/',
+      log: [
+        {
+          url: 'http://127.0.0.1:8002/rpc/log', // self
+          rpcToken: 'x',
+        },
+        {
+          url: 'http://172.17.0.1:8003/rpc/log', // host machine
+          rpcToken: 'core8r3ufurm9tqomosuul0s5s9ts6ko8g85pijxudbvpm2jtb2w01od1z69h5vi',
+        },
+      ],
+    },
+  },
+};
+
 const init = (settingPath = null) => {
   try {
     if (typeof settingPath !== 'string') {
@@ -192,8 +231,11 @@ const init = (settingPath = null) => {
     // local log
     wechatyLog.error('local.setting', typeof error == 'string' ? error : error.message);
     console.log();
+    // local log
+    wechatyLog.info('local.setting', 'use default value');
+    console.log();
     //
-    process.exit(1);
+    global.setting = defaultValue;
   }
 };
 
