@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: HTTP Listener
-  description: 'The document is a part of [wechat-connector](https://github.com/zzc-tongji/wechat-connector) which  defines all requests that the worker **will accept**.'
+  description: 'The document is a part of [wechat-connector](https://github.com/zzc-tongji/wechat-connector) which  defines all requests that the connector **will accept**.'
   version: 1.0.0
 tags:
   - name: 'Control'
@@ -17,7 +17,7 @@ paths:
       summary: 'forward a message to a friend 朋友 or a group 群聊'
       operationId: 'rpcForward'
       requestBody:
-        description: '`id` indicates which message to be forwarded. If `receiver.category` is "group", the worker will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the worker will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the worker will forward the message. Here is a request example in [forward.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/forward.http).'
+        description: '`id` indicates which message to be forwarded. If `receiver.category` is "group", the connector will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the connector will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the connector will forward the message. Here is a request example in [forward.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/forward.http).'
         content:
           application/json:
             schema:
@@ -161,7 +161,7 @@ paths:
       summary: 'send message to a friend 朋友 or a group 群聊'
       operationId: 'rpcSend'
       requestBody:
-        description: '`message` indicates the content to send which accepts text and small sticker 文本和小表情. If `receiver.category` is "group", the worker will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the worker will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the worker will send the content. Here is a request example in [send.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/send.http).'
+        description: '`message` indicates the content to send which accepts text and small sticker 文本和小表情. If `receiver.category` is "group", the connector will find the group 群聊 by exactly matching the topic 群聊名称 as `receiver.name`. If `receiver.category` is "friend", the connector will find the friend 朋友 by exactly matching `receiver.name` as name 昵称 (`isAlias` is false) or alias 备注名 (`isAlias` is true). Once the receiver is found, the connector will send the content. Here is a request example in [send.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/send.http).'
         content:
           application/json:
             schema:
