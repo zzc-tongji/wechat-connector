@@ -1,6 +1,6 @@
 import Ajv from 'ajv';
 
-const validate = (new Ajv()).compile({
+const validate = (new Ajv({ allErrors: true })).compile({
   $schema: 'http://json-schema.org/draft-07/schema',
   $id: '',
   required: [

@@ -30,18 +30,16 @@ const removeExpired = () => {
   remove.forEach((key) => {
     cache.delete(key);
   });
-  if (global.setting.cache.enableLog) {
-    id().then((id) => {
-      log({
-        id,
-        instance: global.setting.wechaty.name,
-        level: 'INFO',
-        category: 'wechat-connector.cache.remove-expired',
-        timestampMs: Date.now(),
-        content: '{}',
-      });
+  id().then((id) => {
+    log({
+      id,
+      instance: global.setting.wechaty.name,
+      level: 'SILL',
+      category: 'wechat-connector.cache.remove-expired',
+      timestampMs: Date.now(),
+      content: '{}',
     });
-  }
+  });
 };
 
 const get = (key) => {
@@ -49,21 +47,19 @@ const get = (key) => {
     return undefined;
   }
   const value = cache.get(key);
-  if (global.setting.cache.enableLog) {
-    id().then((id) => {
-      log({
-        id,
-        instance: global.setting.wechaty.name,
-        level: 'INFO',
-        category: 'wechat-connector.cache.get',
-        timestampMs: Date.now(),
-        content: JSON.stringify({
-          key, // number as long
-          success: value ? true : false, // boolean
-        }),
-      });
+  id().then((id) => {
+    log({
+      id,
+      instance: global.setting.wechaty.name,
+      level: 'SILL',
+      category: 'wechat-connector.cache.get',
+      timestampMs: Date.now(),
+      content: JSON.stringify({
+        key, // number as long
+        success: value ? true : false, // boolean
+      }),
     });
-  }
+  });
   return value;
 };
 
@@ -75,20 +71,18 @@ const set = (key, value) => {
     value.timestampMs = Date.now();
   }
   cache.set(key, value);
-  if (global.setting.cache.enableLog) {
-    id().then((id) => {
-      log({
-        id,
-        instance: global.setting.wechaty.name,
-        level: 'INFO',
-        category: 'wechat-connector.cache.set',
-        timestampMs: Date.now(),
-        content: JSON.stringify({
-          key, // number as long
-        }),
-      });
+  id().then((id) => {
+    log({
+      id,
+      instance: global.setting.wechaty.name,
+      level: 'SILL',
+      category: 'wechat-connector.cache.set',
+      timestampMs: Date.now(),
+      content: JSON.stringify({
+        key, // number as long
+      }),
     });
-  }
+  });
 };
 
 export { init, get, set };

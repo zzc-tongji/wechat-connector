@@ -1,4 +1,4 @@
-import { Message /* , log as wechatyLog */ } from 'wechaty';
+import { Message } from 'wechaty';
 
 import { id, log } from '../../requestor/http';
 import { global } from '../../utils/global';

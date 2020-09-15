@@ -1,6 +1,6 @@
 import Ajv from 'ajv';
 import fetch, { Headers } from 'node-fetch';
-import { log as wechatyLog } from 'wechaty';
+import { log as localLog } from 'wechaty';
 
 import { global } from '../utils/global';
 
@@ -13,26 +13,39 @@ const init = () => {
 };
 
 const id = () => {
-  return new Promise((resolve) => {
-    fetch(idUrl).then((response) => {
-      if (!response.ok) {
-        throw `fetch ${idUrl} => ${response.status}`;
-      }
-      response.json().then((data) => {
-        if (!validate(data)) {
-          throw `fetch ${idUrl} => ${JSON.stringify(validate.errors)}`;
-        }
-        resolve(data.id);
-      }).catch((e) => {
-        idHelper(e, resolve);
-      });
-    }).catch((error) => {
-      idHelper(error, resolve);
-    });
+  // () => Promise <number as integer>
+  let responseStatus;
+  let responseBody;
+  return fetch(idUrl).then((response) => {
+    responseStatus = response.status;
+    if (!response.ok) {
+      throw new Error(`response status: ${responseStatus}`);
+    }
+    return response.text();
+  }).then((text) => {
+    responseBody = text;
+    let data;
+    try {
+      data = JSON.parse(responseBody);
+    } catch (error) {
+      throw new Error(`response status: ${responseStatus} => response body: ${responseBody} => JSON error: ${error.message}`);
+    }
+    return Promise.resolve(data);
+  }).then((data) => {
+    if (!validate(data)) {
+      throw new Error(`response status: ${responseStatus} => response body: ${responseBody} => schema error: ${JSON.stringify(validate.errors)}`);
+    }
+    return Promise.resolve(data.id);
+  }).catch((error) => {
+    // local log
+    localLog.warn('local.requestor.http.id.failure', `GET ${idUrl}\n=> ${error.message}`);
+    console.log();
+    // Use local ID of negative integer instead.
+    return Promise.resolve(Math.floor(-1 + Math.random() * -9007199254740991));
   });
 };
 
-const validate = (new Ajv()).compile({
+const validate = (new Ajv({ allErrors: true })).compile({
   $schema: 'http://json-schema.org/draft-07/schema',
   $id: 'http://example.com/example.json',
   type: 'object',
@@ -48,44 +61,37 @@ const validate = (new Ajv()).compile({
   },
 });
 
-const idHelper = (error, resolve) => {
-  // local log
-  wechatyLog.error('local.requestor.http.id.error', typeof error == 'string' ? error : error.message);
-  console.log();
-  //
-  resolve(Math.floor(-1 + Math.random() * -9007199254740991));
-};
-
 const log = (content) => {
-  // (content: object)
+  // (content: object) => Promise <void>
   const promiseList = [];
   global.setting.http.sender.log.forEach((server) => {
     content.rpcToken = server.rpcToken;
     promiseList.push(new Promise((resolve) => {
-      fetch(server.url, { method: 'POST', headers, body: JSON.stringify(content) }).then((response) => {
+      const body = JSON.stringify(content);
+      let responseStatus;
+      fetch(server.url, { method: 'POST', headers, body }).then((response) => {
         if (response.ok) {
           resolve();
           return;
         }
-        response.text().then((text) => {
-          throw `fetch ${server.url} => ${response.status} => ${text}`;
-        }).catch((error) => {
-          logHelper(error, resolve);
-        });
+        responseStatus = response.status;
+        return response.text();
+      }).then((text) => {
+        // local log
+        localLog.warn('local.requestor.http.log.failure', `request body: ${body}\n=> response status: ${responseStatus}\n=> response body${text}`);
+        console.log();
+        //
+        resolve();
       }).catch((error) => {
-        logHelper(error, resolve);
+        // local log
+        localLog.warn('local.requestor.http.log.failure', `POST ${server.url}\n=> ${error.message}`);
+        console.log();
+        //
+        resolve();
       });
     }));
   });
   return Promise.all(promiseList);
-};
-
-const logHelper = (error, resolve) => {
-  // local log
-  wechatyLog.error('local.requestor.http.log.error', typeof error == 'string' ? error : error.message);
-  console.log();
-  //
-  resolve();
 };
 
 export { init, id, log };

@@ -2,9 +2,8 @@ import * as fs from 'fs';
 import { sep } from 'path';
 
 import express from 'express';
-import { log as wechatyLog } from 'wechaty';
+import { log as localLog } from 'wechaty';
 
-import { id, log } from '../requestor/http';
 import * as wechat from '../requestor/wechat';
 import { global } from '../utils/global';
 import { getStatus } from '../utils/status';
@@ -46,13 +45,13 @@ app.post('/rpc/exit', express.text({ type: 'application/json' }), (req, res) => 
 // POST => /rpc/forward
 app.post('/rpc/forward', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.forward', forward.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(forward.validate, req, res);
+  if (!data) {
     return;
   }
   // forward
-  delete data.payload.rpcToken;
-  wechat.forward(data.payload);
+  data.rpcToken = '<validated>';
+  wechat.forward(data);
   // response
   res.status(202);
   res.send();
@@ -60,10 +59,8 @@ app.post('/rpc/forward', express.text({ type: 'application/json' }), (req, res) 
 
 // POST => /rpc/log
 app.post('/rpc/log', express.text({ type: 'application/json' }), (req, res) => {
-  // mock
-  //
   // echo as local log
-  wechatyLog.info('[MOCK::LOG]', typeof req.body == 'string' ? req.body : '{}');
+  localLog.info('local.echo', typeof req.body == 'string' ? req.body : '{}');
   console.log();
   // response
   res.status(202);
@@ -73,8 +70,8 @@ app.post('/rpc/log', express.text({ type: 'application/json' }), (req, res) => {
 // POST => /rpc/login-approach
 app.post('/rpc/login-approach', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.login-approach', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // response
@@ -85,8 +82,8 @@ app.post('/rpc/login-approach', express.text({ type: 'application/json' }), (req
 // POST /rpc/status
 app.post('/rpc/status', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.status', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // response
@@ -97,8 +94,8 @@ app.post('/rpc/status', express.text({ type: 'application/json' }), (req, res) =
 // POST => /rpc/logout
 app.post('/rpc/logout', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.logout', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // logout
@@ -111,8 +108,8 @@ app.post('/rpc/logout', express.text({ type: 'application/json' }), (req, res) =
 // POST => /rpc/logout/await
 app.post('/rpc/logout/await', express.text({ type: 'application/json' }), async (req, res) => {
   // request
-  const data = errorhandler('.listener.http.logout.await', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // logout
@@ -125,13 +122,13 @@ app.post('/rpc/logout/await', express.text({ type: 'application/json' }), async 
 // POST => /rpc/reply
 app.post('/rpc/reply', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.reply', reply.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(reply.validate, req, res);
+  if (!data) {
     return;
   }
   // reply
-  delete data.payload.rpcToken;
-  wechat.reply(data.payload);
+  data.rpcToken = '<validated>';
+  wechat.reply(data);
   // response
   res.status(202);
   res.send();
@@ -140,13 +137,13 @@ app.post('/rpc/reply', express.text({ type: 'application/json' }), (req, res) =>
 // POST => /rpc/send
 app.post('/rpc/send', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.send', send.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(send.validate, req, res);
+  if (!data) {
     return;
   }
   // send
-  delete data.payload.rpcToken;
-  wechat.send(data.payload);
+  data.rpcToken = '<validated>';
+  wechat.send(data);
   // response
   res.status(202);
   res.send();
@@ -155,8 +152,8 @@ app.post('/rpc/send', express.text({ type: 'application/json' }), (req, res) => 
 // POST => /rpc/start
 app.post('/rpc/start', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.start', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // start
@@ -169,8 +166,8 @@ app.post('/rpc/start', express.text({ type: 'application/json' }), (req, res) =>
 // POST => /rpc/start/await
 app.post('/rpc/start/await', express.text({ type: 'application/json' }), async (req, res) => {
   // request
-  const data = errorhandler('.listener.http.start.await', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // start
@@ -183,8 +180,8 @@ app.post('/rpc/start/await', express.text({ type: 'application/json' }), async (
 // POST => /rpc/stop
 app.post('/rpc/stop', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.stop', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // stop
@@ -197,8 +194,8 @@ app.post('/rpc/stop', express.text({ type: 'application/json' }), (req, res) => 
 // POST => /rpc/stop/await
 app.post('/rpc/stop/await', express.text({ type: 'application/json' }), async (req, res) => {
   // request
-  const data = errorhandler('.listener.http.stop.await', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // stop
@@ -211,8 +208,8 @@ app.post('/rpc/stop/await', express.text({ type: 'application/json' }), async (r
 // POST => /rpc/sync
 app.post('/rpc/sync', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.sync', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // sync
@@ -225,8 +222,8 @@ app.post('/rpc/sync', express.text({ type: 'application/json' }), (req, res) => 
 // POST => /rpc/sync/await
 app.post('/rpc/sync/await', express.text({ type: 'application/json' }), async (req, res) => {
   // request
-  const data = errorhandler('.listener.http.sync.await', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // sync
@@ -237,21 +234,7 @@ app.post('/rpc/sync/await', express.text({ type: 'application/json' }), async (r
 });
 
 const listen = () => {
-  app.listen(global.setting.http.receiver.port, () => {
-    // log
-    id().then((id) => {
-      log({
-        id,
-        instance: global.setting.wechaty.name,
-        level: 'INFO',
-        category: 'wechat-connector.listener.http.listen',
-        timestampMs: Date.now(),
-        content: JSON.stringify({
-          port: global.setting.http.receiver.port, // number as integer
-        }),
-      });
-    });
-  });
+  app.listen(global.setting.http.receiver.port);
 };
 
 export { listen };

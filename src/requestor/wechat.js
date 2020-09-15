@@ -2,9 +2,9 @@ import * as cache from '../utils/cache';
 import { global } from '../utils/global';
 import { id, log } from './http';
 
-import { Contact, Message, Room, log as wechatyLog } from 'wechaty';
+import { Contact, Message, Room } from 'wechaty';
 
-const logError = async (reason, contextType, payload) => {
+const logFailure = async (reason, contextType, payload) => {
   // (reason: string, callerType: string, payload: object)
   const content = JSON.stringify({
     reason, // string
@@ -14,24 +14,21 @@ const logError = async (reason, contextType, payload) => {
   log({
     id: await id(),
     instance: global.setting.wechaty.name,
-    level: 'ERR',
+    level: 'WARN',
     category: `wechat-connector.${contextType}.error`,
     timestampMs: Date.now(),
     content,
   });
-  // local log
-  wechatyLog.error(`local.${contextType}.error`, content);
-  console.log();
 };
 
 const checkRobot = async (contextType, payload) => {
   // (callerType: string, payload: object)
   if (!global.robot) {
-    await logError('robot non-existent', contextType, payload);
+    await logFailure('robot non-existent', contextType, payload);
     return false;
   }
   if (!global.robot.logonoff()) {
-    await logError('robot logged-out', contextType, payload);
+    await logFailure('robot logged-out', contextType, payload);
     return false;
   }
   return true;
@@ -45,7 +42,7 @@ const forward = async (payload) => {
   }
   const context = cache.get(payload.id);
   if (!context) {
-    await logError('message expired', contextType, payload);
+    await logFailure('message expired', contextType, payload);
     return;
   }
   let recipient;
@@ -57,14 +54,14 @@ const forward = async (payload) => {
       recipient = await global.robot.Contact.find({ name: payload.receiver.name });
     }
     if (!recipient) {
-      await logError('friend not found', contextType, payload);
+      await logFailure('friend not found', contextType, payload);
       return;
     }
     try {
       // forward
       await context.message.forward(recipient);
     } catch (error) {
-      await logError(error.message, contextType, payload);
+      await logFailure(error.message, contextType, payload);
       return;
     }
     // log
@@ -87,14 +84,14 @@ const forward = async (payload) => {
     // to group
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
-      await logError('group not found', contextType, payload);
+      await logFailure('group not found', contextType, payload);
       return;
     }
     try {
       // forward
       await context.message.forward(recipient);
     } catch (error) {
-      await logError(error.message, contextType, payload);
+      await logFailure(error.message, contextType, payload);
       return;
     }
     // log
@@ -124,7 +121,7 @@ const reply = async (payload) => {
   }
   const context = cache.get(payload.id);
   if (!context) {
-    await logError('message expired', contextType, payload);
+    await logFailure('message expired', contextType, payload);
     return;
   }
   if (context.group) {
@@ -134,7 +131,7 @@ const reply = async (payload) => {
       // reply
       context.group.say(payload.message, context.one);
     } catch (error) {
-      await logError(error.message, contextType, payload);
+      await logFailure(error.message, contextType, payload);
       return;
     }
     // log
@@ -158,7 +155,7 @@ const reply = async (payload) => {
       // reply
       context.one.say(payload.message);
     } catch (error) {
-      await logError(error.message, contextType, payload);
+      await logFailure(error.message, contextType, payload);
       return;
     }
     // log
@@ -193,14 +190,14 @@ const send = async (payload) => {
       recipient = await global.robot.Contact.find({ name: payload.receiver.name });
     }
     if (!recipient) {
-      await logError('friend not found', contextType, payload);
+      await logFailure('friend not found', contextType, payload);
       return;
     }
     try {
       // send
       await recipient.say(payload.message);
     } catch (error) {
-      await logError(error.message, contextType, payload);
+      await logFailure(error.message, contextType, payload);
       return;
     }
     // log
@@ -221,14 +218,14 @@ const send = async (payload) => {
     // to group
     recipient = await global.robot.Room.find({ topic: payload.receiver.name });
     if (!recipient) {
-      await logError('group not found', contextType, payload);
+      await logFailure('group not found', contextType, payload);
       return;
     }
     try {
       // send
       await recipient.say(payload.message);
     } catch (error) {
-      await logError(error.message, contextType, payload);
+      await logFailure(error.message, contextType, payload);
       return;
     }
     // log
@@ -270,7 +267,7 @@ const syncAll = async () => {
     id: await id(),
     instance: global.setting.wechaty.name,
     level: 'INFO',
-    category: 'requestor.wechat.sync-all',
+    category: 'wechat-connector.requestor.wechat.sync-all',
     timestampMs: Date.now(),
     content: '{}',
   });
@@ -296,8 +293,8 @@ const sync = async (obj) => {
   await log({
     id: await id(),
     instance: global.setting.wechaty.name,
-    level: 'INFO',
-    category: 'requestor.wechat.sync',
+    level: 'VERB',
+    category: 'wechat-connector.requestor.wechat.sync',
     timestampMs: Date.now(),
     content: JSON.stringify(payload),
   });

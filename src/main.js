@@ -1,4 +1,4 @@
-import { Wechaty, log as wechatyLog } from 'wechaty';
+import { Wechaty, log as localLog } from 'wechaty';
 
 import * as http from './requestor/http';
 import { listen as httpListen } from './listener/http';
@@ -13,13 +13,15 @@ import * as autoStart from './utils/auto-start';
 
 const install = async () => {
   // local log
-  wechatyLog.info('local.main.install', 'begin');
+  localLog.info('local.install.begin');
   console.log();
+  //
   const bot = new Wechaty();
   const exit = () => {
     // local log
-    wechatyLog.info('local.main.install', 'end');
+    localLog.info('local.install.end');
     console.log();
+    //
     process.exit(0);
   };
   bot.on('start', exit);
@@ -31,21 +33,17 @@ const install = async () => {
 };
 
 const run = () => {
+  process.on('uncaughtException', (error) => {
+    // local log
+    localLog.error('local.uncaught-exception', error.stack);
+    console.log();
+    //
+    process.exit(1);
+  });
   httpListen();
   if (autoStart.get()) {
     autoStart.set(false);
     global.start();
-    // log
-    http.id().then((id) => {
-      http.log({
-        id,
-        instance: global.setting.wechaty.name,
-        level: 'INFO',
-        category: 'wechat-connector.main.auto-start',
-        timestampMs: Date.now(),
-        content: '{}',
-      });
-    });
   }
 };
 
@@ -61,9 +59,10 @@ const setGlobal = () => {
     if (global.robot === null) {
       return;
     }
-    global.loginApproach.url = null;
-    global.loginApproach.qrcode = null;
-    global.loginApproach.timestampMs = null;
+    global.loginApproach.status = '';
+    global.loginApproach.url = '';
+    global.loginApproach.qrcode = '';
+    global.loginApproach.timestampMs = 0;
     if (global.robot.logonoff()) {
       await global.robot.logout();
       unexpectedLogout.disable();
@@ -81,9 +80,10 @@ const setGlobal = () => {
     if (global.robot === null) {
       return;
     }
-    global.loginApproach.url = null;
-    global.loginApproach.qrcode = null;
-    global.loginApproach.timestampMs = null;
+    global.loginApproach.status = '';
+    global.loginApproach.url = '';
+    global.loginApproach.qrcode = '';
+    global.loginApproach.timestampMs = 0;
     await global.robot.stop();
     global.robot = null;
     unexpectedLogout.disable();

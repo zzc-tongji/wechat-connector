@@ -1,4 +1,4 @@
-import { Message /* , log as wechatyLog */ } from 'wechaty';
+import { Message /* , log as localLog */ } from 'wechaty';
 
 import { global } from '../../utils/global';
 import * as cache from '../../utils/cache';
@@ -23,7 +23,7 @@ const getFileBase64 = async (message) => {
       return undefined;
     }
   } catch (e) {
-    wechatyLog.error('local.listener.wechat.message.file', JSON.stringify(error));
+    localLog.error('local.listener.wechat.message.file', JSON.stringify(error));
     console.log();
     return undefined;
   }

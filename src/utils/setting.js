@@ -2,11 +2,11 @@ import * as fs from 'fs';
 import { sep } from 'path';
 
 import Ajv from 'ajv';
-import { log as wechatyLog } from 'wechaty';
+import { log as localLog } from 'wechaty';
 
 import { global } from './global';
 
-const validate = (new Ajv()).compile({
+const validate = (new Ajv({ allErrors: true })).compile({
   $schema: 'http://json-schema.org/draft-07/schema',
   $id: '',
   type: 'object',
@@ -37,7 +37,6 @@ const validate = (new Ajv()).compile({
       type: 'object',
       required: [
         'expirationSecond',
-        'enableLog',
       ],
       additionalProperties: false,
       properties: {
@@ -45,10 +44,6 @@ const validate = (new Ajv()).compile({
           $id: '#/properties/cache/properties/expirationSecond',
           type: 'integer',
           minimum: 0,
-        },
-        enableLog: {
-          $id: '#/properties/cache/properties/enableLog',
-          type: 'boolean',
         },
       },
     },
@@ -183,7 +178,6 @@ const defaultValue = {
   },
   cache: {
     expirationSecond: 600,
-    enableLog: false,
   },
   report: {
     notLoginAfterStart: {
@@ -224,19 +218,18 @@ const init = (settingPath = null) => {
     const settingText = fs.readFileSync(settingPath, { encoding: 'utf-8', flag: 'r' });
     const setting = JSON.parse(settingText);
     if (!validate(setting)) {
-      throw JSON.stringify(validate.errors);
+      throw new Error(JSON.stringify(validate.errors));
     }
     global.setting = setting;
   } catch (error) {
-    // local log
-    wechatyLog.error('local.setting', typeof error == 'string' ? error : error.message);
-    console.log();
-    // local log
-    wechatyLog.info('local.setting', 'use default value');
-    console.log();
-    //
     global.setting = defaultValue;
+    // local log
+    localLog.warn('local.setting.invalid', error.message);
+    console.log();
   }
+  // local log
+  localLog.info('local.setting', JSON.stringify(global.setting));
+  console.log();
 };
 
 export { init };
