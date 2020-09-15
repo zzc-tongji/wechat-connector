@@ -28,20 +28,6 @@ app.get('/', (_req, res) => {
   res.send(html.replace('${instance}', global.setting.wechaty.name).replace('${status}', getStatus()));
 });
 
-// POST /rpc/exit
-app.post('/rpc/exit', express.text({ type: 'application/json' }), (req, res) => {
-  // request
-  const data = errorhandler('.listener.http.exit', token.validate, req, res);
-  if (data.status !== 200) {
-    return;
-  }
-  // response
-  res.status(202);
-  res.send();
-  // exit
-  process.exit(0);
-});
-
 // POST => /rpc/forward
 app.post('/rpc/forward', express.text({ type: 'application/json' }), (req, res) => {
   // request
@@ -60,7 +46,7 @@ app.post('/rpc/forward', express.text({ type: 'application/json' }), (req, res) 
 // POST => /rpc/log
 app.post('/rpc/log', express.text({ type: 'application/json' }), (req, res) => {
   // echo as local log
-  localLog.info('local.echo', typeof req.body == 'string' ? req.body : '{}');
+  localLog.info('local.echo', typeof req.body == 'string' ? `\n=> ${req.body}` : '');
   console.log();
   // response
   res.status(202);
@@ -146,62 +132,6 @@ app.post('/rpc/send', express.text({ type: 'application/json' }), (req, res) => 
   wechat.send(data);
   // response
   res.status(202);
-  res.send();
-});
-
-// POST => /rpc/start
-app.post('/rpc/start', express.text({ type: 'application/json' }), (req, res) => {
-  // request
-  const data = errorhandler(token.validate, req, res);
-  if (!data) {
-    return;
-  }
-  // start
-  global.start();
-  // response
-  res.status(202);
-  res.send();
-});
-
-// POST => /rpc/start/await
-app.post('/rpc/start/await', express.text({ type: 'application/json' }), async (req, res) => {
-  // request
-  const data = errorhandler(token.validate, req, res);
-  if (!data) {
-    return;
-  }
-  // start
-  await global.start();
-  // response
-  res.status(204);
-  res.send();
-});
-
-// POST => /rpc/stop
-app.post('/rpc/stop', express.text({ type: 'application/json' }), (req, res) => {
-  // request
-  const data = errorhandler(token.validate, req, res);
-  if (!data) {
-    return;
-  }
-  // stop
-  global.stop();
-  // response
-  res.status(202);
-  res.send();
-});
-
-// POST => /rpc/stop/await
-app.post('/rpc/stop/await', express.text({ type: 'application/json' }), async (req, res) => {
-  // request
-  const data = errorhandler(token.validate, req, res);
-  if (!data) {
-    return;
-  }
-  // stop
-  await global.stop();
-  // response
-  res.status(204);
   res.send();
 });
 

@@ -9,8 +9,6 @@ import * as notLoginAfterStart from './utils/report/not-login-after-start';
 import * as unexpectedLogout from './utils/report/unexpected-logout';
 import * as setting from './utils/setting';
 
-import * as autoStart from './utils/auto-start';
-
 const install = async () => {
   // local log
   localLog.info('local.install.begin');
@@ -35,16 +33,19 @@ const install = async () => {
 const run = () => {
   process.on('uncaughtException', (error) => {
     // local log
-    localLog.error('local.uncaught-exception', error.stack);
+    localLog.error('local.uncaught-exception', `\n=> ${error.stack}`);
     console.log();
     //
     process.exit(1);
   });
   httpListen();
+  global.start();
+  /*
   if (autoStart.get()) {
     autoStart.set(false);
     global.start();
   }
+  */
 };
 
 const setGlobal = () => {

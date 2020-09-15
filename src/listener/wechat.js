@@ -2,7 +2,6 @@ import { ScanStatus, Friendship } from 'wechaty';
 
 import * as notLoginAfterStart from '../utils/report/not-login-after-start';
 import * as unexpectedLogout from '../utils/report/unexpected-logout';
-import * as autoStart from '../utils/auto-start';
 import * as cache from '../utils/cache';
 import { global } from '../utils/global';
 import { message } from './wechat-utils/message';
@@ -27,8 +26,6 @@ const error = (error) => {
         stack: typeof error.stack === 'string' ? error.stack : '', // string
       }),
     }).then(() => {
-      // prepare for restart
-      autoStart.set(true);
       global.stop().then(() => {
         process.exit(1);
       });

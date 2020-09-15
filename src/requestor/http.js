@@ -38,7 +38,7 @@ const id = () => {
     return Promise.resolve(data.id);
   }).catch((error) => {
     // local log
-    localLog.warn('local.requestor.http.id.failure', `GET ${idUrl}\n=> ${error.message}`);
+    localLog.warn('local.requestor.http.id.failure', `\n=> GET ${idUrl}\n=> ${error.message}`);
     console.log();
     // Use local ID of negative integer instead.
     return Promise.resolve(Math.floor(-1 + Math.random() * -9007199254740991));
@@ -72,19 +72,17 @@ const log = (content) => {
       fetch(server.url, { method: 'POST', headers, body }).then((response) => {
         if (response.ok) {
           resolve();
-          return;
+          return Promise.resolve(null);
         }
         responseStatus = response.status;
         return response.text();
       }).then((text) => {
-        // local log
-        localLog.warn('local.requestor.http.log.failure', `request body: ${body}\n=> response status: ${responseStatus}\n=> response body${text}`);
-        console.log();
-        //
-        resolve();
+        if (typeof text === 'string') {
+          throw new Error(`request body: ${body}\n=> response status: ${responseStatus}\n=> response body: ${text}`);
+        }
       }).catch((error) => {
         // local log
-        localLog.warn('local.requestor.http.log.failure', `POST ${server.url}\n=> ${error.message}`);
+        localLog.warn('local.requestor.http.log.failure', `\n=> POST ${server.url}\n=> ${error.message}`);
         console.log();
         //
         resolve();

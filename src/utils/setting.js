@@ -224,11 +224,11 @@ const init = (settingPath = null) => {
   } catch (error) {
     global.setting = defaultValue;
     // local log
-    localLog.warn('local.setting.invalid', error.message);
+    localLog.warn('local.setting.invalid', `\n=> ${error.message}`);
     console.log();
   }
   // local log
-  localLog.info('local.setting', JSON.stringify(global.setting));
+  localLog.info('local.setting', `\n=> ${JSON.stringify(global.setting)}`);
   console.log();
 };
 

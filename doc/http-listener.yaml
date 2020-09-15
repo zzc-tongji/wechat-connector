@@ -9,34 +9,6 @@ tags:
   - name: 'Asynchronous'
   - name: 'Synchronous'
 paths:
-  '/rpc/exit':
-    post:
-      tags:
-        - 'Asynchronous'
-        - 'Control'
-      summary: 'exit'
-      operationId: 'rpcExit'
-      requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [exit.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/exit.http).'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Token'
-      responses:
-        202:
-          description: 'The process will exit soon.'
-        400:
-          description: 'The request body is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: 'The RPC token is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   '/rpc/forward':
     post:
       tags:
@@ -209,62 +181,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  '/rpc/start':
-    post:
-      tags:
-        - 'Asynchronous'
-        - 'Control'
-      summary: 'start the robot'
-      operationId: 'rpcStart'
-      requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [start.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/start.http).'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Token'
-      responses:
-        202:
-          description: 'The robot will start soon.'
-        400:
-          description: 'The request body is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: 'The RPC token is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  '/rpc/start/await':
-    post:
-      tags:
-        - 'Synchronous'
-        - 'Control'
-      summary: 'start the robot, wait until done'
-      operationId: 'rpcStartAwait'
-      requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [await.start.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/await.start.http).'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Token'
-      responses:
-        204:
-          description: 'The robot is started.'
-        400:
-          description: 'The request body is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: 'The RPC token is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   '/rpc/status':
     post:
       tags:
@@ -285,62 +201,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Status'
-        400:
-          description: 'The request body is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: 'The RPC token is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  '/rpc/stop':
-    post:
-      tags:
-        - 'Asynchronous'
-        - 'Control'
-      summary: 'stop the robot'
-      operationId: 'rpcStop'
-      requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [stop.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/stop.http).'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Token'
-      responses:
-        202:
-          description: 'The robot will stop soon.'
-        400:
-          description: 'The request body is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: 'The RPC token is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  '/rpc/stop/await':
-    post:
-      tags:
-        - 'Synchronous'
-        - 'Control'
-      summary: 'stop the WeChat worker, wait until done'
-      operationId: 'rpcStopAwait'
-      requestBody:
-        description: '`rpcToken` is used for authorization. Here is a request example in [await.stop.http](https://github.com/zzc-tongji/wechat-connector/blob/master/doc/http/await.stop.http).'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Token'
-      responses:
-        204:
-          description: 'The robot is stopped.'
         400:
           description: 'The request body is invalid.'
           content:
