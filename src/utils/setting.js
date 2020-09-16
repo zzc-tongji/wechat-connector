@@ -16,7 +16,7 @@ const validate = (new Ajv({ allErrors: true })).compile({
     'report',
     'http',
   ],
-  additionalProperties: true,
+  additionalProperties: false,
   properties: {
     wechaty: {
       $id: '#/properties/wechaty',
@@ -54,7 +54,7 @@ const validate = (new Ajv({ allErrors: true })).compile({
         'notLoginAfterStart',
         'unexpectedLogout',
       ],
-      additionalProperties: true,
+      additionalProperties: false,
       properties: {
         notLoginAfterStart: {
           $id: '#/properties/report/properties/notLoginAfterStart',
@@ -63,7 +63,7 @@ const validate = (new Ajv({ allErrors: true })).compile({
             'timeSecond',
             'maxCount',
           ],
-          additionalProperties: true,
+          additionalProperties: false,
           properties: {
             timeSecond: {
               $id: '#/properties/report/properties/notLoginAfterStart/properties/timeSecond',
@@ -84,7 +84,7 @@ const validate = (new Ajv({ allErrors: true })).compile({
             'timeSecond',
             'maxCount',
           ],
-          additionalProperties: true,
+          additionalProperties: false,
           properties: {
             timeSecond: {
               $id: '#/properties/report/properties/unexpectedLogout/properties/timeSecond',
