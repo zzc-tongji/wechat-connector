@@ -9,7 +9,7 @@ import * as notLoginAfterStart from './utils/report/not-login-after-start';
 import * as unexpectedLogout from './utils/report/unexpected-logout';
 import * as setting from './utils/setting';
 
-const install = async () => {
+const install = () => {
   // local log
   localLog.info('local.install.begin');
   console.log();
@@ -23,14 +23,20 @@ const install = async () => {
     process.exit(0);
   };
   bot.on('start', exit);
-  try {
-    await bot.start();
-  } catch (error) {
-    exit();
-  }
+  bot.start().catch(exit);
+};
+
+const normal = () => {
+  // local log
+  localLog.info('local.normal.begin');
+  console.log();
+  //
+  setGlobal();
+  run();
 };
 
 const setGlobal = () => {
+  //
   setting.init(); // global.setting
   http.init();
   cache.init();
@@ -76,16 +82,13 @@ const setGlobal = () => {
 };
 
 const run = () => {
-  // local log
-  localLog.error('local.normal.begin');
-  console.log();
   // process
   const handleUncaughtException = (error) => {
     // local log
     localLog.error('local.uncaught-exception', `\n=> ${error.stack}`);
     console.log();
     // local log
-    localLog.error('local.normal.exit');
+    localLog.info('local.normal.exit');
     console.log();
     // exit
     process.exit(1);
@@ -93,7 +96,7 @@ const run = () => {
   const handleExit = (signal) => {
     global.stop.then(() => {
       // local log
-      localLog.error('local.normal.exit', `\n=> ${signal}`);
+      localLog.info('local.normal.exit', `\n=> ${signal}`);
       console.log();
       // exit
       process.exit(0);
@@ -113,6 +116,5 @@ const run = () => {
 if (process.env.INSTALL) {
   install();
 } else {
-  setGlobal();
-  run();
+  normal();
 }
