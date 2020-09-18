@@ -99,7 +99,7 @@ const run = () => {
     process.exit(1);
   };
   const handleExit = (signal) => {
-    global.stop.then(() => {
+    global.stop().then(() => {
       // local log
       localLog.info('local.normal.exit', `\n=> ${signal}`);
       console.log();
