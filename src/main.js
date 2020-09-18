@@ -30,24 +30,6 @@ const install = async () => {
   }
 };
 
-const run = () => {
-  process.on('uncaughtException', (error) => {
-    // local log
-    localLog.error('local.uncaught-exception', `\n=> ${error.stack}`);
-    console.log();
-    //
-    process.exit(1);
-  });
-  httpListen();
-  global.start();
-  /*
-  if (autoStart.get()) {
-    autoStart.set(false);
-    global.start();
-  }
-  */
-};
-
 const setGlobal = () => {
   setting.init(); // global.setting
   http.init();
@@ -56,6 +38,7 @@ const setGlobal = () => {
   notLoginAfterStart.init();
   //
   notLoginAfterStart.enable();
+  //
   global.logout = async () => {
     if (global.robot === null) {
       return;
@@ -90,6 +73,39 @@ const setGlobal = () => {
     unexpectedLogout.disable();
   };
   // Global variable `global.robot` will be set when executing function `start`.
+};
+
+const run = () => {
+  // local log
+  localLog.error('local.normal.begin');
+  console.log();
+  // process
+  const handleUncaughtException = (error) => {
+    // local log
+    localLog.error('local.uncaught-exception', `\n=> ${error.stack}`);
+    console.log();
+    // local log
+    localLog.error('local.normal.exit');
+    console.log();
+    // exit
+    process.exit(1);
+  };
+  const handleExit = (signal) => {
+    global.stop.then(() => {
+      // local log
+      localLog.error('local.normal.exit', `\n=> ${signal}`);
+      console.log();
+      // exit
+      process.exit(0);
+    });
+  };
+  process.on('uncaughtException', handleUncaughtException);
+  process.on('SIGTERM', handleExit);
+  process.on('SIGINT', handleExit);
+  // http listen
+  httpListen();
+  // wechaty start
+  global.start();
 };
 
 // entry point
