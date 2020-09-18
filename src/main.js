@@ -45,38 +45,43 @@ const setGlobal = () => {
   //
   notLoginAfterStart.enable();
   //
-  global.logout = async () => {
+  global.logout = () => {
     if (global.robot === null) {
-      return;
+      return Promise.resolve();
     }
     global.loginApproach.status = '';
     global.loginApproach.url = '';
     global.loginApproach.qrcode = '';
     global.loginApproach.timestampMs = 0;
     if (global.robot.logonoff()) {
-      await global.robot.logout();
-      unexpectedLogout.disable();
+      return global.robot.logout().then(() => {
+        unexpectedLogout.disable();
+        return Promise.resolve();
+      });
     }
+    return Promise.resolve();
   };
-  global.start = async () => {
+  global.start = () => {
     if (global.robot !== null) {
-      return;
+      return Promise.resolve();
     }
     global.robot = new Wechaty(global.setting.wechaty);
     wechat.listen();
-    await global.robot.start();
+    return global.robot.start();
   };
-  global.stop = async () => {
+  global.stop = () => {
     if (global.robot === null) {
-      return;
+      return Promise.resolve();
     }
     global.loginApproach.status = '';
     global.loginApproach.url = '';
     global.loginApproach.qrcode = '';
     global.loginApproach.timestampMs = 0;
-    await global.robot.stop();
-    global.robot = null;
-    unexpectedLogout.disable();
+    return global.robot.stop().then(() => {
+      global.robot = null;
+      unexpectedLogout.disable();
+      return Promise.resolve();
+    });
   };
   // Global variable `global.robot` will be set when executing function `start`.
 };
