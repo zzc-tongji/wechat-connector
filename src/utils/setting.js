@@ -198,12 +198,8 @@ const defaultValue = {
       id: 'https://id.zzc.icu/',
       log: [
         {
-          url: 'http://127.0.0.1:8002/rpc/log', // self
+          url: 'http://127.0.0.1:8002/rpc/log',
           rpcToken: 'x',
-        },
-        {
-          url: 'http://172.17.0.1:8003/rpc/log', // host machine
-          rpcToken: 'core8r3ufurm9tqomosuul0s5s9ts6ko8g85pijxudbvpm2jtb2w01od1z69h5vi',
         },
       ],
     },
