@@ -13,4 +13,4 @@ COPY ./yarn.lock ./
 
 RUN ./prerequisite.sh && mkdir runtime && yarn install --production && yarn start-install
 
-CMD [ "yarn", "start" ]
+CMD [ "runtime/docker-start.sh"]

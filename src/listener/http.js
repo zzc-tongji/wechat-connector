@@ -28,6 +28,22 @@ app.get('/', (_req, res) => {
   res.send(html.replace('${instance}', global.setting.wechaty.name).replace('${status}', getStatus()));
 });
 
+// POST /rpc/exit
+app.post('/rpc/exit', express.text({ type: 'application/json' }), (req, res) => {
+  // request
+  const data = errorhandler('.listener.http.exit', token.validate, req, res);
+  if (data.status !== 200) {
+    return;
+  }
+  // response
+  res.status(202);
+  res.send();
+  // exit
+  global.stop().then(() => {
+    process.exit(0);
+  });
+});
+
 // POST => /rpc/forward
 app.post('/rpc/forward', express.text({ type: 'application/json' }), (req, res) => {
   // request

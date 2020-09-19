@@ -4,6 +4,7 @@ import * as http from './requestor/http';
 import { listen as httpListen } from './listener/http';
 import * as wechat from './listener/wechat';
 import * as cache from './utils/cache';
+import { generateExitScript } from './utils/exit';
 import { global } from './utils/global';
 import * as notLoginAfterStart from './utils/report/not-login-after-start';
 import * as unexpectedLogout from './utils/report/unexpected-logout';
@@ -92,6 +93,8 @@ const run = () => {
     process.exit(1);
   };
   process.on('uncaughtException', handleUncaughtException);
+  // generate file `docker-stop.sh`
+  generateExitScript();
   // http listen
   httpListen();
   // wechaty start
