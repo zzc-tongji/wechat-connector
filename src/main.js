@@ -27,10 +27,6 @@ const install = () => {
 };
 
 const normal = () => {
-  // local log
-  localLog.info('local.normal.begin');
-  console.log();
-  //
   setGlobal();
   run();
 };
@@ -92,24 +88,10 @@ const run = () => {
     // local log
     localLog.error('local.uncaught-exception', `\n=> ${error.stack}`);
     console.log();
-    // local log
-    localLog.info('local.normal.exit');
-    console.log();
     // exit
     process.exit(1);
   };
-  const handleExit = (signal) => {
-    global.stop().then(() => {
-      // local log
-      localLog.info('local.normal.exit', `\n=> ${signal}`);
-      console.log();
-      // exit
-      process.exit(0);
-    });
-  };
   process.on('uncaughtException', handleUncaughtException);
-  process.on('SIGTERM', handleExit);
-  process.on('SIGINT', handleExit);
   // http listen
   httpListen();
   // wechaty start
