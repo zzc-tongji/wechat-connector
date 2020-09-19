@@ -31,8 +31,8 @@ app.get('/', (_req, res) => {
 // POST /rpc/exit
 app.post('/rpc/exit', express.text({ type: 'application/json' }), (req, res) => {
   // request
-  const data = errorhandler('.listener.http.exit', token.validate, req, res);
-  if (data.status !== 200) {
+  const data = errorhandler(token.validate, req, res);
+  if (!data) {
     return;
   }
   // response
