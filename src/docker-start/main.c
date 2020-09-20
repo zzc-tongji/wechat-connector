@@ -20,7 +20,6 @@ void signalHandler(int signum)
 int main(int argc, char *argv[])
 {
   signal(SIGTERM, signalHandler);
-  signal(SIGINT, signalHandler);
   int length = wai_getExecutablePath(NULL, 0, NULL);
   int dirname_length = 0;
   char *dirname = (char *)malloc(length);

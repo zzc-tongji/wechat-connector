@@ -18,7 +18,7 @@ const install = () => {
   const bot = new Wechaty();
   const exit = () => {
     // local log
-    localLog.info('local.install.end');
+    localLog.info('local.install.end', '\n=> 0');
     console.log();
     //
     process.exit(0);
@@ -28,6 +28,10 @@ const install = () => {
 };
 
 const normal = () => {
+  // local log
+  localLog.info('local.normal.begin');
+  console.log();
+  //
   setGlobal();
   run();
 };
@@ -88,6 +92,9 @@ const run = () => {
   const handleUncaughtException = (error) => {
     // local log
     localLog.error('local.uncaught-exception', `\n=> ${error.stack}`);
+    console.log();
+    // local log
+    localLog.info('local.normal.end', '\n=> 1');
     console.log();
     // exit
     process.exit(1);

@@ -40,7 +40,10 @@ app.post('/rpc/exit', express.text({ type: 'application/json' }), (req, res) => 
   res.send();
   // exit
   global.stop().then(() => {
-    console.log('wechaty has stopped');
+    // local log
+    localLog.info('local.normal.end', '\n=> 0');
+    console.log();
+    //
     process.exit(0);
   });
 });

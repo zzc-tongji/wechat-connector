@@ -1,4 +1,4 @@
-import { ScanStatus, Friendship } from 'wechaty';
+import { ScanStatus, Friendship, log as localLog } from 'wechaty';
 
 import * as notLoginAfterStart from '../utils/report/not-login-after-start';
 import * as unexpectedLogout from '../utils/report/unexpected-logout';
@@ -27,6 +27,10 @@ const error = (error) => {
       }),
     }).then(() => {
       global.stop().then(() => {
+        // local log
+        localLog.info('local.normal.end', '\n=> 1');
+        console.log();
+        //
         process.exit(1);
       });
     });
