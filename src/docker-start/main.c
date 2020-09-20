@@ -22,6 +22,8 @@ int main(int argc, char *argv[])
   signal(SIGTERM, signalHandler);
   signal(SIGINT, signalHandler);
   //
+  int length = wai_getExecutablePath(NULL, 0, NULL);
+  int dirname_length = 0;
   int docker_start_sh_length = length + 16 + 1; // 16 is the length of "/docker-start.sh".
   char *docker_start_sh = (char *)malloc(docker_start_sh_length);
   wai_getExecutablePath(docker_start_sh, length, &dirname_length);
