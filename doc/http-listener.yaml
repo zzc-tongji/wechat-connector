@@ -9,34 +9,6 @@ tags:
   - name: 'Asynchronous'
   - name: 'Synchronous'
 paths:
-  '/rpc/exit':
-    post:
-      tags:
-        - 'Asynchronous'
-        - 'Control'
-      summary: 'exit'
-      operationId: 'rpcExit'
-      requestBody:
-        description: '`rpcToken` is used for authorization.'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Token'
-      responses:
-        202:
-          description: 'The process will exit soon.'
-        400:
-          description: 'The request body is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: 'The RPC token is invalid.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   '/rpc/forward':
     post:
       tags:
