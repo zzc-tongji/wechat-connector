@@ -5,13 +5,6 @@
 
 #include "whereami.h"
 
-int main(int argc, char *argv[])
-{
-  signal(SIGTERM, signalHandler);
-  signal(SIGINT, signalHandler);
-  pause();
-}
-
 void signalHandler(int signum)
 {
   int length = wai_getExecutablePath(NULL, 0, NULL);
@@ -21,4 +14,11 @@ void signalHandler(int signum)
   wai_getExecutablePath(docker_stop_sh_path, length, &dirname_length);
   strcpy(docker_stop_sh_path + dirname_length, "/docker-stop.sh");
   system(docker_stop_sh_path);
+}
+
+int main(int argc, char *argv[])
+{
+  signal(SIGTERM, signalHandler);
+  signal(SIGINT, signalHandler);
+  pause();
 }
