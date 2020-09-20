@@ -203,4 +203,4 @@ dist
 # [.gitignore]
 
 runtime/*
-!runtime/docker-start.sh
+runtime-private/*

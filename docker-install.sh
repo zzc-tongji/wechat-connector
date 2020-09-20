@@ -7,15 +7,16 @@ if [ $(cat /etc/os-release | grep -ci "debian\|ubuntu") -gt 0 ]; then
   && apt-get install -y make \
   && apt-get install -y --no-install-recommends ./google-chrome-unstable_85.0.4173.0-1_amd64.deb \
   && mkdir runtime/ \
+  && mkdir runtime-private/ \
   && yarn install --production \
   && yarn start-install \
   && cd docker-start/ \
   && gcc -include whereami.h -c whereami.c \
   && gcc -include whereami.h -c main.c \
-  && gcc whereami.o main.o -o docker-start \
+  && gcc whereami.o main.o -static -o docker-start \
   && rm -f whereami.o \
   && rm -f main.o \
-  && mv docker-start ../runtime/ \
+  && mv docker-start ../runtime-private/ \
   && cd ../
 else
   echo "[Error] unsupported linux distribution"

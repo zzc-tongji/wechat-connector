@@ -14,4 +14,4 @@ COPY ./yarn.lock ./
 
 RUN ./docker-install.sh
 
-CMD [ "./runtime/docker-start"]
+CMD [ "./runtime-private/docker-start"]
