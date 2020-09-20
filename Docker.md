@@ -14,7 +14,7 @@ docker build -t messagehelper/wechat-connector .
 #### Script
 
 ``` sh
-docker run --detach --name wechat-connector --volume ./runtime/:/usr/src/app/runtime/ --publish 8002:8002 --restart on-failure messagehelper/wechat-connector
+docker run --detach --name wechat-connector --volume ./mount/runtime/:/usr/src/app/runtime/ --publish 8002:8002 --restart on-failure messagehelper/wechat-connector
 ```
 
 #### Compose
