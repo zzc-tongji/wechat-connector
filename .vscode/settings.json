@@ -1,5 +1,6 @@
 {
   "bashBeautify.tabSize": 2,
   "editor.fontSize": 16,
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "C_Cpp.errorSquiggles": "Disabled"
 }

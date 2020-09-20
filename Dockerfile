@@ -8,9 +8,9 @@ COPY ./static/ ./static/
 COPY ./.babelrc ./
 COPY ./google-chrome-unstable_85.0.4173.0-1_amd64.deb ./
 COPY ./package.json ./
-COPY ./prerequisite.sh ./
+COPY ./docker-install.sh ./
 COPY ./yarn.lock ./
 
-RUN ./prerequisite.sh && mkdir runtime && yarn install --production && yarn start-install
+RUN ./docker-install.sh
 
-CMD [ "runtime/docker-start.sh"]
+CMD [ "./runtime/docker-start.sh"]
