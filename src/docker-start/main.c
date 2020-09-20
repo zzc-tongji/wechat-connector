@@ -21,15 +21,13 @@ int main(int argc, char *argv[])
 {
   signal(SIGTERM, signalHandler);
   signal(SIGINT, signalHandler);
-  //
   int length = wai_getExecutablePath(NULL, 0, NULL);
   int dirname_length = 0;
-  int docker_start_sh_length = length + 16 + 1; // 16 is the length of "/docker-start.sh".
-  char *docker_start_sh = (char *)malloc(docker_start_sh_length);
-  wai_getExecutablePath(docker_start_sh, length, &dirname_length);
-  strcpy(docker_start_sh + dirname_length, "/docker-start.sh");
-  system(docker_start_sh);
-  free(docker_start_sh);
-  //
-  pause();
+  char *dirname = (char *)malloc(length);
+  wai_getExecutablePath(, length, &dirname_length);
+  dirname[dirname_length] = '\0';
+  chdir(dirname);
+  free(dirname);
+  chdir("..");
+  return system("yarn start");
 }
