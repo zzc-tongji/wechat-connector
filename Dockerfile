@@ -3,6 +3,7 @@ FROM node:lts
 
 WORKDIR /usr/src/app
 
+COPY ./docker-start/ ./docker-start/
 COPY ./src/ ./src/
 COPY ./static/ ./static/
 COPY ./.babelrc ./
