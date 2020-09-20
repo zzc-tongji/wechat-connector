@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
   int length = wai_getExecutablePath(NULL, 0, NULL);
   int dirname_length = 0;
   char *dirname = (char *)malloc(length);
-  wai_getExecutablePath(, length, &dirname_length);
+  wai_getExecutablePath(dirname, length, &dirname_length);
   dirname[dirname_length] = '\0';
   chdir(dirname);
   free(dirname);
