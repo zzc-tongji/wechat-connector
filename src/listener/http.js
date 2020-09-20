@@ -35,15 +35,14 @@ app.post('/rpc/exit', express.text({ type: 'application/json' }), (req, res) => 
   if (!data) {
     return;
   }
-  // response
-  res.status(202);
-  res.send();
-  // exit
   global.stop().then(() => {
     // local log
     localLog.info('local.normal.end', '\n=> 0');
     console.log();
-    //
+    // response
+    res.status(204);
+    res.send();
+    // exit
     process.exit(0);
   });
 });

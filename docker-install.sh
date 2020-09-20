@@ -9,14 +9,14 @@ if [ $(cat /etc/os-release | grep -ci "debian\|ubuntu") -gt 0 ]; then
   && mkdir runtime/ \
   && yarn install --production \
   && yarn start-install \
-  && cd src/docker-start/ \
+  && cd docker-start/ \
   && gcc -include whereami.h -c whereami.c \
   && gcc -include whereami.h -c main.c \
   && gcc whereami.o main.o -o docker-start \
   && rm -f whereami.o \
   && rm -f main.o \
-  && mv docker-start ../../runtime/ \
-  && cd ../../
+  && mv docker-start ../runtime/ \
+  && cd ../
 else
   echo "[Error] unsupported linux distribution"
   exit 1
