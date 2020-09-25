@@ -93,7 +93,11 @@ app.post('/rpc/status', express.text({ type: 'application/json' }), (req, res) =
   }
   // response
   res.set('content-type', 'application/json;charset=UTF-8');
-  res.send(JSON.stringify({ status: getStatus() }));
+  res.send(JSON.stringify({
+    instance: global.setting.wechaty.name,
+    category: 'wechat-connector',
+    status: getStatus(),
+  }));
 });
 
 // POST => /rpc/logout

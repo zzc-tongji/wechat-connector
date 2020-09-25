@@ -57,6 +57,7 @@ const validate = (new Ajv({ allErrors: true })).compile({
     id: {
       $id: '#/properties/id',
       type: 'integer',
+      exclusiveMinimum: 0,
     },
   },
 });
