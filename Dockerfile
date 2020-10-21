@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-FROM node:lts
+FROM node:12
 
 WORKDIR /usr/src/app
 
