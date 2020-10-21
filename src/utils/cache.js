@@ -1,6 +1,5 @@
 import Hashmap from 'hashmap';
 
-import { id, log } from '../requestor/http';
 import { global } from './global';
 
 let cache;
@@ -30,16 +29,6 @@ const removeExpired = () => {
   remove.forEach((key) => {
     cache.delete(key);
   });
-  id().then((id) => {
-    log({
-      id,
-      instance: global.setting.wechaty.name,
-      level: 'SILL',
-      category: 'wechat-connector.cache.remove-expired',
-      timestampMs: Date.now(),
-      content: '{}',
-    });
-  });
 };
 
 const get = (key) => {
@@ -47,19 +36,6 @@ const get = (key) => {
     return undefined;
   }
   const value = cache.get(key);
-  id().then((id) => {
-    log({
-      id,
-      instance: global.setting.wechaty.name,
-      level: 'SILL',
-      category: 'wechat-connector.cache.get',
-      timestampMs: Date.now(),
-      content: JSON.stringify({
-        key, // number as long
-        success: value ? true : false, // boolean
-      }),
-    });
-  });
   return value;
 };
 
@@ -71,18 +47,6 @@ const set = (key, value) => {
     value.timestampMs = Date.now();
   }
   cache.set(key, value);
-  id().then((id) => {
-    log({
-      id,
-      instance: global.setting.wechaty.name,
-      level: 'SILL',
-      category: 'wechat-connector.cache.set',
-      timestampMs: Date.now(),
-      content: JSON.stringify({
-        key, // number as long
-      }),
-    });
-  });
 };
 
 export { init, get, set };
