@@ -20,12 +20,12 @@ const html = fs.readFileSync(`${__dirname}${sep}..${sep}..${sep}static${sep}wech
 // Get - /
 app.get('/', (_req, res) => {
   // response
-  res.set('content-type', 'text/html; charset=utf-8');
-  res.set('cache-control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  res.set('pragma', 'no-cache');
-  res.set('expires', 'no-store');
-  res.set('surrogate-control', 'no-store');
-  res.send(html.replace('${instance}', global.setting.wechaty.name).replace('${status}', getStatus()));
+  res.set('Content-Type', 'text/html;charset=utf-8')
+      .set('Cache-Control', 'no-store,no-cache,must-revalidate,proxy-revalidate')
+      .set('Pragma', 'no-cache')
+      .set('Expires', 'no-store')
+      .set('Surrogate-Control', 'no-store')
+      .send(html.replace('${instance}', global.setting.wechaty.name).replace('${status}', getStatus()));
 });
 
 // POST /rpc/exit
