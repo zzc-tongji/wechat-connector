@@ -23,7 +23,7 @@
     "babel-preset-latest": "^6.24.1",
     "express": "^4.17.1",
     "hashmap": "^2.4.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "wechaty": "^0.48.10"
   },
   "devDependencies": {
