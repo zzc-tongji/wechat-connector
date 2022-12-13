@@ -21,7 +21,7 @@
     "ajv": "^6.12.2",
     "babel-cli": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "hashmap": "^2.4.0",
     "node-fetch": "^2.6.1",
     "wechaty": "^0.48.10"
